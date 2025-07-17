@@ -1,11 +1,46 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import InstitutionSection from "../components/home/InstitutionSection.astro";
+import VolunteeringSection from "../components/home/VolunteeringSection.astro";
+import AssociationsSection from "../components/home/AssociationsSection.astro";
 ---
 
 <Layout>
-	<Welcome />
+  <div class="relative">
+    <Hero
+      picture="https://pictures.laprovence.com/cdn-cgi/image//media/2019/11/15/1573838256_816a2100.jpg"
+      pictureAlt="Escoffiers Marseille"
+    >
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">
+          Délégation Escoffiers
+        </h1>
+        <h2 class="text-3xl md:text-5xl font-light mb-8 text-blue-500">
+          Marseille
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
+          Institution culinaire bénévole au service des associations
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/about"
+            class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
+          >
+            Qui sommes-nous ?
+          </a>
+          <a
+            href="/events"
+            class="border-2 border-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Nos événements
+          </a>
+        </div>
+      </div>
+    </Hero>
+
+    <InstitutionSection />
+    <VolunteeringSection />
+    <AssociationsSection />
+  </div>
 </Layout>

@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+export interface Props {
+  picture: string;
+  pictureAlt?: string;
+}
+
+const { picture, pictureAlt = "Hero image" } = Astro.props;
+---
+
+<section
+  class="relative h-screen flex items-center justify-center overflow-hidden"
+>
+  <!-- Image de fond -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-10"
+    >
+    </div>
+    <Image
+      src={picture}
+      alt={pictureAlt}
+      width={1920}
+      height={1080}
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+  </div>
+
+  <!-- Contenu du slot -->
+  <slot />
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+    <div
+      class="w-6 h-10 border-2 border-white rounded-full flex justify-center"
+    >
+      <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+    </div>
+  </div>
+</section>

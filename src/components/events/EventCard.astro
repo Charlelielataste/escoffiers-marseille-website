@@ -1,0 +1,51 @@
+---
+export interface Props {
+  title: string;
+  date: string;
+  time: string;
+  image: string;
+  description: string;
+  externalLink: string;
+}
+const { title, date, time, image, description, externalLink } =
+  Astro.props as Props;
+---
+
+<div
+  class="relative rounded-3xl shadow-xl w-full border border-primary/20 hover:shadow-2xl transition-shadow duration-300 h-[550px] sm:h-[700px] overflow-hidden"
+  style={`background-image: url(${image}); background-size: cover; background-position: center;`}
+>
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
+  >
+  </div>
+
+  <div class="relative h-full flex flex-col justify-end p-6">
+    <div
+      class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 border border-white/20"
+    >
+      <h3 class="text-2xl font-bold text-primary mb-2 leading-tight">
+        {title}
+      </h3>
+      <div class="mb-3">
+        <div class="text-lg font-bold text-gray-800 mb-1">{date}</div>
+        <div class="text-base text-gray-600 font-medium">À {time}</div>
+      </div>
+
+      <p class="text-gray-700 text-sm leading-relaxed mb-6 line-clamp-3">
+        {description}
+      </p>
+      <div class="flex justify-center">
+        <a
+          href={externalLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-[80%] bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
+        >
+          Participer à l'événement
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

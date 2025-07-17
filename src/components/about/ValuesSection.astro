@@ -1,0 +1,53 @@
+---
+const values = [
+  {
+    title: "Excellence",
+    description:
+      "Nous maintenons les plus hauts standards de qualité culinaire, hérités de la tradition d'Escoffier.",
+    icon: "🏆",
+  },
+  {
+    title: "Bénévolat",
+    description:
+      "Notre engagement désintéressé au service de la communauté marseillaise et des associations locales.",
+    icon: "🤝",
+  },
+  {
+    title: "Tradition",
+    description:
+      "Nous perpétuons les techniques et savoir-faire de la cuisine française classique.",
+    icon: "🇫🇷",
+  },
+  {
+    title: "Innovation",
+    description:
+      "Nous adaptons nos compétences aux besoins modernes tout en respectant nos racines.",
+    icon: "✨",
+  },
+];
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Nos Valeurs
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Les principes qui guident notre action au quotidien
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {
+        values.map((value) => (
+          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="text-4xl mb-4">{value.icon}</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+            <p class="text-gray-600 leading-relaxed">{value.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

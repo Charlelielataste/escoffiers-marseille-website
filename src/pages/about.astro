@@ -1,0 +1,31 @@
+---
+import Hero from "../components/Hero.astro";
+import MissionSection from "../components/about/MissionSection.astro";
+import Layout from "../layouts/Layout.astro";
+import ValuesSection from "../components/about/ValuesSection.astro";
+import TeamSection from "../components/about/TeamSection.astro";
+---
+
+<Layout>
+  <div class="relative">
+    <Hero
+      picture="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      pictureAlt="A propos"
+    >
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">À Propos</h1>
+        <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
+          Notre Institution
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          Disciples d&apos;Escoffier, nous perpétuons l&apos;excellence
+          culinaire française au service de la communauté marseillaise
+        </p>
+      </div>
+    </Hero>
+
+    <MissionSection />
+    <ValuesSection />
+    <TeamSection />
+  </div>
+</Layout>

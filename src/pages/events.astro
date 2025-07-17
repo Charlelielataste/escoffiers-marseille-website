@@ -1,0 +1,170 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ArticleCard from "../components/articles/ArticleCard.astro";
+import FacebookSection from "../components/articles/FacebookSection.astro";
+import EventCard from "../components/events/EventCard.astro";
+
+const articles = [
+  {
+    id: 1,
+    title: "Gala de Charité 2024 : Un Succès Extraordinaire",
+    time: "18:00",
+    excerpt:
+      "Notre gala annuel a permis de récolter des fonds exceptionnels pour nos associations partenaires.",
+    date: "2024-01-15",
+    category: "Événement",
+    image:
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "gala-charite-2024",
+    externalLink: "https://www.google.com",
+  },
+  {
+    id: 2,
+    title: "Nouveau Partenariat avec l'Association Solidarité Marseille",
+    time: "18:00",
+    excerpt:
+      "Nous sommes fiers d'annoncer notre collaboration avec cette association locale dédiée à l'aide alimentaire.",
+    date: "2024-01-10",
+    category: "Partenariat",
+    image:
+      "https://images.unsplash.com/photo-1593113616828-6f22bca04b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "partenariat-solidarite-marseille",
+    externalLink: "https://www.google.com",
+  },
+  {
+    id: 3,
+    title: "Formation Culinaire pour les Jeunes en Difficulté",
+    time: "18:00",
+    excerpt:
+      "Lancement de notre programme de formation gratuite pour accompagner l'insertion professionnelle.",
+    date: "2024-01-05",
+    category: "Formation",
+    image:
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "formation-culinaire-jeunes",
+    externalLink: "https://www.google.com",
+  },
+  {
+    id: 4,
+    title: "Les Traditions Culinaires Provençales à l'Honneur",
+    time: "18:00",
+    excerpt:
+      "Retour sur notre événement dédié à la valorisation du patrimoine culinaire de notre région.",
+    date: "2023-12-20",
+    category: "Culture",
+    image:
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "traditions-culinaires-provencales",
+    externalLink: "https://www.google.com",
+  },
+];
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// Fonction pour grouper les événements par mois/année
+function groupEventsByMonth(events: typeof articles) {
+  const grouped = events.reduce(
+    (acc, event) => {
+      const date = new Date(event.date);
+      const monthYear = date.toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+      });
+
+      if (!acc[monthYear]) {
+        acc[monthYear] = [];
+      }
+      acc[monthYear].push(event);
+
+      return acc;
+    },
+    {} as Record<string, typeof articles>
+  );
+
+  // Trier les événements dans chaque groupe par date décroissante
+  Object.keys(grouped).forEach((monthYear) => {
+    grouped[monthYear].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  });
+
+  // Trier les groupes par date décroissante (plus récent en premier)
+  const sortedGroups = Object.entries(grouped).sort(
+    ([monthYearA], [monthYearB]) => {
+      const dateA = new Date(grouped[monthYearA][0].date);
+      const dateB = new Date(grouped[monthYearB][0].date);
+      return dateB.getTime() - dateA.getTime();
+    }
+  );
+
+  return sortedGroups;
+}
+
+const groupedEvents = groupEventsByMonth(articles);
+---
+
+<Layout>
+  <div class="relative">
+    <Hero
+      picture="https://pictures.laprovence.com/cdn-cgi/image/width=3840,format=auto,quality=80,trim.left=0,trim.top=81,trim.height=1121,trim.width=2000/media/2024/03/21/_FRA5589.jpg"
+      pictureAlt="Événements"
+    >
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Événements</h1>
+        <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
+          Découvrez nos prochains événements
+        </h2>
+      </div>
+    </Hero>
+    <div class="mx-5 sm:mx-10">
+      <div class="max-w-6xl mx-auto m-10">
+        {
+          groupedEvents.map(([monthYear, events], groupIndex) => (
+            <div class="mb-12">
+              {/* En-tête du mois/année */}
+              <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                  {monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}
+                </h2>
+                <hr class="w-24 h-1 bg-primary mx-auto rounded-full" />
+              </div>
+
+              {/* Grille des événements pour ce mois */}
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+                {events.map((article) => (
+                  <EventCard
+                    title={article.title}
+                    date={formatDate(article.date)}
+                    time={article.time}
+                    image={article.image}
+                    description={article.excerpt}
+                    externalLink={article.externalLink}
+                  />
+                ))}
+              </div>
+
+              {/* Séparateur entre les groupes (sauf pour le dernier) */}
+              {groupIndex < groupedEvents.length - 1 && (
+                <div class="flex items-center justify-center my-12">
+                  <div class="flex-grow h-px bg-gray-300" />
+                  <div class="mx-4">
+                    <div class="w-3 h-3 bg-primary rounded-full" />
+                  </div>
+                  <div class="flex-grow h-px bg-gray-300" />
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Layout>
