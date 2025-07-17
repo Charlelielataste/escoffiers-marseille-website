@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 const currentYear = new Date().getFullYear();
 ---
 
@@ -8,12 +9,13 @@ const currentYear = new Date().getFullYear();
       <!-- Logo et description -->
       <div class="col-span-1 md:col-span-2">
         <div class="flex items-center mb-4">
-          <img
+          <Image
             src="/logos/logo-face-color.png"
             alt="Logo Escoffiers"
             width="50"
             height="50"
-            class="h-9 w-auto mr-5 bg-white/50"
+            class="h-9 w-auto p-1 mr-5 bg-white rounded-full"
+            loading="eager"
           />
           <h3 class="text-xl font-semibold text-text-secondary">
             Les Disciples d'Escoffier

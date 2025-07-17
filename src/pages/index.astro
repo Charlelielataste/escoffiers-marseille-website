@@ -23,16 +23,18 @@ import AssociationsSection from "../components/home/AssociationsSection.astro";
           Institution culinaire bénévole au service des associations
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            class="bg-primary hover:bg-primary/80 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+          <a
+            href="/about"
+            class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
           >
             Qui sommes-nous ?
-          </button>
-          <button
+          </a>
+          <a
+            href="/events"
             class="border-2 border-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-semibold transition-colors"
           >
             Nos événements
-          </button>
+          </a>
         </div>
       </div>
     </Hero>

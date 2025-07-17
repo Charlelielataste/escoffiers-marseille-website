@@ -20,7 +20,7 @@ const getLinkClasses = (isActive: boolean) => {
 ---
 
 <nav
-  class="bg-background shadow-md fixed top-0 left-0 right-0 z-50 border-b border-primary/30"
+  class="bg-white shadow-md fixed top-0 left-0 right-0 z-50 border-b border-primary/30"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
@@ -41,7 +41,7 @@ const getLinkClasses = (isActive: boolean) => {
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-8">
           <a href="/about" class={getLinkClasses(currentPath === "/about")}>
-            A Propos
+            À Propos
           </a>
           <a
             href="/articles"
@@ -49,33 +49,21 @@ const getLinkClasses = (isActive: boolean) => {
           >
             Articles
           </a>
-          <a
-            href="/calendrier"
-            class={getLinkClasses(currentPath === "/calendrier")}
-          >
-            Calendrier
+          <a href="/events" class={getLinkClasses(currentPath === "/events")}>
+            Événements
           </a>
-          <a
-            href="/organisation"
-            class={getLinkClasses(currentPath === "/organisation")}
-          >
+          <a href="/members" class={getLinkClasses(currentPath === "/members")}>
             Les Disciples
+          </a>
+          <a href="/contact" class={getLinkClasses(currentPath === "/contact")}>
+            Nous Rejoindre
           </a>
         </div>
       </div>
 
       <!-- Boutons à droite - Desktop -->
       <div class="hidden md:block flex-shrink-0 items-center space-x-3">
-        <!-- Bouton Login -->
-        <a
-          href="/login"
-          class={cn(
-            "bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-md text-sm font-medium",
-            "transition-colors"
-          )}
-        >
-          Login
-        </a>
+        <p class="text-sm text-gray-700">FR / EN</p>
       </div>
 
       <!-- Bouton Menu Mobile -->
@@ -107,7 +95,7 @@ const getLinkClasses = (isActive: boolean) => {
           href="/about"
           class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
         >
-          À propos
+          À Propos
         </a>
         <a
           href="/articles"
@@ -116,25 +104,25 @@ const getLinkClasses = (isActive: boolean) => {
           Articles
         </a>
         <a
-          href="/calendrier"
+          href="/events"
           class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
         >
-          Calendrier
+          Événements
         </a>
         <a
-          href="/organisation"
+          href="/members"
           class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
         >
-          Organisation
+          Les Disciples
+        </a>
+        <a
+          href="/contact"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Nous Rejoindre
         </a>
         <div class="pt-4 space-y-2">
-          <!-- Bouton Login -->
-          <a
-            href="/login"
-            class="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-md text-base font-medium block text-center"
-          >
-            Login
-          </a>
+          <p class="text-sm text-gray-700">FR / EN</p>
         </div>
       </div>
     </div>

@@ -1,0 +1,231 @@
+---
+import Hero from "../components/Hero.astro";
+import MembersCard from "../components/members/MembersCard.astro";
+import Layout from "../layouts/Layout.astro";
+
+const membres = [
+  {
+    photo:
+      "https://www.utopix.com/fr/blog/wp-content/uploads/2024/04/Mzk0NGJkOWEtY2ZlYS00MjVjLTkwNTAtOGY5OWQzN2IzNGVi_762cec57-2eaf-4eaf-9a0d-2e7860147e48_profilhomme7-scaled.jpg",
+    color: "#B0675C", // primary
+    nom: "Jean-Baptiste Escoffier",
+    job: "Maître Cuisinier",
+    description: "Membre fondateur des Disciples d'Escoffier de Marseille",
+    contact: "jean.escoffier@disciples-marseille.fr",
+    restaurant: "Le Grand Véfour",
+    is_honor: true,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#8ccab2", // secondary
+    nom: "Marie Dubois",
+    job: "Chef Exécutive",
+    description: "Spécialiste de la cuisine provençale moderne",
+    contact: "marie.dubois@marseille-cuisine.fr",
+    restaurant: "La Bouillabaisse d'Or",
+    is_honor: true,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#ccb782", // tertiary
+    nom: "Pierre Martin",
+    job: "Sous-Chef",
+    description: "Expert en pâtisserie française traditionnelle",
+    contact: "pierre.martin@patisserie-marseille.fr",
+    restaurant: "Les Délices du Vieux-Port",
+    is_honor: true,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#e74c3c", // rouge
+    nom: "Sophie Leclerc",
+    job: "Chef Pâtissière",
+    description: "Créatrice de desserts inspirés de la Méditerranée",
+    contact: "sophie.leclerc@sucreries-provence.fr",
+    restaurant: "Sweet Provence",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#9b59b6", // violet
+    nom: "Antoine Rossi",
+    job: "Sommelier Expert",
+    description: "Spécialiste des vins de Provence et accords mets-vins",
+    contact: "antoine.rossi@vins-marseille.fr",
+    restaurant: "Cave des Calanques",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#27ae60", // vert
+    nom: "Isabelle Moreau",
+    job: "Chef de Cuisine",
+    description: "Ambassadrice de la cuisine méditerranéenne authentique",
+    contact: "isabelle.moreau@mediterra-saveurs.fr",
+    restaurant: "Mediterra Saveurs",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#f39c12", // orange
+    nom: "Julien Blanc",
+    job: "Chef de Partie",
+    description: "Maître dans l'art des poissons et fruits de mer",
+    contact: "julien.blanc@fruits-mer-marseille.fr",
+    restaurant: "L'Épuisette",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#e91e63", // rose
+    nom: "Camille Durand",
+    job: "Chef Traiteur",
+    description: "Organisatrice d'événements culinaires d'exception",
+    contact: "camille.durand@events-gastronomie.fr",
+    restaurant: "Événements Gastronomie+",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#34495e", // bleu-gris
+    nom: "Maxime Fernandez",
+    job: "Chef Boulanger",
+    description: "Artisan boulanger spécialisé dans les pains traditionnels",
+    contact: "maxime.fernandez@pain-tradition.fr",
+    restaurant: "Boulangerie du Panier",
+    is_honor: false,
+  },
+  {
+    photo:
+      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    color: "#16a085", // turquoise
+    nom: "Élise Bonnard",
+    job: "Nutritionniste Culinaire",
+    description: "Experte en cuisine santé et bien-être méditerranéen",
+    contact: "elise.bonnard@nutrition-sante.fr",
+    restaurant: "Santé & Saveurs",
+    is_honor: false,
+  },
+];
+
+// Filtrer les membres d'honneur et les membres normaux
+const membresHonneur = membres.filter((membre) => membre.is_honor);
+const membresNormaux = membres.filter((membre) => !membre.is_honor);
+---
+
+<Layout>
+  <div class="relative">
+    <Hero
+      picture="https://www.le-grand-pastis.com/wp-content/uploads/2019/05/les-Disciples-descoffier.jpg"
+      pictureAlt="Les Disciples"
+    >
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Les Disciples</h1>
+        <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
+          Nos Membres
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          Les Disciples d&apos;Escoffier, nous perpétuons l&apos;excellence
+          culinaire française au service de la communauté marseillaise
+        </p>
+      </div>
+    </Hero>
+
+    <section class="max-w-6xl mx-auto">
+      <div class="container mx-auto px-4">
+        <h3
+          class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
+        >
+          Notre Président
+        </h3>
+
+        <div
+          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+        >
+          <div class="w-full sm:w-auto">
+            <MembersCard
+              photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+              color={"#e74c3c"}
+              nom={"Alain Laporte"}
+              job={"Président"}
+              description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
+              contact={"alain.laporte@disciples-marseille.fr"}
+              restaurant={"Partout"}
+              size="150px"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Membres d'Honneur -->
+    <section class="max-w-6xl mx-auto">
+      <div class="container mx-auto px-4">
+        <h3
+          class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12"
+        >
+          Nos Membres à l'Honneur
+        </h3>
+
+        <div
+          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+        >
+          {
+            membresHonneur.map((membre) => (
+              <div class="w-full sm:w-auto">
+                <MembersCard
+                  photo={membre.photo}
+                  color={membre.color}
+                  nom={membre.nom}
+                  job={membre.job}
+                  description={membre.description}
+                  contact={membre.contact}
+                  restaurant={membre.restaurant}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Membres Normaux -->
+    <section class="max-w-6xl mx-auto">
+      <div class="container mx-auto px-4">
+        <h3
+          class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12"
+        >
+          Nos Membres
+        </h3>
+
+        <div
+          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+        >
+          {
+            membresNormaux.map((membre) => (
+              <div class="w-full sm:w-auto">
+                <MembersCard
+                  photo={membre.photo}
+                  color={membre.color}
+                  nom={membre.nom}
+                  job={membre.job}
+                  description={membre.description}
+                  contact={membre.contact}
+                  restaurant={membre.restaurant}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
