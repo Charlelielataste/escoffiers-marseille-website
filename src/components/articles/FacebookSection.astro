@@ -1,0 +1,60 @@
+---
+// Déclaration de type pour l'API Facebook
+declare global {
+  interface Window {
+    FB: {
+      XFBML: {
+        parse(): void;
+      };
+    };
+  }
+}
+---
+
+<div class="flex justify-center">
+  <div
+    class="fb-page"
+    data-href="https://www.facebook.com/disciples.escoffier.provence.mediterranee"
+    data-tabs="timeline"
+    data-width="300"
+    data-small-header="true"
+    data-hide-cover="false"
+    data-show-facepile="true"
+  >
+  </div>
+</div>
+
+<script>
+  // Fonction pour charger le SDK Facebook
+  function loadFacebookSDK() {
+    // Vérifier si le SDK est déjà chargé
+    if (window.FB) {
+      window.FB.XFBML.parse(); // Re-scan du DOM
+      return;
+    }
+
+    // Créer et charger le script Facebook SDK
+    const script = document.createElement("script");
+    script.async = true;
+    script.defer = true;
+    script.crossOrigin = "anonymous";
+    script.src =
+      "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0";
+    document.body.appendChild(script);
+  }
+
+  // Charger le SDK quand le DOM est prêt
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadFacebookSDK);
+  } else {
+    loadFacebookSDK();
+  }
+</script>
+
+<style>
+  /* Styles pour le conteneur Facebook si nécessaire */
+  .fb-page {
+    border: none;
+    overflow: hidden;
+  }
+</style>

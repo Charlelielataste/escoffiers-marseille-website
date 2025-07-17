@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ArticleCard from "../components/articles/ArticleCard.astro";
+import FacebookSection from "../components/articles/FacebookSection.astro";
+
+const articles = [
+  {
+    id: 1,
+    title: "Gala de Charité 2024 : Un Succès Extraordinaire",
+    excerpt:
+      "Notre gala annuel a permis de récolter des fonds exceptionnels pour nos associations partenaires.",
+    date: "2024-01-15",
+    category: "Événement",
+    image:
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "gala-charite-2024",
+  },
+  {
+    id: 2,
+    title: "Nouveau Partenariat avec l'Association Solidarité Marseille",
+    excerpt:
+      "Nous sommes fiers d'annoncer notre collaboration avec cette association locale dédiée à l'aide alimentaire.",
+    date: "2024-01-10",
+    category: "Partenariat",
+    image:
+      "https://images.unsplash.com/photo-1593113616828-6f22bca04b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "partenariat-solidarite-marseille",
+  },
+  {
+    id: 3,
+    title: "Formation Culinaire pour les Jeunes en Difficulté",
+    excerpt:
+      "Lancement de notre programme de formation gratuite pour accompagner l'insertion professionnelle.",
+    date: "2024-01-05",
+    category: "Formation",
+    image:
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "formation-culinaire-jeunes",
+  },
+  {
+    id: 4,
+    title: "Les Traditions Culinaires Provençales à l'Honneur",
+    excerpt:
+      "Retour sur notre événement dédié à la valorisation du patrimoine culinaire de notre région.",
+    date: "2023-12-20",
+    category: "Culture",
+    image:
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "traditions-culinaires-provencales",
+  },
+];
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<Layout>
+  <div class="relative">
+    <Hero
+      picture="https://www.gourmicom.fr/wp-content/uploads/Escoffier-Chapitre-Marseille-2015-Groupe-%C2%A9PatrickDesgraupes.jpg"
+      pictureAlt="Articles"
+    >
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Articles</h1>
+        <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
+          Restez informés de nos dernières actualités
+        </h2>
+      </div>
+    </Hero>
+
+    <div class="flex gap-5 my-10 max-w-5xl mx-auto">
+      <ArticleCard
+        title={articles[0].title}
+        date={articles[0].date}
+        image={articles[0].image}
+        excerpt={articles[0].excerpt}
+        slug={articles[0].slug}
+      />
+      <FacebookSection />
+    </div>
+    <div class="grid grid-cols-2 gap-5 my-10 max-w-5xl mx-auto">
+      {
+        articles.map((article) => (
+          <ArticleCard
+            title={article.title}
+            date={formatDate(article.date)}
+            image={article.image}
+            excerpt={article.excerpt}
+            slug={article.slug}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Layout>

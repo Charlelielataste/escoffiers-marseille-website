@@ -1,0 +1,188 @@
+---
+import { cn } from "../../lib/cn";
+import BarMobileIcon from "../icons/BarMobileIcon.astro";
+import CloseIcon from "../icons/CloseIcon.astro";
+
+// Props pour le composant
+export interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+
+// Helper function pour les classes des liens de navigation
+const getLinkClasses = (isActive: boolean) => {
+  return cn(
+    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+    isActive ? "text-primary font-bold" : "text-text-primary hover:text-primary"
+  );
+};
+---
+
+<nav
+  class="bg-background shadow-md fixed top-0 left-0 right-0 z-50 border-b border-primary/30"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo à gauche -->
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center">
+          <img
+            src="/logos/logo-face-color.png"
+            alt="Logo"
+            width="40"
+            height="40"
+            class="h-10 w-auto"
+          />
+        </a>
+      </div>
+
+      <!-- Liens centrés - Desktop -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-8">
+          <a href="/about" class={getLinkClasses(currentPath === "/about")}>
+            A Propos
+          </a>
+          <a
+            href="/articles"
+            class={getLinkClasses(currentPath === "/articles")}
+          >
+            Articles
+          </a>
+          <a
+            href="/calendrier"
+            class={getLinkClasses(currentPath === "/calendrier")}
+          >
+            Calendrier
+          </a>
+          <a
+            href="/organisation"
+            class={getLinkClasses(currentPath === "/organisation")}
+          >
+            Les Disciples
+          </a>
+        </div>
+      </div>
+
+      <!-- Boutons à droite - Desktop -->
+      <div class="hidden md:block flex-shrink-0 items-center space-x-3">
+        <!-- Bouton Login -->
+        <a
+          href="/login"
+          class={cn(
+            "bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-md text-sm font-medium",
+            "transition-colors"
+          )}
+        >
+          Login
+        </a>
+      </div>
+
+      <!-- Bouton Menu Mobile -->
+      <div class="md:hidden">
+        <button
+          id="mobile-menu-toggle"
+          class="text-gray-700 hover:text-gray-900 p-2 rounded-md"
+          aria-label="Menu"
+        >
+          <div id="menu-icon">
+            <BarMobileIcon size="24" class="text-primary" />
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="md:hidden hidden">
+      <div
+        class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/40"
+      >
+        <a
+          href="/"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Accueil
+        </a>
+        <a
+          href="/about"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          À propos
+        </a>
+        <a
+          href="/articles"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Articles
+        </a>
+        <a
+          href="/calendrier"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Calendrier
+        </a>
+        <a
+          href="/organisation"
+          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Organisation
+        </a>
+        <div class="pt-4 space-y-2">
+          <!-- Bouton Login -->
+          <a
+            href="/login"
+            class="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-md text-base font-medium block text-center"
+          >
+            Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Gestion simple du menu mobile
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    if (mobileMenuToggle && mobileMenu && menuIcon) {
+      let isMenuOpen = false;
+
+      mobileMenuToggle.addEventListener("click", () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+          // Ouvrir le menu
+          mobileMenu.classList.remove("hidden");
+          // Changer l'icône en X
+          menuIcon.innerHTML = `
+            <CloseIcon />
+          `;
+        } else {
+          // Fermer le menu
+          mobileMenu.classList.add("hidden");
+          // Remettre l'icône hamburger
+          menuIcon.innerHTML = `
+            <BarMobileIcon />
+          `;
+        }
+      });
+
+      // Fermer le menu en cliquant sur un lien
+      const mobileLinks = mobileMenu.querySelectorAll("a");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          isMenuOpen = false;
+          mobileMenu.classList.add("hidden");
+          // Remettre l'icône hamburger
+          menuIcon.innerHTML = `
+            <BarMobileIcon />
+          `;
+        });
+      });
+    }
+  });
+</script>
