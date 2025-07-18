@@ -17,6 +17,16 @@ const getLinkClasses = (isActive: boolean) => {
     isActive ? "text-primary font-bold" : "text-text-primary hover:text-primary"
   );
 };
+
+// Helper function pour les classes des liens mobiles
+const getMobileLinkClasses = (isActive: boolean) => {
+  return cn(
+    "block px-3 py-2 rounded-md text-base font-medium transition-colors",
+    isActive
+      ? "text-primary font-bold bg-primary/10"
+      : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+  );
+};
 ---
 
 <nav
@@ -40,22 +50,34 @@ const getLinkClasses = (isActive: boolean) => {
       <!-- Liens centrés - Desktop -->
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-8">
-          <a href="/about" class={getLinkClasses(currentPath === "/about")}>
+          <a
+            href="/about"
+            class={getLinkClasses(currentPath.startsWith("/about"))}
+          >
             À Propos
           </a>
           <a
             href="/articles"
-            class={getLinkClasses(currentPath === "/articles")}
+            class={getLinkClasses(currentPath.startsWith("/articles"))}
           >
             Articles
           </a>
-          <a href="/events" class={getLinkClasses(currentPath === "/events")}>
+          <a
+            href="/events"
+            class={getLinkClasses(currentPath.startsWith("/events"))}
+          >
             Événements
           </a>
-          <a href="/members" class={getLinkClasses(currentPath === "/members")}>
+          <a
+            href="/members"
+            class={getLinkClasses(currentPath.startsWith("/members"))}
+          >
             Les Disciples
           </a>
-          <a href="/contact" class={getLinkClasses(currentPath === "/contact")}>
+          <a
+            href="/contact"
+            class={getLinkClasses(currentPath.startsWith("/contact"))}
+          >
             Nous Rejoindre
           </a>
         </div>
@@ -85,39 +107,36 @@ const getLinkClasses = (isActive: boolean) => {
       <div
         class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/40"
       >
-        <a
-          href="/"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
-        >
+        <a href="/" class={getMobileLinkClasses(currentPath === "/")}>
           Accueil
         </a>
         <a
           href="/about"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          class={getMobileLinkClasses(currentPath.startsWith("/about"))}
         >
           À Propos
         </a>
         <a
           href="/articles"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          class={getMobileLinkClasses(currentPath.startsWith("/articles"))}
         >
           Articles
         </a>
         <a
           href="/events"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          class={getMobileLinkClasses(currentPath.startsWith("/events"))}
         >
           Événements
         </a>
         <a
           href="/members"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          class={getMobileLinkClasses(currentPath.startsWith("/members"))}
         >
           Les Disciples
         </a>
         <a
           href="/contact"
-          class="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          class={getMobileLinkClasses(currentPath.startsWith("/contact"))}
         >
           Nous Rejoindre
         </a>
