@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import ArticleCard from "../components/articles/ArticleCard.astro";
 import FacebookSection from "../components/articles/FacebookSection.astro";
 import MobileFacebookSection from "../components/articles/MobileFacebookSection.astro";
+import ArticlesImage from "../assets/hero/articles.png";
 
 const articles = [
   {
@@ -68,14 +69,11 @@ function formatDate(dateString: string) {
 
 <Layout>
   <div class="relative">
-    <Hero
-      picture="https://www.gourmicom.fr/wp-content/uploads/Escoffier-Chapitre-Marseille-2015-Groupe-%C2%A9PatrickDesgraupes.jpg"
-      pictureAlt="Articles"
-    >
+    <Hero picture={ArticlesImage} pictureAlt="Articles">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Articles</h1>
         <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
-          Nos Savoir-Faire
+          Notre Savoir-Faire
         </h2>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
           Restez informés de nos dernières actualités, conseils et recettes
