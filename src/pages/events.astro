@@ -1,9 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import ArticleCard from "../components/articles/ArticleCard.astro";
-import FacebookSection from "../components/articles/FacebookSection.astro";
 import EventCard from "../components/events/EventCard.astro";
+import EventsImage from "../assets/hero/events.png";
 
 const articles = [
   {
@@ -113,10 +112,7 @@ const groupedEvents = groupEventsByMonth(articles);
 
 <Layout>
   <div class="relative">
-    <Hero
-      picture="https://pictures.laprovence.com/cdn-cgi/image/width=3840,format=auto,quality=80,trim.left=0,trim.top=81,trim.height=1121,trim.width=2000/media/2024/03/21/_FRA5589.jpg"
-      pictureAlt="Événements"
-    >
+    <Hero picture={EventsImage} pictureAlt="Événements">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Événements</h1>
         <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">

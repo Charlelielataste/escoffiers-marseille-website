@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 export interface Props {
-  picture: string;
+  picture: ImageMetadata;
   pictureAlt?: string;
 }
 
@@ -14,16 +14,17 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
   <!-- Image de fond -->
   <div class="absolute inset-0 z-0 overflow-hidden">
     <div
-      class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-10"
+      class="absolute rounded-full w-[85%] sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/50 z-10 blur-3xl"
     >
     </div>
     <Image
       src={picture}
       alt={pictureAlt}
-      width={1920}
-      height={1080}
+      widths={[640, 1024, 1440, 1920]}
+      sizes="100vw"
+      format="webp"
       class="absolute inset-0 w-full h-full object-cover"
-      loading="eager"
+      priority
     />
   </div>
 

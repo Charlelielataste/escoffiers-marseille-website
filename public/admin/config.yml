@@ -76,3 +76,44 @@ collections:
           widget: "string",
           required: false,
         }
+
+  - name: "members"
+    label: "Membres"
+    folder: "src/content/members"
+    create: true
+    slug: "{{prenom}}-{{nom}}"
+    fields:
+      - { label: "Prénom", name: "prenom", widget: "string" }
+      - { label: "Nom", name: "nom", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Poste", name: "poste", widget: "string" }
+      - {
+          label: "Établissement",
+          name: "etablissement",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Lien position Google Maps",
+          name: "googleMapLink",
+          widget: "string",
+          required: false,
+          hint: "URL complète vers la position Google Maps de l'établissement (laisser vide si aucun établissement)",
+        }
+      - {
+          label: "Contact",
+          name: "contact",
+          widget: "string",
+          required: false,
+          pattern:
+            [
+              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+              "Veuillez entrer une adresse email valide",
+            ],
+        }
+      - {
+          label: "Membre d'honneur",
+          name: "is_honor",
+          widget: "boolean",
+          default: false,
+        }

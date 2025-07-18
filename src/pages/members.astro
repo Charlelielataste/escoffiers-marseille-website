@@ -2,6 +2,7 @@
 import Hero from "../components/Hero.astro";
 import MembersCard from "../components/members/MembersCard.astro";
 import Layout from "../layouts/Layout.astro";
+import MembersImage from "../assets/hero/members.png";
 
 const membres = [
   {
@@ -123,10 +124,7 @@ const membresNormaux = membres.filter((membre) => !membre.is_honor);
 
 <Layout>
   <div class="relative">
-    <Hero
-      picture="https://www.le-grand-pastis.com/wp-content/uploads/2019/05/les-Disciples-descoffier.jpg"
-      pictureAlt="Les Disciples"
-    >
+    <Hero picture={MembersImage} pictureAlt="Les Disciples">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Les Disciples</h1>
         <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">
