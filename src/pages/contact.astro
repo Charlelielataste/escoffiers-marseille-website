@@ -2,14 +2,12 @@
 import Hero from "../components/Hero.astro";
 import Layout from "../layouts/Layout.astro";
 import ContactForm from "../components/contact/ContactForm.astro";
+import ContactImage from "../assets/hero/contact.png";
 ---
 
 <Layout>
   <div class="relative">
-    <Hero
-      picture="https://www.institutescoffier.com/wp-content/uploads/2023/12/culinary-journey.webp"
-      pictureAlt="Nous Rejoindre"
-    >
+    <Hero picture={ContactImage} pictureAlt="Nous Rejoindre">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Nous Rejoindre</h1>
         <h2 class="text-3xl md:text-5xl font-light mb-8 text-primary">

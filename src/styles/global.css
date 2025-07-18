@@ -29,3 +29,26 @@ body {
   color: var(--text-primary);
   cursor: url('/icons/spoon-icon.svg'), auto;
 }
+
+a:hover {
+  cursor: url('/icons/fork-icon.svg'), auto;
+}
+
+button:hover {
+  cursor: url('/icons/fork-icon.svg'), auto;
+}
+
+label:hover {
+  cursor: url('/icons/fork-icon.svg'), auto;
+}
+
+/* Styles pour désactiver le curseur personnalisé */
+body.custom-cursor-disabled {
+  cursor: auto !important;
+}
+
+body.custom-cursor-disabled a:hover,
+body.custom-cursor-disabled button:hover,
+body.custom-cursor-disabled label:hover {
+  cursor: pointer !important;
+}

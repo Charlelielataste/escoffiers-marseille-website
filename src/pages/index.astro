@@ -4,14 +4,12 @@ import Hero from "../components/Hero.astro";
 import InstitutionSection from "../components/home/InstitutionSection.astro";
 import VolunteeringSection from "../components/home/VolunteeringSection.astro";
 import AssociationsSection from "../components/home/AssociationsSection.astro";
+import HomeImage from "../assets/hero/home.jpg";
 ---
 
 <Layout>
   <div class="relative">
-    <Hero
-      picture="https://pictures.laprovence.com/cdn-cgi/image//media/2019/11/15/1573838256_816a2100.jpg"
-      pictureAlt="Escoffiers Marseille"
-    >
+    <Hero picture={HomeImage} pictureAlt="Escoffiers Marseille">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">
           Délégation Escoffiers

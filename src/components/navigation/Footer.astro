@@ -9,15 +9,20 @@ const currentYear = new Date().getFullYear();
       <!-- Logo et description -->
       <div class="col-span-1 md:col-span-2">
         <div class="flex items-center mb-4">
-          <Image
-            src="/logos/logo-face-color.png"
-            alt="Logo Escoffiers"
-            width="50"
-            height="50"
-            class="h-9 w-auto p-1 mr-5 bg-white rounded-full"
-            loading="eager"
-          />
-          <h3 class="text-xl font-semibold text-text-secondary">
+          <a
+            href="/"
+            class="hover:scale-110 w-10 h-10 flex items-center justify-center transition-colors bg-tertiary/90 rounded-full mr-2"
+          >
+            <Image
+              src="/logos/logo-face-color.png"
+              alt="Logo Escoffiers"
+              width="50"
+              height="50"
+              class="h-9 w-auto p-1"
+              loading="eager"
+            />
+          </a>
+          <h3 class="text-xl font-bold text-tertiary">
             Les Disciples d'Escoffier
           </h3>
         </div>
@@ -30,7 +35,7 @@ const currentYear = new Date().getFullYear();
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-text-secondary hover:text-primary transition-colors hover:scale-110"
+            class="text-text-secondary hover:text-tertiary transition-colors hover:scale-110"
           >
             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -42,7 +47,7 @@ const currentYear = new Date().getFullYear();
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-text-secondary hover:text-primary transition-colors hover:scale-110"
+            class="text-text-secondary hover:text-tertiary transition-colors hover:scale-110"
           >
             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -55,40 +60,46 @@ const currentYear = new Date().getFullYear();
 
       <!-- Navigation -->
       <div>
-        <h4 class="text-lg font-semibold text-text-secondary mb-4">
-          Navigation
-        </h4>
+        <h4 class="text-lg font-bold text-tertiary mb-4">Navigation</h4>
         <ul class="space-y-2">
           <li>
             <a
-              href="/"
-              class="text-text-secondary hover:text-primary transition-colors"
+              href="/about"
+              class="text-text-secondary hover:text-tertiary transition-colors"
             >
-              Accueil
+              À Propos
             </a>
           </li>
           <li>
             <a
               href="/articles"
-              class="text-text-secondary hover:text-primary transition-colors"
+              class="text-text-secondary hover:text-tertiary transition-colors"
             >
               Articles
             </a>
           </li>
           <li>
             <a
-              href="/calendrier"
-              class="text-text-secondary hover:text-primary transition-colors"
+              href="/events"
+              class="text-text-secondary hover:text-tertiary transition-colors"
             >
-              Calendrier
+              Événements
             </a>
           </li>
           <li>
             <a
-              href="/organisation"
-              class="text-text-secondary hover:text-primary transition-colors"
+              href="/members"
+              class="text-text-secondary hover:text-tertiary transition-colors"
             >
               Les Disciples
+            </a>
+          </li>
+          <li>
+            <a
+              href="/contact"
+              class="text-text-secondary hover:text-tertiary transition-colors"
+            >
+              Nous Rejoindre
             </a>
           </li>
         </ul>
@@ -96,7 +107,7 @@ const currentYear = new Date().getFullYear();
 
       <!-- Contact -->
       <div>
-        <h4 class="text-lg font-semibold text-text-secondary mb-4">Contact</h4>
+        <h4 class="text-lg font-bold text-tertiary mb-4">Contact</h4>
         <div class="space-y-3">
           <div class="flex items-start">
             <svg
@@ -153,6 +164,32 @@ const currentYear = new Date().getFullYear();
             </svg>
             <span class="text-text-secondary">+33 4 91 XX XX XX</span>
           </div>
+
+          <!-- Bouton pour désactiver le curseur personnalisé -->
+          <div class="flex items-start pt-2">
+            <button
+              id="cursor-toggle"
+              class="flex items-center text-text-secondary hover:text-tertiary transition-colors text-sm"
+              aria-label="Activer/Désactiver le curseur personnalisé"
+            >
+              <svg
+                class="h-5 w-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                ></path>
+              </svg>
+              <span id="cursor-toggle-text"
+                >Désactiver curseur personnalisé</span
+              >
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -166,13 +203,13 @@ const currentYear = new Date().getFullYear();
         <div class="flex space-x-6 mt-4 md:mt-0">
           <a
             href="/mentions-legales"
-            class="text-text-secondary hover:text-primary text-sm transition-colors"
+            class="text-text-secondary hover:text-tertiary text-sm transition-colors"
           >
             Mentions légales
           </a>
           <a
             href="/politique-confidentialite"
-            class="text-text-secondary hover:text-primary text-sm transition-colors"
+            class="text-text-secondary hover:text-tertiary text-sm transition-colors"
           >
             Politique de confidentialité
           </a>
@@ -181,3 +218,47 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  import type { boolean } from "astro:schema";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const cursorToggle = document.getElementById("cursor-toggle");
+    const cursorToggleText = document.getElementById("cursor-toggle-text");
+
+    // Vérifier l'état actuel du curseur personnalisé
+    const customCursorDisabled =
+      localStorage.getItem("customCursorDisabled") === "true";
+
+    // Appliquer l'état initial
+    updateCursorState(customCursorDisabled);
+
+    // Gestionnaire d'événement pour le bouton
+    cursorToggle?.addEventListener("click", function () {
+      const isCurrentlyDisabled = document.body.classList.contains(
+        "custom-cursor-disabled"
+      );
+      const newState = !isCurrentlyDisabled;
+
+      // Sauvegarder la préférence
+      localStorage.setItem("customCursorDisabled", newState.toString());
+
+      // Appliquer le nouvel état
+      updateCursorState(newState);
+    });
+
+    function updateCursorState(disabled: boolean) {
+      if (disabled) {
+        document.body.classList.add("custom-cursor-disabled");
+        if (cursorToggleText) {
+          cursorToggleText.textContent = "Activer curseur personnalisé";
+        }
+      } else {
+        document.body.classList.remove("custom-cursor-disabled");
+        if (cursorToggleText) {
+          cursorToggleText.textContent = "Désactiver curseur personnalisé";
+        }
+      }
+    }
+  });
+</script>
