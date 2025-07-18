@@ -2,20 +2,11 @@
 // Composant de formulaire de contact pour Les Disciples d'Escoffier Marseille
 ---
 
-<section class="py-20 bg-white">
+<section class="py-12 bg-white">
   <div class="container mx-auto px-4">
     <div class="max-w-6xl mx-auto">
-      <!-- En-tête de la section -->
-      <div class="text-center mb-12">
-        <p class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          Passionné(e) de cuisine française et désireux(se) de perpétuer
-          l'héritage d'Auguste Escoffier ? Contactez-nous pour découvrir comment
-          devenir disciple et servir notre communauté marseillaise.
-        </p>
-      </div>
-
       <div
-        class="bg-primary/10 p-6 rounded-r-lg mb-12 flex flex-col items-center justify-center"
+        class="border-l-4 border-primary bg-primary/10 p-6 rounded-r-lg mb-10 flex flex-col items-center justify-center"
       >
         <blockquote class="text-lg italic text-text-primary mb-3">
           "La cuisine est un art qui doit être traité avec respect et passion."
@@ -25,8 +16,26 @@
 
       <!-- Formulaire -->
       <div class="bg-container rounded-2xl max-w-2xl mx-auto p-8 shadow-lg">
-        <form id="contact-form" class="space-y-6">
-          <!-- Nom et Prénom -->
+        <form
+          id="contact-form"
+          name="contact"
+          method="POST"
+          action="/contact"
+          class="space-y-6"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+        >
+          <!-- Champ honeypot caché pour la protection anti-spam -->
+          <div style="display: none;">
+            <label>
+              Ne pas remplir ce champ si vous êtes humain:
+              <input name="bot-field" />
+            </label>
+          </div>
+
+          <!-- Champ caché pour identifier le formulaire -->
+          <input type="hidden" name="form-name" value="contact" />
+
           <div class="grid md:grid-cols-2 gap-4">
             <div class="form-group">
               <label
@@ -105,21 +114,14 @@
             >
               Votre expérience culinaire *
             </label>
-            <select
+            <input
+              type="text"
               id="experience"
               name="experience"
               required
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white text-text-primary"
-            >
-              <option value="">Sélectionnez votre niveau</option>
-              <option value="amateur">Amateur passionné</option>
-              <option value="etudiant">Étudiant en cuisine</option>
-              <option value="professionnel"
-                >Professionnel de la restauration</option
-              >
-              <option value="chef">Chef de cuisine</option>
-              <option value="retraite">Professionnel retraité</option>
-            </select>
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white text-text-primary placeholder-gray-400"
+              placeholder="Décrivez votre parcours culinaire (amateur, étudiant, professionnel, chef, etc.)"
+            />
           </div>
 
           <!-- Type d'engagement -->
@@ -131,7 +133,7 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement[]"
+                  name="engagement"
                   value="evenements"
                   class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
@@ -142,7 +144,7 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement[]"
+                  name="engagement"
                   value="formation"
                   class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
@@ -153,7 +155,7 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement[]"
+                  name="engagement"
                   value="organisation"
                   class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
@@ -164,7 +166,7 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement[]"
+                  name="engagement"
                   value="communication"
                   class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
@@ -202,29 +204,6 @@
               Envoyer ma candidature
             </button>
           </div>
-
-          <!-- Message de confirmation -->
-          <div
-            id="success-message"
-            class="hidden bg-secondary/20 border border-secondary text-text-primary px-4 py-3 rounded-lg"
-          >
-            <div class="flex items-center">
-              <svg
-                class="w-5 h-5 text-secondary mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"></path>
-              </svg>
-              <span
-                >Votre message a été envoyé avec succès ! Nous vous
-                recontacterons prochainement.</span
-              >
-            </div>
-          </div>
         </form>
       </div>
     </div>
@@ -232,59 +211,11 @@
 </section>
 
 <script>
-  // Gestion du formulaire de contact
+  // Gestion du formulaire avec Netlify Forms
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contact-form") as HTMLFormElement;
-    const successMessage = document.getElementById("success-message");
 
-    if (form && successMessage) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        // Animation du bouton de soumission
-        const submitButton = form.querySelector(
-          'button[type="submit"]'
-        ) as HTMLButtonElement;
-        if (!submitButton) return;
-
-        const originalText = submitButton.innerHTML;
-
-        submitButton.innerHTML = `
-          <div class="flex items-center space-x-2">
-            <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span>Envoi en cours...</span>
-          </div>
-        `;
-        submitButton.disabled = true;
-
-        // Simulation d'envoi (remplacer par votre logique d'envoi réelle)
-        setTimeout(() => {
-          // Afficher le message de succès
-          successMessage.classList.remove("hidden");
-
-          // Réinitialiser le formulaire
-          form.reset();
-
-          // Remettre le bouton à son état initial
-          submitButton.innerHTML = originalText;
-          submitButton.disabled = false;
-
-          // Faire défiler vers le message de succès
-          successMessage.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-
-          // Masquer le message de succès après 10 secondes
-          setTimeout(() => {
-            successMessage.classList.add("hidden");
-          }, 10000);
-        }, 2000);
-      });
-
+    if (form) {
       // Validation en temps réel des champs requis
       const requiredFields = form.querySelectorAll(
         "input[required], select[required], textarea[required]"
@@ -315,11 +246,11 @@
 
       // Validation des checkboxes d'engagement
       const engagementCheckboxes = form.querySelectorAll(
-        'input[name="engagement[]"]'
+        'input[name="engagement"]'
       );
       const validateEngagement = () => {
         const checkedBoxes = form.querySelectorAll(
-          'input[name="engagement[]"]:checked'
+          'input[name="engagement"]:checked'
         );
         return checkedBoxes.length > 0;
       };
@@ -337,7 +268,7 @@
         });
       });
 
-      // Validation personnalisée avant soumission
+      // Validation avant soumission - laisse Netlify gérer l'envoi
       form.addEventListener("submit", (e) => {
         if (!validateEngagement()) {
           e.preventDefault();
@@ -356,6 +287,23 @@
               behavior: "smooth",
               block: "center",
             });
+          }
+        } else {
+          // Animation du bouton lors de la soumission
+          const submitButton = form.querySelector(
+            'button[type="submit"]'
+          ) as HTMLButtonElement;
+          if (submitButton) {
+            submitButton.innerHTML = `
+              <div class="flex items-center space-x-2">
+                <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Envoi en cours...</span>
+              </div>
+            `;
+            submitButton.disabled = true;
           }
         }
       });
