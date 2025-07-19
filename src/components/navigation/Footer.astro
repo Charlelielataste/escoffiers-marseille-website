@@ -166,7 +166,7 @@ const currentYear = new Date().getFullYear();
           </div>
 
           <!-- Bouton pour désactiver le curseur personnalisé -->
-          <div class="flex items-start pt-2">
+          <div class="hidden sm:flex items-start pt-2">
             <button
               id="cursor-toggle"
               class="flex items-center text-text-secondary hover:text-tertiary transition-colors text-sm"
@@ -220,8 +220,6 @@ const currentYear = new Date().getFullYear();
 </footer>
 
 <script>
-  import type { boolean } from "astro:schema";
-
   document.addEventListener("DOMContentLoaded", function () {
     const cursorToggle = document.getElementById("cursor-toggle");
     const cursorToggleText = document.getElementById("cursor-toggle-text");

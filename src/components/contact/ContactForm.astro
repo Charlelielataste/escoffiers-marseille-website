@@ -2,7 +2,7 @@
 // Composant de formulaire de contact pour Les Disciples d'Escoffier Marseille
 ---
 
-<section class="py-12 bg-white">
+<section class="relative py-12 bg-white">
   <div class="container mx-auto px-4">
     <div class="max-w-6xl mx-auto">
       <div
@@ -20,7 +20,7 @@
           id="contact-form"
           name="contact"
           method="POST"
-          action="/contact-success"
+          action="/contact/success"
           class="space-y-6"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
@@ -42,7 +42,7 @@
                 for="firstName"
                 class="block text-sm font-medium text-text-primary mb-2"
               >
-                Prénom *
+                Prénom <span class="text-primary">*</span>
               </label>
               <input
                 type="text"
@@ -58,7 +58,7 @@
                 for="lastName"
                 class="block text-sm font-medium text-text-primary mb-2"
               >
-                Nom *
+                Nom <span class="text-primary">*</span>
               </label>
               <input
                 type="text"
@@ -77,7 +77,7 @@
               for="email"
               class="block text-sm font-medium text-text-primary mb-2"
             >
-              Adresse email *
+              Adresse email <span class="text-primary">*</span>
             </label>
             <input
               type="email"
@@ -112,7 +112,7 @@
               for="experience"
               class="block text-sm font-medium text-text-primary mb-2"
             >
-              Votre expérience culinaire *
+              Votre expérience culinaire <span class="text-primary">*</span>
             </label>
             <input
               type="text"
@@ -124,25 +124,20 @@
             />
           </div>
 
-          <!-- Type d'engagement - Champ caché pour le label -->
-          <input
-            type="hidden"
-            name="type-engagement"
-            value="Types d'engagement sélectionnés"
-          />
-
           <!-- Type d'engagement -->
           <div class="form-group">
             <label class="block text-sm font-medium text-text-primary mb-3">
-              Comment souhaitez-vous vous engager ? (au moins une case) *
+              Comment souhaitez-vous vous engager ? (au moins une case) <span
+                class="text-primary">*</span
+              >
             </label>
             <div class="space-y-3">
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement-evenements"
+                  name="engagement"
                   value="Participation aux événements caritatifs"
-                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded engagement-checkbox"
+                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
                 <span class="ml-3 text-text-primary"
                   >Participation aux événements caritatifs</span
@@ -151,9 +146,9 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement-formation"
+                  name="engagement"
                   value="Formations et ateliers culinaires"
-                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded engagement-checkbox"
+                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
                 <span class="ml-3 text-text-primary"
                   >Formations et ateliers culinaires</span
@@ -162,9 +157,9 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement-organisation"
+                  name="engagement"
                   value="Organisation d'événements"
-                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded engagement-checkbox"
+                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
                 <span class="ml-3 text-text-primary"
                   >Organisation d'événements</span
@@ -173,17 +168,14 @@
               <label class="flex items-center">
                 <input
                   type="checkbox"
-                  name="engagement-communication"
+                  name="engagement"
                   value="Communication et médias"
-                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded engagement-checkbox"
+                  class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
                 <span class="ml-3 text-text-primary"
                   >Communication et médias</span
                 >
               </label>
-            </div>
-            <div id="engagement-error" class="text-red-500 text-sm mt-2 hidden">
-              Veuillez sélectionner au moins un type d'engagement.
             </div>
           </div>
 
@@ -193,7 +185,8 @@
               for="message"
               class="block text-sm font-medium text-text-primary mb-2"
             >
-              Parlez-nous de votre motivation *
+              Parlez-nous de votre motivation <span class="text-primary">*</span
+              >
             </label>
             <textarea
               id="message"
@@ -210,7 +203,8 @@
             <button
               type="submit"
               id="submit-button"
-              class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2"
+              disabled
+              class="w-full bg-primary/50 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-not-allowed"
             >
               <span id="button-text">Envoyer ma candidature</span>
             </button>
@@ -222,44 +216,55 @@
 </section>
 
 <script>
-  // Validation des checkboxes d'engagement
   document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById(
-      "contact-form"
-    ) as HTMLFormElement | null;
+    const submitButton = document.getElementById(
+      "submit-button"
+    ) as HTMLButtonElement;
+    const requiredFields = [
+      document.getElementById("firstName") as HTMLInputElement,
+      document.getElementById("lastName") as HTMLInputElement,
+      document.getElementById("email") as HTMLInputElement,
+      document.getElementById("experience") as HTMLInputElement,
+      document.getElementById("message") as HTMLTextAreaElement,
+    ];
     const checkboxes = document.querySelectorAll(
-      ".engagement-checkbox"
+      'input[name="engagement"]'
     ) as NodeListOf<HTMLInputElement>;
-    const errorDiv = document.getElementById(
-      "engagement-error"
-    ) as HTMLDivElement | null;
 
-    if (form && errorDiv) {
-      form.addEventListener("submit", function (e) {
-        const isChecked = Array.from(checkboxes).some(
-          (checkbox) => checkbox.checked
-        );
+    function checkFormValidity() {
+      // Vérifier que tous les champs obligatoires sont remplis
+      const allFieldsFilled = requiredFields.every(
+        (field) => field.value.trim() !== ""
+      );
 
-        if (!isChecked) {
-          e.preventDefault();
-          errorDiv.classList.remove("hidden");
-          // Faire défiler vers l'erreur
-          errorDiv.scrollIntoView({ behavior: "smooth", block: "center" });
-          return false;
-        } else {
-          errorDiv.classList.add("hidden");
-        }
-      });
+      // Vérifier qu'au moins une checkbox est cochée
+      const atLeastOneChecked = Array.from(checkboxes).some(
+        (checkbox) => checkbox.checked
+      );
 
-      // Cacher l'erreur quand une checkbox est cochée
-      checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          const isChecked = Array.from(checkboxes).some((cb) => cb.checked);
-          if (isChecked && errorDiv) {
-            errorDiv.classList.add("hidden");
-          }
-        });
-      });
+      // Activer le bouton si tout est ok
+      if (allFieldsFilled && atLeastOneChecked) {
+        submitButton.disabled = false;
+        submitButton.className =
+          "w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2 cursor-pointer";
+      } else {
+        submitButton.disabled = true;
+        submitButton.className =
+          "w-full bg-primary/50 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-not-allowed";
+      }
     }
+
+    // Écouter les changements sur les champs obligatoires
+    requiredFields.forEach((field) => {
+      field.addEventListener("input", checkFormValidity);
+    });
+
+    // Écouter les changements sur les checkboxes
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", checkFormValidity);
+    });
+
+    // Vérification initiale
+    checkFormValidity();
   });
 </script>

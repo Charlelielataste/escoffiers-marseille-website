@@ -136,92 +136,93 @@ const membresNormaux = membres.filter((membre) => !membre.is_honor);
         </p>
       </div>
     </Hero>
+    <section class="relative px-5 sm:px-10 bg-white py-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
+          >
+            Notre Président
+          </h3>
 
-    <section class="max-w-6xl mx-auto">
-      <div class="container mx-auto px-4">
-        <h3
-          class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
-        >
-          Notre Président
-        </h3>
-
-        <div
-          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
-        >
-          <div class="w-full sm:w-auto">
-            <MembersCard
-              photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
-              color={"#e74c3c"}
-              nom={"Alain Laporte"}
-              job={"Président"}
-              description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
-              contact={"alain.laporte@disciples-marseille.fr"}
-              restaurant={"Partout"}
-              size="150px"
-            />
+          <div
+            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+          >
+            <div class="w-full sm:w-auto">
+              <MembersCard
+                photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+                color={"#e74c3c"}
+                nom={"Alain Laporte"}
+                job={"Président"}
+                description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
+                contact={"alain.laporte@disciples-marseille.fr"}
+                restaurant={"Partout"}
+                size="150px"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Section Membres d'Honneur -->
-    <section class="max-w-6xl mx-auto">
-      <div class="container mx-auto px-4">
-        <h3
-          class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12"
-        >
-          Nos Membres à l'Honneur
-        </h3>
+      <!-- Section Membres d'Honneur -->
+      <d class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12"
+          >
+            Nos Membres à l'Honneur
+          </h3>
 
-        <div
-          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
-        >
-          {
-            membresHonneur.map((membre) => (
-              <div class="w-full sm:w-auto">
-                <MembersCard
-                  photo={membre.photo}
-                  color={membre.color}
-                  nom={membre.nom}
-                  job={membre.job}
-                  description={membre.description}
-                  contact={membre.contact}
-                  restaurant={membre.restaurant}
-                />
-              </div>
-            ))
-          }
+          <div
+            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+          >
+            {
+              membresHonneur.map((membre) => (
+                <div class="w-full sm:w-auto">
+                  <MembersCard
+                    photo={membre.photo}
+                    color={membre.color}
+                    nom={membre.nom}
+                    job={membre.job}
+                    description={membre.description}
+                    contact={membre.contact}
+                    restaurant={membre.restaurant}
+                  />
+                </div>
+              ))
+            }
+          </div>
         </div>
-      </div>
-    </section>
+      </d>
 
-    <!-- Section Membres Normaux -->
-    <section class="max-w-6xl mx-auto">
-      <div class="container mx-auto px-4">
-        <h3
-          class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12"
-        >
-          Nos Membres
-        </h3>
+      <!-- Section Membres Normaux -->
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12"
+          >
+            Nos Membres
+          </h3>
 
-        <div
-          class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
-        >
-          {
-            membresNormaux.map((membre) => (
-              <div class="w-full sm:w-auto">
-                <MembersCard
-                  photo={membre.photo}
-                  color={membre.color}
-                  nom={membre.nom}
-                  job={membre.job}
-                  description={membre.description}
-                  contact={membre.contact}
-                  restaurant={membre.restaurant}
-                />
-              </div>
-            ))
-          }
+          <div
+            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+          >
+            {
+              membresNormaux.map((membre) => (
+                <div class="w-full sm:w-auto">
+                  <MembersCard
+                    photo={membre.photo}
+                    color={membre.color}
+                    nom={membre.nom}
+                    job={membre.job}
+                    description={membre.description}
+                    contact={membre.contact}
+                    restaurant={membre.restaurant}
+                  />
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>

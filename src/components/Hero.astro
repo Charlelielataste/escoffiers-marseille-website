@@ -10,6 +10,7 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
 
 <section
   class="relative h-screen flex items-center justify-center overflow-hidden"
+  style="overscroll-behavior-y: none;"
 >
   <!-- Image de fond -->
   <div class="absolute inset-0 z-0 overflow-hidden">
@@ -23,7 +24,8 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       widths={[640, 1024, 1440, 1920]}
       sizes="100vw"
       format="webp"
-      class="absolute inset-0 w-full h-full object-cover"
+      class="fixed inset-0 w-full h-full object-cover transition-transform duration-75 ease-out"
+      id="hero-image"
       priority
     />
   </div>
@@ -40,3 +42,66 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
     </div>
   </div>
 </section>
+
+<script>
+  function initScrollZoom() {
+    const heroImage = document.getElementById("hero-image");
+
+    if (!heroImage) return;
+
+    function handleScroll() {
+      if (!heroImage) return;
+
+      const scrollTop = Math.max(
+        0,
+        window.pageYOffset || document.documentElement.scrollTop
+      );
+      const windowHeight = window.innerHeight;
+
+      // Calculer le facteur de zoom basé sur la position de scroll
+      // Plus on scroll vers le bas, plus le zoom augmente
+      const scrollProgress = Math.min(scrollTop / windowHeight, 1);
+      const zoomFactor = 1 + scrollProgress * 0.1; // Zoom de 1 à 1.1
+
+      // Appliquer la transformation
+      heroImage.style.transform = `scale(${zoomFactor})`;
+    }
+
+    // Écouter le scroll avec throttling pour les performances
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Cleanup function pour les navigations SPA
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }
+
+  // Initialiser au chargement de la page
+  document.addEventListener("DOMContentLoaded", initScrollZoom);
+
+  // Réinitialiser pour les navigations SPA (Astro transitions)
+  document.addEventListener("astro:page-load", initScrollZoom);
+</script>
+
+<style>
+  /* Empêcher l'effet bounce sur toute la page */
+  :global(html) {
+    overscroll-behavior-y: none;
+  }
+
+  :global(body) {
+    overscroll-behavior-y: none;
+  }
+</style>

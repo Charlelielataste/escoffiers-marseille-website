@@ -42,6 +42,17 @@ label:hover {
   cursor: url('/icons/fork-icon.svg'), auto;
 }
 
+/* Curseur not-allowed pour les éléments désactivés */
+button:disabled,
+button[disabled],
+a[aria-disabled="true"],
+a.disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: url('/icons/not-allowed.svg'), not-allowed !important;
+}
+
 /* Styles pour désactiver le curseur personnalisé */
 body.custom-cursor-disabled {
   cursor: auto !important;
@@ -51,4 +62,14 @@ body.custom-cursor-disabled a:hover,
 body.custom-cursor-disabled button:hover,
 body.custom-cursor-disabled label:hover {
   cursor: pointer !important;
+}
+
+body.custom-cursor-disabled button:disabled,
+body.custom-cursor-disabled button[disabled],
+body.custom-cursor-disabled a[aria-disabled="true"],
+body.custom-cursor-disabled a.disabled,
+body.custom-cursor-disabled input:disabled,
+body.custom-cursor-disabled textarea:disabled,
+body.custom-cursor-disabled select:disabled {
+  cursor: not-allowed !important;
 }
