@@ -1,7 +1,7 @@
 ---
 title: Atelier Bouillabaisse Authentique avec Chef Provençal
 image: /uploads/about.avif
-date: 2024-02-24T14:00:00.000Z
+date: 2027-11-03T15:00:00.000+01:00
 intro: Apprenez les secrets de la vraie bouillabaisse marseillaise lors de cet
   atelier exclusif animé par un chef provençal reconnu.
 location: Restaurant Le Miramar, Vieux-Port de Marseille
