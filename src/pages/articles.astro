@@ -70,25 +70,3 @@ const firstArticle = featuredArticle();
     </div>
   </div>
 </Layout>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Fonction pour sauvegarder la position de scroll
-    function saveScrollPosition() {
-      const scrollPosition =
-        window.pageYOffset || document.documentElement.scrollTop;
-      sessionStorage.setItem(
-        "articlesScrollPosition",
-        scrollPosition.toString()
-      );
-    }
-
-    // Ajouter le listener sur l'article en vedette
-    const featuredArticleLink = document.querySelector(
-      'a[href^="/articles/"]:not(.article-card a)'
-    );
-    if (featuredArticleLink) {
-      featuredArticleLink.addEventListener("click", saveScrollPosition);
-    }
-  });
-</script>

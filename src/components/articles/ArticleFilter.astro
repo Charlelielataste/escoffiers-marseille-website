@@ -100,54 +100,6 @@ const { articles } = Astro.props as Props;
       tags: card.getAttribute("data-tags")?.split(",") || [],
     }));
 
-    // Gestion de la sauvegarde de la position de scroll
-    function saveScrollPosition() {
-      const scrollPosition =
-        window.pageYOffset || document.documentElement.scrollTop;
-      sessionStorage.setItem(
-        "articlesScrollPosition",
-        scrollPosition.toString()
-      );
-      sessionStorage.setItem("articlesCurrentFilter", currentFilter);
-    }
-
-    // Restaurer la position de scroll si elle existe
-    function restoreScrollPosition() {
-      const savedPosition = sessionStorage.getItem("articlesScrollPosition");
-      const savedFilter = sessionStorage.getItem("articlesCurrentFilter");
-
-      if (savedPosition) {
-        // Restaurer le filtre d'abord
-        if (savedFilter && savedFilter !== currentFilter) {
-          const targetBtn = document.querySelector(
-            `[data-filter="${savedFilter}"]`
-          ) as HTMLButtonElement;
-          if (targetBtn) {
-            targetBtn.click();
-          }
-        }
-
-        // Restaurer la position de scroll après un délai pour laisser le DOM se mettre à jour
-        setTimeout(() => {
-          window.scrollTo({
-            top: parseInt(savedPosition),
-            behavior: "smooth",
-          });
-          // Nettoyer le stockage après restauration
-          sessionStorage.removeItem("articlesScrollPosition");
-          sessionStorage.removeItem("articlesCurrentFilter");
-        }, 100);
-      }
-    }
-
-    // Ajouter des listeners sur tous les liens d'articles
-    function addArticleLinkListeners() {
-      const articleLinks = document.querySelectorAll('a[href^="/articles/"]');
-      articleLinks.forEach((link) => {
-        link.addEventListener("click", saveScrollPosition);
-      });
-    }
-
     // Initialiser l'état des boutons et filtrer selon le filtre sauvegardé
     function initializeFiltersFromStorage() {
       // Reset tous les boutons
@@ -162,14 +114,8 @@ const { articles } = Astro.props as Props;
       filterArticles(currentFilter);
     }
 
-    // Initialiser les listeners
-    addArticleLinkListeners();
-
     // Initialiser les filtres depuis localStorage
     initializeFiltersFromStorage();
-
-    // Restaurer la position au chargement de la page
-    restoreScrollPosition();
 
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", function (this: HTMLButtonElement) {
@@ -195,9 +141,6 @@ const { articles } = Astro.props as Props;
 
         // Filtrer avec show/hide au lieu de remove/append
         filterArticles(selectedTag);
-
-        // Réajouter les listeners après filtrage
-        setTimeout(addArticleLinkListeners, 100);
       });
     });
 
