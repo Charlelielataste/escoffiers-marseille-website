@@ -2,22 +2,22 @@
 export interface Props {
   photo: string;
   color: string;
-  nom: string;
-  job: string;
+  name: string;
+  role: string;
   description: string;
-  contact: string;
-  restaurant: string;
+  email?: string;
+  workplace?: string;
   size?: string;
 }
 
 const {
   photo,
   color,
-  nom,
-  job,
+  name,
+  role,
   description,
-  contact,
-  restaurant,
+  email,
+  workplace,
   size = "112px",
 } = Astro.props;
 ---
@@ -31,7 +31,7 @@ const {
     >
       <img
         src={photo}
-        alt={nom}
+        alt={name}
         class="object-cover"
         style="width: 100%; height: 100%; object-fit: cover;"
       />
@@ -39,15 +39,40 @@ const {
   </div>
 
   <!-- Informations du membre -->
-  <h4 class="text-lg font-bold text-gray-900 mb-1">{nom}</h4>
+  <h4 class="text-lg font-bold text-gray-900 mb-1">
+    {name}
+  </h4>
   <p class="text-sm font-medium mb-2" style={`color: ${color};`}>
-    {job}
+    {role}
   </p>
   <p class="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold">
     {description}
   </p>
-  <p class="text-sm text-gray-500 mb-1">
-    📍 {restaurant}
-  </p>
-  <a href={`mailto:${contact}`} class="text-sm text-primary"> ✉️ Contact </a>
+  {
+    workplace && (
+      <a
+        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(workplace)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        📍{" "}
+        <span class="text-sm hover:text-secondary/80 underline">
+          {workplace}
+        </span>
+      </a>
+    )
+  }
+  {
+    email && (
+      <a
+        href={`mailto:${email}`}
+        class="text-sm text-primary mt-2 flex items-center gap-x-2"
+      >
+        ✉️{" "}
+        <span class="hover:text-secondary/80 hover:underline">
+          Contactez-moi
+        </span>
+      </a>
+    )
+  }
 </div>

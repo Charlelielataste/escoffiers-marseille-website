@@ -14,17 +14,27 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
 >
   <!-- Image de fond -->
   <div class="absolute inset-0 z-0 overflow-hidden">
+    <!-- Placeholder avec dégradé pendant le chargement -->
     <div
-      class="absolute rounded-full w-[85%] sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/50 z-10 blur-3xl"
+      id="hero-placeholder"
+      class="absolute inset-0 bg-container transition-opacity duration-1000 ease-out animate-pulse"
     >
     </div>
+
+    <!-- Overlay dégradé -->
+    <div
+      class="absolute rounded-full w-full sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/70 z-10 blur-3xl"
+    >
+    </div>
+
+    <!-- Image principale -->
     <Image
       src={picture}
       alt={pictureAlt}
       widths={[640, 1024, 1440, 1920]}
       sizes="100vw"
       format="webp"
-      class="fixed inset-0 w-full h-full object-cover transition-transform duration-75 ease-out"
+      class="fixed inset-0 w-full h-full object-cover transition-all duration-1000 ease-out opacity-0 scale-105"
       id="hero-image"
       priority
     />
@@ -34,9 +44,12 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
   <slot />
 
   <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+  <div
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-700 ease-out opacity-0 translate-y-12"
+    id="scroll-indicator"
+  >
     <div
-      class="w-6 h-10 border-2 border-white rounded-full flex justify-center"
+      class="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-black/20"
     >
       <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
     </div>
@@ -44,11 +57,52 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
 </section>
 
 <script>
-  function initScrollZoom() {
-    const heroImage = document.getElementById("hero-image");
+  function initHeroEffects() {
+    const heroImage = document.getElementById(
+      "hero-image"
+    ) as HTMLImageElement | null;
+    const placeholder = document.getElementById(
+      "hero-placeholder"
+    ) as HTMLElement | null;
+    const scrollIndicator = document.getElementById(
+      "scroll-indicator"
+    ) as HTMLElement | null;
 
-    if (!heroImage) return;
+    if (!heroImage || !placeholder) return;
 
+    // Fonction pour gérer le chargement de l'image
+    function handleImageLoad() {
+      if (!heroImage || !placeholder) return;
+
+      // Faire apparaître l'image avec un fondu et réduire le scale
+      heroImage.style.opacity = "1";
+      heroImage.style.transform = "scale(1)";
+
+      // Faire disparaître le placeholder avec un délai
+      setTimeout(() => {
+        if (placeholder) {
+          placeholder.style.opacity = "0";
+        }
+      }, 400);
+
+      // Faire apparaître l'indicateur de scroll avec animation de bas en haut
+      if (scrollIndicator) {
+        setTimeout(() => {
+          scrollIndicator.classList.remove("opacity-0", "translate-y-12");
+          scrollIndicator.classList.add("opacity-100", "translate-y-0");
+        }, 800);
+      }
+    }
+
+    // Vérifier si l'image est déjà chargée
+    if (heroImage.complete && heroImage.naturalHeight !== 0) {
+      handleImageLoad();
+    } else {
+      // Écouter les événements de chargement
+      heroImage.addEventListener("load", handleImageLoad);
+    }
+
+    // Fonction de scroll avec zoom parallax
     function handleScroll() {
       if (!heroImage) return;
 
@@ -59,15 +113,22 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       const windowHeight = window.innerHeight;
 
       // Calculer le facteur de zoom basé sur la position de scroll
-      // Plus on scroll vers le bas, plus le zoom augmente
       const scrollProgress = Math.min(scrollTop / windowHeight, 1);
-      const zoomFactor = 1 + scrollProgress * 0.1; // Zoom de 1 à 1.1
+      const zoomFactor = 1 + scrollProgress * 0.15; // Zoom plus prononcé
 
-      // Appliquer la transformation
-      heroImage.style.transform = `scale(${zoomFactor})`;
+      // Appliquer la transformation seulement si l'image est visible
+      if (heroImage.style.opacity === "1") {
+        heroImage.style.transform = `scale(${zoomFactor})`;
+      }
+
+      // Effet parallax sur l'indicateur de scroll
+      if (scrollIndicator && scrollProgress < 0.3) {
+        const indicatorOpacity = Math.max(0, 1 - scrollProgress * 3);
+        scrollIndicator.style.opacity = indicatorOpacity.toString();
+      }
     }
 
-    // Écouter le scroll avec throttling pour les performances
+    // Throttling optimisé pour les performances
     let ticking = false;
 
     function onScroll() {
@@ -80,28 +141,47 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       }
     }
 
+    // Event listeners
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Cleanup function pour les navigations SPA
+    // Cleanup function
     return () => {
       window.removeEventListener("scroll", onScroll);
+      if (heroImage) {
+        heroImage.removeEventListener("load", handleImageLoad);
+      }
     };
   }
 
-  // Initialiser au chargement de la page
-  document.addEventListener("DOMContentLoaded", initScrollZoom);
-
-  // Réinitialiser pour les navigations SPA (Astro transitions)
-  document.addEventListener("astro:page-load", initScrollZoom);
+  // Initialisation
+  document.addEventListener("DOMContentLoaded", initHeroEffects);
+  document.addEventListener("astro:page-load", initHeroEffects);
 </script>
 
 <style>
-  /* Empêcher l'effet bounce sur toute la page */
+  /* Styles globaux pour empêcher le bounce */
   :global(html) {
     overscroll-behavior-y: none;
   }
 
   :global(body) {
     overscroll-behavior-y: none;
+  }
+
+  /* Animation personnalisée pour le placeholder (complément à Tailwind) */
+  #hero-placeholder {
+    animation: gentle-shimmer 4s ease-in-out infinite;
+  }
+
+  @keyframes gentle-shimmer {
+    0%,
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      transform: scale(1.02);
+      filter: brightness(1.1);
+    }
   }
 </style>

@@ -90,20 +90,29 @@ const getMobileLinkClasses = (isActive: boolean) => {
 
       <!-- Bouton Menu Mobile -->
       <div class="md:hidden">
-        <button
-          id="mobile-menu-toggle"
-          class="text-gray-700 hover:text-gray-900 p-2 rounded-md"
-          aria-label="Menu"
-        >
-          <div id="menu-icon">
+        <button id="mobile-menu-toggle" class="p-2 relative" aria-label="Menu">
+          <div
+            id="hamburger-icon"
+            class="text-primary transition-all duration-300 ease-in-out"
+          >
             <BarMobileIcon size="24" class="text-primary" />
+          </div>
+          <div
+            id="close-icon"
+            class="text-primary transition-all duration-300 ease-in-out opacity-0 absolute top-2 left-2"
+          >
+            <CloseIcon size="24" class="text-primary" />
           </div>
         </button>
       </div>
     </div>
 
     <!-- Menu Mobile -->
-    <div id="mobile-menu" class="md:hidden hidden">
+    <div
+      id="mobile-menu"
+      class="md:hidden overflow-hidden transition-all duration-300 ease-in-out max-h-0"
+      style="transition-property: max-height, opacity; max-height: 0;"
+    >
       <div
         class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/40"
       >
@@ -149,45 +158,62 @@ const getMobileLinkClasses = (isActive: boolean) => {
 </nav>
 
 <script>
-  // Gestion simple du menu mobile
+  // Gestion smooth du menu mobile avec transitions
   document.addEventListener("DOMContentLoaded", () => {
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
-    const menuIcon = document.getElementById("menu-icon");
+    const hamburgerIcon = document.getElementById("hamburger-icon");
+    const closeIcon = document.getElementById("close-icon");
 
-    if (mobileMenuToggle && mobileMenu && menuIcon) {
+    if (mobileMenuToggle && mobileMenu && hamburgerIcon && closeIcon) {
       let isMenuOpen = false;
 
       mobileMenuToggle.addEventListener("click", () => {
         isMenuOpen = !isMenuOpen;
 
         if (isMenuOpen) {
-          // Ouvrir le menu
-          mobileMenu.classList.remove("hidden");
-          // Changer l'icône en X
-          menuIcon.innerHTML = `
-            <CloseIcon />
-          `;
+          // Ouvrir le menu avec animation fluide
+          mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+          mobileMenu.style.opacity = "1";
+
+          // Transition fluide des icônes
+          hamburgerIcon.style.opacity = "0";
+          hamburgerIcon.style.transform = "rotate(180deg) scale(0.8)";
+
+          closeIcon.style.opacity = "1";
+          closeIcon.style.transform = "rotate(0deg) scale(1)";
         } else {
-          // Fermer le menu
-          mobileMenu.classList.add("hidden");
-          // Remettre l'icône hamburger
-          menuIcon.innerHTML = `
-            <BarMobileIcon />
-          `;
+          // Fermer le menu avec animation fluide
+          mobileMenu.style.maxHeight = "0px";
+          mobileMenu.style.opacity = "0";
+
+          // Transition fluide des icônes
+          hamburgerIcon.style.opacity = "1";
+          hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
+
+          closeIcon.style.opacity = "0";
+          closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
         }
       });
 
-      // Fermer le menu en cliquant sur un lien
+      // Fermer le menu en cliquant sur un lien avec animation
       const mobileLinks = mobileMenu.querySelectorAll("a");
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          isMenuOpen = false;
-          mobileMenu.classList.add("hidden");
-          // Remettre l'icône hamburger
-          menuIcon.innerHTML = `
-            <BarMobileIcon />
-          `;
+          if (isMenuOpen) {
+            isMenuOpen = false;
+
+            // Fermer avec animation
+            mobileMenu.style.maxHeight = "0px";
+            mobileMenu.style.opacity = "0";
+
+            // Remettre l'icône hamburger
+            hamburgerIcon.style.opacity = "1";
+            hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
+
+            closeIcon.style.opacity = "0";
+            closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
+          }
         });
       });
     }

@@ -4,116 +4,114 @@ backend:
   name: test-repo
   branch: main
 
+# local_backend: true
+
 media_folder: "public/uploads" # Où les images sont stockées
 public_folder: "/uploads" # URL publique des images
 
 collections:
-  - name: "tags"
-    label: "Catégories Articles"
-    folder: "src/content/tags"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Nom", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Couleur", name: "color", widget: "color", required: false }
-
-  - name: "articles"
-    label: "Articles"
+  - label: "Articles"
+    name: "articles"
+    editor:
+      preview: false
     folder: "src/content/articles"
     create: true
-    slug: "{{slug}}"
     fields:
-      - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Extrait", name: "excerpt", widget: "text" }
-      - { label: "Contenu", name: "body", widget: "markdown" }
-      - { label: "Date", name: "date", widget: "datetime" }
       - {
-          label: "Catégorie",
-          name: "category",
+          label: "Tags",
+          name: "tags",
           widget: "relation",
           collection: "tags",
-          value_field: "slug",
-          search_fields: ["name"],
-          display_fields: ["name"],
+          search_fields: ["title"],
+          display_fields: ["title"],
+          value_field: "{{slug}}",
+          multiple: true,
+          hint: "Sélectionnez les tags associés à l'article (minimum 1, maximum 3)",
+        }
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Introduction", name: "intro", widget: "string" }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+  - label: "Tags"
+    name: "tags"
+    editor:
+      preview: false
+    folder: "src/content/tags"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+
+  - label: "Événements"
+    name: "events"
+    editor:
+      preview: false
+    folder: "src/content/events"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Introduction", name: "intro", widget: "string" }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+      - { label: "Lieu", name: "location", widget: "string" }
+      - { label: "Lien", name: "link", widget: "string", required: false }
+
+  - label: "Disciples"
+    name: "members"
+    editor:
+      preview: false
+    folder: "src/content/members"
+    create: true
+    identifier_field: "name"
+    slug: "{{slug}}-{{minute}}-{{second}}"
+    fields:
+      - { label: "Nom et Prénom", name: "name", widget: "string" }
+      - {
+          label: "Couleur de l'écharpe",
+          name: "color",
+          widget: "select",
+          options:
+            [
+              { label: "Ami des Escoffiers", value: "#1e40af" },
+              { label: "Fournisseurs", value: "#15803d" },
+              { label: "Hôtelier", value: "#8b5cf6" },
+              { label: "Cuisinier", value: "#b91c1c" },
+            ],
         }
       - { label: "Image", name: "image", widget: "image" }
+      - { label: "Rôle", name: "role", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - {
+          label: "Restaurant ou Lieu de travail",
+          name: "workplace",
+          widget: "string",
+          required: false,
+        }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - {
+          label: "A l'honneur",
+          name: "is_honored",
+          widget: "boolean",
+          required: false,
+        }
 
-  - name: "article-a-la-une"
-    label: "Article à la une"
-    delete: false
+  - label: "Configuration"
+    name: "settings"
     editor:
       preview: false
     files:
       - label: "Article à la une"
         name: "featured"
-        file: "src/content/articles/featured.md"
+        file: "src/content/settings/featured.md"
         fields:
-          - label: "Article sélectionné"
-            name: "slug"
-            widget: "relation"
-            collection: "articles"
-            value_field: "slug"
-            search_fields: ["title", "slug"]
-            display_fields: ["title"]
-
-  - name: "evenements"
-    label: "Événements"
-    folder: "src/content/evenements"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Extrait", name: "excerpt", widget: "text" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Heure", name: "time", widget: "string", required: false }
-      - { label: "Image", name: "image", widget: "image" }
-      - {
-          label: "Lien externe",
-          name: "externalLink",
-          widget: "string",
-          required: false,
-        }
-
-  - name: "members"
-    label: "Membres"
-    folder: "src/content/members"
-    create: true
-    slug: "{{prenom}}-{{nom}}"
-    fields:
-      - { label: "Prénom", name: "prenom", widget: "string" }
-      - { label: "Nom", name: "nom", widget: "string" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Poste", name: "poste", widget: "string" }
-      - {
-          label: "Établissement",
-          name: "etablissement",
-          widget: "string",
-          required: false,
-        }
-      - {
-          label: "Lien position Google Maps",
-          name: "googleMapLink",
-          widget: "string",
-          required: false,
-          hint: "URL complète vers la position Google Maps de l'établissement (laisser vide si aucun établissement)",
-        }
-      - {
-          label: "Contact",
-          name: "contact",
-          widget: "string",
-          required: false,
-          pattern:
-            [
-              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-              "Veuillez entrer une adresse email valide",
-            ],
-        }
-      - {
-          label: "Membre d'honneur",
-          name: "is_honor",
-          widget: "boolean",
-          default: false,
-        }
+          - {
+              label: "Article à la une",
+              name: "slug",
+              widget: "relation",
+              collection: "articles",
+              search_fields: ["title"],
+              display_fields: ["title"],
+              value_field: "{{slug}}",
+            }

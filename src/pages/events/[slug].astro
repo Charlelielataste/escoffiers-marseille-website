@@ -1,0 +1,118 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const events = await getCollection("events");
+  return events.map((event) => ({
+    params: { slug: event.id },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+
+function formatDateTime(dateString: Date) {
+  const date = new Date(dateString);
+  const dateFormatted = date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const timeFormatted = `${hours}h${minutes}`;
+  return `${dateFormatted} à ${timeFormatted}`;
+}
+---
+
+<Layout title={event.data.title}>
+  <article class="max-w-6xl mx-auto px-6 py-20">
+    <!-- Image en haut -->
+    <div class="mb-8">
+      <img
+        src={event.data.image}
+        alt={event.data.title}
+        class="w-full h-96 object-cover rounded-2xl shadow-lg"
+      />
+    </div>
+
+    <!-- Bouton retour -->
+    <div class="mb-6">
+      <button
+        onclick="window.history.back()"
+        class="inline-flex items-center text-sm gap-2 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
+      >
+        ← Retour aux événements
+      </button>
+    </div>
+
+    <!-- Date -->
+    <div class="mb-6">
+      <time
+        datetime={event.data.date.toISOString()}
+        class="text-black text-lg font-bold"
+      >
+        Le {formatDateTime(event.data.date)}
+      </time>
+    </div>
+
+    <!-- Titre -->
+    <h1 class="text-4xl md:text-5xl font-bold text-tertiary mb-8 leading-tight">
+      {event.data.title}
+    </h1>
+
+    <!-- Localisation -->
+    <div class="mb-8">
+      <span class="text-gray-700">Lieu : </span>
+      <a
+        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.data.location)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-secondary font-semibold hover:text-secondary/80 transition-colors duration-200 underline decoration-2 underline-offset-2"
+      >
+        {event.data.location}
+      </a>
+    </div>
+
+    <!-- Introduction -->
+    <div class="mb-12">
+      <div
+        class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+      >
+        {event.data.intro}
+      </div>
+    </div>
+
+    <!-- Lien ou statut terminé -->
+    {
+      new Date(event.data.date) < new Date() ? (
+        <div class="mb-8 flex justify-center">
+          <div class="w-[50%] text-center bg-red-800 text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center">
+            Événement terminé
+          </div>
+        </div>
+      ) : (
+        event.data.link && (
+          <div class="mb-8 flex justify-center">
+            <a
+              href={event.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-[50%] text-center bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
+            >
+              Participer à l'événement
+            </a>
+          </div>
+        )
+      )
+    }
+
+    <!-- Contenu principal -->
+    <div
+      class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-tertiary prose-h1:font-bold prose-h2:text-tertiary prose-black max-w-none bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+    >
+      <div set:html={event.rendered?.html} />
+    </div>
+  </article>
+</Layout>
