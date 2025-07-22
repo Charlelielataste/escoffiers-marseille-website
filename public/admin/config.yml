@@ -1,10 +1,10 @@
 locale: fr
 
 backend:
-  name: git-gateway
+  name: test-repo
   branch: main
 
-local_backend: true
+# local_backend: true
 
 media_folder: "public/uploads" # Où les images sont stockées
 public_folder: "/uploads" # URL publique des images
