@@ -14,10 +14,9 @@ function formatDateTime(dateString: Date) {
     month: "long",
     day: "numeric",
   });
-  const timeFormatted = date.toLocaleTimeString("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const timeFormatted = `${hours}h${minutes}`;
   return `${dateFormatted} à ${timeFormatted}`;
 }
 

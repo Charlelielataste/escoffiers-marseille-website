@@ -19,10 +19,9 @@ function formatDateTime(dateString: Date) {
     month: "long",
     day: "numeric",
   });
-  const timeFormatted = date.toLocaleTimeString("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const timeFormatted = `${hours}h${minutes}`;
   return `${dateFormatted} à ${timeFormatted}`;
 }
 ---
@@ -42,7 +41,7 @@ function formatDateTime(dateString: Date) {
     <div class="mb-6">
       <button
         onclick="window.history.back()"
-        class="inline-flex items-center text-sm gap-2 bg-primary text-white px-5 py-2 rounded-full font-semibold hover:bg-primary/90 transition-colors duration-200 shadow-md"
+        class="inline-flex items-center text-sm gap-2 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
       >
         ← Retour aux événements
       </button>
@@ -83,6 +82,18 @@ function formatDateTime(dateString: Date) {
       >
         {event.data.intro}
       </div>
+    </div>
+
+    <!-- Lien -->
+    <div class="mb-8 flex justify-center">
+      <a
+        href={event.data.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-[50%] text-center bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
+      >
+        Participer à l'événement
+      </a>
     </div>
 
     <!-- Contenu principal -->
