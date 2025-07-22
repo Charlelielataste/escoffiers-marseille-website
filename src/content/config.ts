@@ -22,6 +22,21 @@ const articlesCollection = defineCollection({
   }),
 });
 
+const eventsCollection = defineCollection({
+  loader: glob({
+    pattern: ["*.md"],
+    base: "src/content/events",
+  }),
+  schema: z.object({
+    title: z.string(),
+    image: z.string(),
+    date: z.date(),
+    intro: z.string(),
+    location: z.string(),
+    link: z.string(),
+  }),
+});
+
 const settingsCollection = defineCollection({
   loader: glob({
     pattern: ["*.md"],
@@ -36,5 +51,6 @@ const settingsCollection = defineCollection({
 export const collections = {
   articles: articlesCollection,
   tags: tagsCollection,
+  events: eventsCollection,
   settings: settingsCollection,
 };
