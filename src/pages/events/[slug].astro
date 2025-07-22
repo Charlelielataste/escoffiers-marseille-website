@@ -84,17 +84,29 @@ function formatDateTime(dateString: Date) {
       </div>
     </div>
 
-    <!-- Lien -->
-    <div class="mb-8 flex justify-center">
-      <a
-        href={event.data.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="w-[50%] text-center bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
-      >
-        Participer à l'événement
-      </a>
-    </div>
+    <!-- Lien ou statut terminé -->
+    {
+      new Date(event.data.date) < new Date() ? (
+        <div class="mb-8 flex justify-center">
+          <div class="w-[50%] text-center bg-red-800 text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center">
+            Événement terminé
+          </div>
+        </div>
+      ) : (
+        event.data.link && (
+          <div class="mb-8 flex justify-center">
+            <a
+              href={event.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-[50%] text-center bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
+            >
+              Participer à l'événement
+            </a>
+          </div>
+        )
+      )
+    }
 
     <!-- Contenu principal -->
     <div
