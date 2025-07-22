@@ -18,8 +18,6 @@ const findTag = (tags: string[]) => {
   return tags.map((tag) => allTags.find((t) => t.slug === tag));
 };
 
-console.log(article.rendered?.html);
-
 // Formater la date en français
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("fr-FR", {
