@@ -38,20 +38,18 @@ const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
           </h3>
 
           <div
-            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+            class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
           >
-            <div class="w-full sm:w-auto">
-              <MembersCard
-                photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
-                color={"#b91c1c"}
-                name={"Alain Laporte"}
-                role={"Président"}
-                description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
-                email={"alain.laporte@disciples-marseille.fr"}
-                workplace={"Form'actions Consulting"}
-                size="150px"
-              />
-            </div>
+            <MembersCard
+              photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+              color={"#b91c1c"}
+              name={"Alain Laporte"}
+              role={"Président"}
+              description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
+              email={"alain.laporte@disciples-marseille.fr"}
+              workplace={"Form'actions Consulting"}
+              size="150px"
+            />
           </div>
         </div>
       </div>
@@ -64,13 +62,12 @@ const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
           >
             Nos Membres à l'Honneur
           </h3>
-
-          <div
-            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
-          >
-            {
-              membresHonneur.map((membre) => (
-                <div class="w-full sm:w-auto">
+          <div class="flex justify-center">
+            <div
+              class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16"
+            >
+              {
+                membresHonneur.map((membre) => (
                   <MembersCard
                     photo={membre.data.image}
                     color={membre.data.color}
@@ -80,9 +77,9 @@ const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
                     email={membre.data.email}
                     workplace={membre.data.workplace}
                   />
-                </div>
-              ))
-            }
+                ))
+              }
+            </div>
           </div>
         </div>
       </d>
@@ -96,12 +93,12 @@ const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
             Nos Membres
           </h3>
 
-          <div
-            class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
-          >
-            {
-              membresNormaux.map((membre) => (
-                <div class="w-full sm:w-auto">
+          <div class="flex justify-center">
+            <div
+              class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16"
+            >
+              {
+                membresNormaux.map((membre) => (
                   <MembersCard
                     photo={membre.data.image}
                     color={membre.data.color}
@@ -111,9 +108,9 @@ const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
                     email={membre.data.email}
                     workplace={membre.data.workplace}
                   />
-                </div>
-              ))
-            }
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
