@@ -1,0 +1,222 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import ArticleCard from "./ArticleCard.astro";
+
+const tags = await getCollection("tags");
+
+function formatDate(dateString: Date) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export interface Props {
+  articles: CollectionEntry<"articles">[];
+}
+
+const { articles } = Astro.props as Props;
+---
+
+<div class="max-w-6xl mx-auto px-4">
+  <!-- Filtres -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4 text-center">
+      Filtres par catégories
+    </h3>
+
+    <div class="flex flex-wrap gap-3 justify-center">
+      <button
+        data-filter=""
+        class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
+      >
+        Tous les articles
+      </button>
+
+      {
+        tags.map((tag) => (
+          <button
+            data-filter={tag.slug}
+            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
+          >
+            {tag.data.title}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Articles -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="articles-container">
+    {
+      articles.map((article) => (
+        <div class="article-card" data-tags={article.data.tags.join(",")}>
+          <ArticleCard
+            tags={article.data.tags}
+            title={article.data.title}
+            date={formatDate(article.data.date)}
+            image={article.data.image}
+            excerpt={article.data.intro}
+            slug={article.id}
+            is_first={false}
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterBtns = document.querySelectorAll(".filter-btn");
+
+    // Variables pour tracker l'état
+    let currentActiveBtn: HTMLButtonElement | null = null;
+    let currentFilter = "";
+
+    // Restaurer le filtre depuis localStorage
+    const savedFilter = localStorage.getItem("articlesFilter") || "";
+    currentFilter = savedFilter;
+
+    // Trouver et activer le bon bouton au chargement
+    currentActiveBtn = document.querySelector(
+      `[data-filter="${savedFilter}"]`
+    ) as HTMLButtonElement;
+
+    if (!currentActiveBtn) {
+      currentActiveBtn = document.querySelector(
+        ".filter-btn[data-filter='']"
+      ) as HTMLButtonElement;
+      currentFilter = "";
+    }
+
+    // Données des articles (côté client)
+    const articlesData = Array.from(
+      document.querySelectorAll(".article-card")
+    ).map((card) => ({
+      element: card as HTMLElement,
+      tags: card.getAttribute("data-tags")?.split(",") || [],
+    }));
+
+    // Gestion de la sauvegarde de la position de scroll
+    function saveScrollPosition() {
+      const scrollPosition =
+        window.pageYOffset || document.documentElement.scrollTop;
+      sessionStorage.setItem(
+        "articlesScrollPosition",
+        scrollPosition.toString()
+      );
+      sessionStorage.setItem("articlesCurrentFilter", currentFilter);
+    }
+
+    // Restaurer la position de scroll si elle existe
+    function restoreScrollPosition() {
+      const savedPosition = sessionStorage.getItem("articlesScrollPosition");
+      const savedFilter = sessionStorage.getItem("articlesCurrentFilter");
+
+      if (savedPosition) {
+        // Restaurer le filtre d'abord
+        if (savedFilter && savedFilter !== currentFilter) {
+          const targetBtn = document.querySelector(
+            `[data-filter="${savedFilter}"]`
+          ) as HTMLButtonElement;
+          if (targetBtn) {
+            targetBtn.click();
+          }
+        }
+
+        // Restaurer la position de scroll après un délai pour laisser le DOM se mettre à jour
+        setTimeout(() => {
+          window.scrollTo({
+            top: parseInt(savedPosition),
+            behavior: "smooth",
+          });
+          // Nettoyer le stockage après restauration
+          sessionStorage.removeItem("articlesScrollPosition");
+          sessionStorage.removeItem("articlesCurrentFilter");
+        }, 100);
+      }
+    }
+
+    // Ajouter des listeners sur tous les liens d'articles
+    function addArticleLinkListeners() {
+      const articleLinks = document.querySelectorAll('a[href^="/articles/"]');
+      articleLinks.forEach((link) => {
+        link.addEventListener("click", saveScrollPosition);
+      });
+    }
+
+    // Initialiser l'état des boutons et filtrer selon le filtre sauvegardé
+    function initializeFiltersFromStorage() {
+      // Reset tous les boutons
+      filterBtns.forEach((btn) => resetButton(btn as HTMLButtonElement));
+
+      // Activer le bon bouton
+      if (currentActiveBtn) {
+        activateButton(currentActiveBtn);
+      }
+
+      // Appliquer le filtre
+      filterArticles(currentFilter);
+    }
+
+    // Initialiser les listeners
+    addArticleLinkListeners();
+
+    // Initialiser les filtres depuis localStorage
+    initializeFiltersFromStorage();
+
+    // Restaurer la position au chargement de la page
+    restoreScrollPosition();
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", function (this: HTMLButtonElement) {
+        const selectedTag = this.getAttribute("data-filter") || "";
+
+        // Éviter les traitements inutiles si même filtre
+        if (selectedTag === currentFilter) return;
+
+        // Reset uniquement le bouton précédent
+        if (currentActiveBtn) {
+          resetButton(currentActiveBtn);
+        }
+
+        // Activer le nouveau bouton
+        activateButton(this);
+
+        // Mettre à jour les références
+        currentActiveBtn = this;
+        currentFilter = selectedTag;
+
+        // Sauvegarder le filtre dans localStorage
+        localStorage.setItem("articlesFilter", selectedTag);
+
+        // Filtrer avec show/hide au lieu de remove/append
+        filterArticles(selectedTag);
+
+        // Réajouter les listeners après filtrage
+        setTimeout(addArticleLinkListeners, 100);
+      });
+    });
+
+    function resetButton(btn: HTMLButtonElement) {
+      btn.classList.remove("bg-secondary", "text-white");
+      btn.classList.add("bg-white", "text-secondary");
+    }
+
+    function activateButton(btn: HTMLButtonElement) {
+      btn.classList.remove("bg-white", "text-secondary");
+      btn.classList.add("bg-secondary", "text-white");
+    }
+
+    function filterArticles(selectedTag: string) {
+      articlesData.forEach((article) => {
+        const shouldShow =
+          selectedTag === "" || article.tags.includes(selectedTag);
+        article.element.style.display = shouldShow ? "block" : "none";
+      });
+    }
+  });
+</script>
