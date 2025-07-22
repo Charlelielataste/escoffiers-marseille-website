@@ -1,0 +1,3 @@
+---
+slug: masterclass-chef-etoile
+---
