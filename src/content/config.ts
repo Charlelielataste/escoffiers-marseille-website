@@ -33,7 +33,7 @@ const eventsCollection = defineCollection({
     date: z.date(),
     intro: z.string(),
     location: z.string(),
-    link: z.string(),
+    link: z.string().optional(),
   }),
 });
 
@@ -47,10 +47,28 @@ const settingsCollection = defineCollection({
   }),
 });
 
+const membersCollection = defineCollection({
+  loader: glob({
+    pattern: ["*.md"],
+    base: "src/content/members",
+  }),
+  schema: z.object({
+    name: z.string(),
+    image: z.string(),
+    role: z.string(),
+    description: z.string(),
+    workplace: z.string().optional(),
+    email: z.string().optional(),
+    is_honored: z.boolean().optional(),
+    color: z.string(),
+  }),
+});
+
 // Export des collections
 export const collections = {
   articles: articlesCollection,
   tags: tagsCollection,
   events: eventsCollection,
   settings: settingsCollection,
+  members: membersCollection,
 };
