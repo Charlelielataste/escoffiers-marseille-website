@@ -2,62 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import ArticleCard from "../components/articles/ArticleCard.astro";
+import ArticleFilter from "../components/articles/ArticleFilter.astro";
 import FacebookSection from "../components/articles/FacebookSection.astro";
 import MobileFacebookSection from "../components/articles/MobileFacebookSection.astro";
 import ArticlesImage from "../assets/hero/articles.png";
+import { getCollection } from "astro:content";
 
-const articles = [
-  {
-    id: 1,
-    title: "Gala de Charité 2024 : Un Succès Extraordinaire",
-    excerpt:
-      "Notre gala annuel a permis de récolter des fonds exceptionnels pour nos associations partenaires. Cette soirée mémorable, organisée dans les salons prestigieux du Palais du Pharo, a rassemblé plus de 200 convives autour d'un dîner gastronomique préparé par nos chefs membres. Grâce à la générosité de nos invités et partenaires, nous avons collecté plus de 50 000 euros qui seront entièrement redistribués aux associations locales œuvrant pour l'aide alimentaire et l'insertion professionnelle. Un grand merci à tous les participants, bénévoles et chefs qui ont contribué à ce succès remarquable.",
-    date: "2024-01-15",
-    category: "Événement",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    slug: "gala-charite-2024",
-    is_first: true,
-  },
-  {
-    id: 2,
-    title: "Nouveau Partenariat avec l'Association Solidarité Marseille",
-    excerpt:
-      "Nous sommes fiers d'annoncer notre collaboration avec cette association locale dédiée à l'aide alimentaire. Ce partenariat stratégique nous permettra de mettre en place des ateliers culinaires hebdomadaires destinés aux familles en situation de précarité. Nos chefs bénévoles partageront leurs savoir-faire pour apprendre à cuisiner des repas équilibrés avec un budget restreint. L'objectif est d'accompagner 150 familles marseillaises en leur donnant les clés d'une alimentation saine et économique. Les premiers ateliers débuteront dès le mois de février dans les locaux de l'association, situés dans le 3ème arrondissement.",
-    date: "2024-01-10",
-    category: "Partenariat",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    slug: "partenariat-solidarite-marseille",
-    is_first: false,
-  },
-  {
-    id: 3,
-    title: "Formation Culinaire pour les Jeunes en Difficulté",
-    excerpt:
-      "Lancement de notre programme de formation gratuite pour accompagner l'insertion professionnelle. Cette initiative ambitieuse s'adresse aux jeunes de 16 à 25 ans en situation de décrochage scolaire ou de recherche d'emploi. Sur une durée de 6 mois, ils bénéficieront d'une formation complète aux métiers de la restauration : techniques culinaires de base, hygiène alimentaire, service en salle et gestion. Nos chefs professionnels, membres actifs de la Chaîne des Rôtisseurs, assureront l'encadrement pédagogique. À l'issue de la formation, nous garantissons un accompagnement vers l'emploi avec notre réseau de restaurateurs partenaires. Les candidatures sont ouvertes jusqu'au 15 février.",
-    date: "2024-01-05",
-    category: "Formation",
-    image:
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    slug: "formation-culinaire-jeunes",
-    is_first: false,
-  },
-  {
-    id: 4,
-    title: "Les Traditions Culinaires Provençales à l'Honneur",
-    excerpt:
-      "Retour sur notre événement dédié à la valorisation du patrimoine culinaire de notre région. Cette journée exceptionnelle, organisée au Marché des Capucins, a mis en lumière les savoir-faire ancestraux de la cuisine provençale. Nos chefs ont proposé des démonstrations culinaires autour de recettes traditionnelles : bouillabaisse authentique, tapenade d'olives de Kalamata, pissaladière niçoise et navettes marseillaises. Plus de 500 visiteurs ont pu déguster ces spécialités tout en découvrant l'histoire de notre gastronomie locale. Cet événement s'inscrit dans notre mission de transmission du patrimoine culinaire méditerranéen aux nouvelles générations et de promotion des producteurs locaux.",
-    date: "2023-12-20",
-    category: "Culture",
-    image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    slug: "traditions-culinaires-provencales",
-    is_first: false,
-  },
-];
-
-function formatDate(dateString: string) {
+function formatDate(dateString: Date) {
   const date = new Date(dateString);
   return date.toLocaleDateString("fr-FR", {
     year: "numeric",
@@ -65,6 +16,22 @@ function formatDate(dateString: string) {
     day: "numeric",
   });
 }
+
+const articles = await getCollection("articles");
+const settings = await getCollection("settings");
+
+const featuredArticle = () => {
+  const featuredArticle = articles.find(
+    (article) => article.id === settings[0].data.slug
+  );
+  if (featuredArticle) {
+    return featuredArticle;
+  } else {
+    return articles[0];
+  }
+};
+
+const firstArticle = featuredArticle();
 ---
 
 <Layout>
@@ -84,38 +51,44 @@ function formatDate(dateString: string) {
       <div class="flex flex-col lg:flex-row gap-5 pb-10 max-w-6xl mx-auto">
         <MobileFacebookSection />
         {
-          articles.map(
-            (article) =>
-              article.is_first && (
-                <ArticleCard
-                  title={article.title}
-                  date={formatDate(article.date)}
-                  image={article.image}
-                  excerpt={article.excerpt}
-                  slug={article.slug}
-                  is_first={true}
-                />
-              )
+          firstArticle && (
+            <ArticleCard
+              title={firstArticle.data.title}
+              date={formatDate(firstArticle.data.date)}
+              image={firstArticle.data.image}
+              excerpt={firstArticle.data.intro}
+              slug={firstArticle.id}
+              tags={firstArticle.data.tags}
+              is_first={true}
+            />
           )
         }
         <FacebookSection />
       </div>
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10 max-w-6xl mx-auto"
-      >
-        {
-          articles.map((article) => (
-            <ArticleCard
-              title={article.title}
-              date={formatDate(article.date)}
-              image={article.image}
-              excerpt={article.excerpt}
-              slug={article.slug}
-              is_first={false}
-            />
-          ))
-        }
-      </div>
+      <!-- Filtres et Articles -->
+      <ArticleFilter articles={articles} />
     </div>
   </div>
 </Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Fonction pour sauvegarder la position de scroll
+    function saveScrollPosition() {
+      const scrollPosition =
+        window.pageYOffset || document.documentElement.scrollTop;
+      sessionStorage.setItem(
+        "articlesScrollPosition",
+        scrollPosition.toString()
+      );
+    }
+
+    // Ajouter le listener sur l'article en vedette
+    const featuredArticleLink = document.querySelector(
+      'a[href^="/articles/"]:not(.article-card a)'
+    );
+    if (featuredArticleLink) {
+      featuredArticleLink.addEventListener("click", saveScrollPosition);
+    }
+  });
+</script>
