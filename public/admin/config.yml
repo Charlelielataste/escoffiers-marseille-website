@@ -98,12 +98,14 @@ collections:
         }
 
   - label: "Configuration"
-    name: "settings"
+    name: "featured"
     editor:
       preview: false
+    delete: false
+    create: false
     files:
       - label: "Article à la une"
-        name: "featured"
+        name: "highlighted"
         file: "src/content/settings/featured.md"
         fields:
           - {

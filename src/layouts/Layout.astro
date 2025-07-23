@@ -1,18 +1,29 @@
 ---
-import Navbar from "../components/navigation/Navbar.astro";
-import Footer from "../components/navigation/Footer.astro";
+import Navbar from "@/components/navigation/Navbar.astro";
+import Footer from "@/components/navigation/Footer.astro";
 import "../styles/global.css";
 import "../styles/fonts.css";
+import { type Locale } from "../lib/i18n";
+
+// Utiliser le helper natif d'Astro au lieu de notre fonction
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+
+// Props pour le Layout
+export interface Props {
+  title?: string;
+}
+
+const { title = "Les Disciples d'Escoffier Marseille" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Les Disciples d'Escoffier Marseille</title>
+    <title>{title}</title>
   </head>
   <body class="font-['Museo_Sans']">
     <Navbar currentPath={Astro.url.pathname} />

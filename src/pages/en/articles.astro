@@ -19,7 +19,7 @@ function formatDate(dateString: Date) {
 
 const articles = await getCollection("articles");
 
-const featuredFile = await import("../content/settings/featured.md");
+const featuredFile = await import("@/content/settings/featured.md");
 const slug = featuredFile.frontmatter.slug;
 
 const featuredArticle = articles.find((a) => a.id === slug);
