@@ -1,0 +1,100 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ContactImage from "@/assets/hero/contact.png";
+import { Image } from "astro:assets";
+---
+
+<Layout title="Message envoyé - Les Disciples d'Escoffier Marseille">
+  <main
+    class="relative min-h-screen flex items-center justify-center py-24 sm:py-12 px-4 overflow-hidden"
+  >
+    <!-- Image de fond -->
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={ContactImage}
+        alt="Contact background"
+        widths={[640, 1024, 1440, 1920]}
+        sizes="100vw"
+        format="webp"
+        class="w-full h-full object-cover"
+        priority
+      />
+      <!-- Overlay sombre pour la lisibilité -->
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <div
+      class="relative z-10 max-w-md w-full bg-white backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-8 text-center"
+    >
+      <!-- Icône de succès -->
+      <div
+        class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6"
+      >
+        <svg
+          class="w-8 h-8 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <!-- Message de succès -->
+      <h1 class="text-xl sm:text-2xl font-bold text-text-primary mb-4">
+        Message envoyé avec succès !
+      </h1>
+
+      <p
+        class="text-text-primary text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed"
+      >
+        Merci pour votre intérêt envers les Disciples d'Escoffier Marseille.
+        Nous avons bien reçu votre message et nous vous contacterons très
+        prochainement.
+      </p>
+
+      <div
+        class="border-l-4 border-primary bg-primary/10 p-4 rounded-r-lg mb-4 sm:mb-6"
+      >
+        <p class="text-xs sm:text-sm text-text-primary italic">
+          "La cuisine est l'âme de la maison, et vous pourriez bientôt faire
+          partie de notre famille culinaire."
+        </p>
+        <cite class="text-xs sm:text-sm text-primary font-semibold mt-2 block">
+          - Auguste Escoffier
+        </cite>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="space-y-2 sm:space-y-3">
+        <a
+          href="/"
+          class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg inline-block"
+        >
+          Retour à l'accueil
+        </a>
+
+        <a
+          href="/about"
+          class="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 inline-block"
+        >
+          En savoir plus sur nous
+        </a>
+      </div>
+
+      <!-- Informations de contact -->
+      <div class="mt-6 pt-4 border-t border-gray-200">
+        <p class="text-xs sm:text-sm text-gray-600 mb-2">
+          Des questions ? Contactez-nous :
+        </p>
+        <p class="text-xs sm:text-sm font-medium text-text-primary">
+          contact@disciples-escoffier-marseille.fr
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>

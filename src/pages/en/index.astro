@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import InstitutionSection from "@/components/home/InstitutionSection.astro";
+import VolunteeringSection from "@/components/home/VolunteeringSection.astro";
+import AssociationsSection from "@/components/home/AssociationsSection.astro";
+import HomeImage from "@/assets/hero/home.jpg";
+---
+
+<Layout>
+  <div class="relative">
+    <Hero picture={HomeImage} pictureAlt="Escoffiers Marseille">
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">
+          Délégation Escoffiers Anglais
+        </h1>
+        <h2 class="text-3xl md:text-5xl mb-8 text-blue-500 font-bold">
+          Provence Méditerranée
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
+          Institution culinaire bénévole au service des associations
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/about"
+            class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:shadow-lg flex items-center justify-center"
+          >
+            Qui sommes-nous ?
+          </a>
+          <a
+            href="/events"
+            class="border-2 border-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Nos événements
+          </a>
+        </div>
+      </div>
+    </Hero>
+
+    <InstitutionSection />
+    <VolunteeringSection />
+    <AssociationsSection />
+  </div>
+</Layout>
