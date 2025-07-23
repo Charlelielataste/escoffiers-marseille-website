@@ -1,7 +1,16 @@
 ---
-import { cn } from "../../lib/cn";
-import BarMobileIcon from "../icons/BarMobileIcon.astro";
-import CloseIcon from "../icons/CloseIcon.astro";
+import { cn } from "@/lib/utils";
+import BarMobileIcon from "@/components/icons/BarMobileIcon.astro";
+import CloseIcon from "@/components/icons/CloseIcon.astro";
+import { Image } from "astro:assets";
+import {
+  getNavUrls,
+  getTranslations,
+  getAlternateLanguageUrl,
+  type Locale,
+} from "@/lib/i18n";
+import FrenchFlagIcon from "@/components/icons/FrenchFlagIcon.astro";
+import EnglishFlagIcon from "@/components/icons/EnglishFlagIcon.astro";
 
 // Props pour le composant
 export interface Props {
@@ -10,10 +19,19 @@ export interface Props {
 
 const { currentPath = "/" } = Astro.props;
 
+// Utiliser le helper natif d'Astro au lieu de notre fonction
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const navUrls = getNavUrls(currentLocale);
+const t = getTranslations(currentLocale);
+
+// URLs pour changer de langue
+const frUrl = getAlternateLanguageUrl(currentPath, "fr");
+const enUrl = getAlternateLanguageUrl(currentPath, "en");
+
 // Helper function pour les classes des liens de navigation
 const getLinkClasses = (isActive: boolean) => {
   return cn(
-    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+    "py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center",
     isActive ? "text-primary font-bold" : "text-text-primary hover:text-primary"
   );
 };
@@ -29,63 +47,107 @@ const getMobileLinkClasses = (isActive: boolean) => {
 };
 ---
 
+<!-- Overlay pour le menu mobile -->
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/40 z-40 md:hidden opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+>
+</div>
+
 <nav
   class="bg-white shadow-md fixed top-0 left-0 right-0 z-50 border-b border-primary/30"
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+  <div class="max-w-7xl lg:mx-auto sm:px-6 lg:px-8">
+    <div
+      class="flex justify-between px-4 lg:px-0 items-center h-[60px] lg:h-[70px]"
+    >
       <!-- Logo à gauche -->
       <div class="flex-shrink-0">
-        <a href="/" class="flex items-center">
-          <img
+        <a
+          href={navUrls.home}
+          class="flex items-center justify-center w-16 lg:w-20 h-[50px]"
+        >
+          <Image
             src="/logos/logo-face-color.png"
-            alt="Logo"
+            alt="Logo des Disciples des Escoffiers"
             width="40"
             height="40"
-            class="h-10 w-auto"
+            class="w-[35px] lg:w-[40px]"
+            loading="eager"
           />
         </a>
       </div>
 
       <!-- Liens centrés - Desktop -->
       <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
+        <div class="flex items-baseline gap-x-8">
           <a
-            href="/about"
-            class={getLinkClasses(currentPath.startsWith("/about"))}
+            href={navUrls.about}
+            class={cn(
+              getLinkClasses(navUrls.about === currentPath),
+              currentLocale === "fr" ? "w-[70px]" : "w-14"
+            )}
           >
-            À Propos
+            {t.nav.about}
           </a>
           <a
-            href="/articles"
-            class={getLinkClasses(currentPath.startsWith("/articles"))}
+            href={navUrls.articles}
+            class={cn(getLinkClasses(navUrls.articles === currentPath), "w-16")}
           >
-            Articles
+            {t.nav.articles}
           </a>
           <a
-            href="/events"
-            class={getLinkClasses(currentPath.startsWith("/events"))}
+            href={navUrls.events}
+            class={cn(
+              getLinkClasses(navUrls.events === currentPath),
+              currentLocale === "fr" ? "w-20" : "w-14"
+            )}
           >
-            Événements
+            {t.nav.events}
           </a>
           <a
-            href="/members"
-            class={getLinkClasses(currentPath.startsWith("/members"))}
+            href={navUrls.members}
+            class={cn(getLinkClasses(navUrls.members === currentPath), "w-24")}
           >
-            Les Disciples
+            {t.nav.members}
           </a>
           <a
-            href="/contact"
-            class={getLinkClasses(currentPath.startsWith("/contact"))}
+            href={navUrls.contact}
+            class={cn(
+              getLinkClasses(navUrls.contact === currentPath),
+              currentLocale === "fr" ? "w-28" : "w-14"
+            )}
           >
-            Nous Rejoindre
+            {t.nav.contact}
           </a>
         </div>
       </div>
 
-      <!-- Boutons à droite - Desktop -->
-      <div class="hidden md:block flex-shrink-0 items-center space-x-3">
-        <p class="text-sm text-gray-700">FR / EN</p>
+      <!-- Sélecteur de langue - Desktop -->
+      <div class="hidden md:flex w-20 items-center justify-center">
+        <div class="flex items-center space-x-1">
+          <a
+            href={frUrl}
+            aria-label="Langue Française"
+            class={cn(
+              "px-2 py-1 rounded w-10 h-[32px] flex items-center justify-center hover:bg-tertiary/40",
+              currentLocale === "fr" && "bg-tertiary/50 text-white"
+            )}
+          >
+            <FrenchFlagIcon />
+          </a>
+          <span class="text-gray-400">|</span>
+          <a
+            href={enUrl}
+            aria-label="English Language"
+            class={cn(
+              "px-2 py-1 rounded w-10 h-[32px] flex items-center justify-center hover:bg-tertiary/40",
+              currentLocale === "en" && "bg-tertiary/50 text-white"
+            )}
+          >
+            <EnglishFlagIcon />
+          </a>
+        </div>
       </div>
 
       <!-- Bouton Menu Mobile -->
@@ -114,43 +176,72 @@ const getMobileLinkClasses = (isActive: boolean) => {
       style="transition-property: max-height, opacity; max-height: 0;"
     >
       <div
-        class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/40"
+        class="px-4 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/40"
       >
-        <a href="/" class={getMobileLinkClasses(currentPath === "/")}>
-          Accueil
+        <a
+          href={navUrls.home}
+          class={getMobileLinkClasses(navUrls.home === currentPath)}
+        >
+          {t.nav.home}
         </a>
         <a
-          href="/about"
-          class={getMobileLinkClasses(currentPath.startsWith("/about"))}
+          href={navUrls.about}
+          class={getMobileLinkClasses(navUrls.about === currentPath)}
         >
-          À Propos
+          {t.nav.about}
         </a>
         <a
-          href="/articles"
-          class={getMobileLinkClasses(currentPath.startsWith("/articles"))}
+          href={navUrls.articles}
+          class={getMobileLinkClasses(navUrls.articles === currentPath)}
         >
-          Articles
+          {t.nav.articles}
         </a>
         <a
-          href="/events"
-          class={getMobileLinkClasses(currentPath.startsWith("/events"))}
+          href={navUrls.events}
+          class={getMobileLinkClasses(navUrls.events === currentPath)}
         >
-          Événements
+          {t.nav.events}
         </a>
         <a
-          href="/members"
-          class={getMobileLinkClasses(currentPath.startsWith("/members"))}
+          href={navUrls.members}
+          class={getMobileLinkClasses(navUrls.members === currentPath)}
         >
-          Les Disciples
+          {t.nav.members}
         </a>
         <a
-          href="/contact"
-          class={getMobileLinkClasses(currentPath.startsWith("/contact"))}
+          href={navUrls.contact}
+          class={getMobileLinkClasses(navUrls.contact === currentPath)}
         >
-          Nous Rejoindre
+          {t.nav.contact}
         </a>
-        <div class="pt-4 space-y-2">
-          <p class="text-sm text-gray-700">FR / EN</p>
+
+        <!-- Sélecteur de langue mobile -->
+        <div
+          class="pt-4 px-3 flex items-center justify-between border-t border-primary/40"
+        >
+          <p class="text-sm text-black">Langue / Language</p>
+          <div class="flex space-x-2">
+            <a
+              aria-label="Langue Française"
+              href={frUrl}
+              class={cn(
+                "px-2 py-1 rounded w-10 h-[32px] flex items-center justify-center",
+                currentLocale === "fr" && "bg-tertiary/50 text-white"
+              )}
+            >
+              <FrenchFlagIcon />
+            </a>
+            <a
+              aria-label="English Language"
+              href={enUrl}
+              class={cn(
+                "px-2 py-1 rounded w-10 h-[32px] flex items-center justify-center",
+                currentLocale === "en" && "bg-tertiary/50 text-white"
+              )}
+            >
+              <EnglishFlagIcon />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -158,41 +249,76 @@ const getMobileLinkClasses = (isActive: boolean) => {
 </nav>
 
 <script>
-  // Gestion smooth du menu mobile avec transitions
+  // Gestion smooth du menu mobile avec transitions et overlay
   document.addEventListener("DOMContentLoaded", () => {
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
+    const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
     const hamburgerIcon = document.getElementById("hamburger-icon");
     const closeIcon = document.getElementById("close-icon");
 
-    if (mobileMenuToggle && mobileMenu && hamburgerIcon && closeIcon) {
+    if (
+      mobileMenuToggle &&
+      mobileMenu &&
+      mobileMenuOverlay &&
+      hamburgerIcon &&
+      closeIcon
+    ) {
       let isMenuOpen = false;
 
+      // Fonction pour ouvrir le menu
+      const openMenu = () => {
+        isMenuOpen = true;
+
+        // Ouvrir le menu avec animation fluide
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+        mobileMenu.style.opacity = "1";
+
+        // Afficher l'overlay
+        mobileMenuOverlay.style.opacity = "1";
+        mobileMenuOverlay.style.pointerEvents = "auto";
+
+        // Transition fluide des icônes
+        hamburgerIcon.style.opacity = "0";
+        hamburgerIcon.style.transform = "rotate(180deg) scale(0.8)";
+
+        closeIcon.style.opacity = "1";
+        closeIcon.style.transform = "rotate(0deg) scale(1)";
+      };
+
+      // Fonction pour fermer le menu
+      const closeMenu = () => {
+        isMenuOpen = false;
+
+        // Fermer le menu avec animation fluide
+        mobileMenu.style.maxHeight = "0px";
+        mobileMenu.style.opacity = "0";
+
+        // Masquer l'overlay
+        mobileMenuOverlay.style.opacity = "0";
+        mobileMenuOverlay.style.pointerEvents = "none";
+
+        // Transition fluide des icônes
+        hamburgerIcon.style.opacity = "1";
+        hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
+
+        closeIcon.style.opacity = "0";
+        closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
+      };
+
+      // Toggle du menu via le bouton
       mobileMenuToggle.addEventListener("click", () => {
-        isMenuOpen = !isMenuOpen;
-
         if (isMenuOpen) {
-          // Ouvrir le menu avec animation fluide
-          mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
-          mobileMenu.style.opacity = "1";
-
-          // Transition fluide des icônes
-          hamburgerIcon.style.opacity = "0";
-          hamburgerIcon.style.transform = "rotate(180deg) scale(0.8)";
-
-          closeIcon.style.opacity = "1";
-          closeIcon.style.transform = "rotate(0deg) scale(1)";
+          closeMenu();
         } else {
-          // Fermer le menu avec animation fluide
-          mobileMenu.style.maxHeight = "0px";
-          mobileMenu.style.opacity = "0";
+          openMenu();
+        }
+      });
 
-          // Transition fluide des icônes
-          hamburgerIcon.style.opacity = "1";
-          hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
-
-          closeIcon.style.opacity = "0";
-          closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
+      // Fermer le menu en cliquant sur l'overlay
+      mobileMenuOverlay.addEventListener("click", () => {
+        if (isMenuOpen) {
+          closeMenu();
         }
       });
 
@@ -201,18 +327,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
           if (isMenuOpen) {
-            isMenuOpen = false;
-
-            // Fermer avec animation
-            mobileMenu.style.maxHeight = "0px";
-            mobileMenu.style.opacity = "0";
-
-            // Remettre l'icône hamburger
-            hamburgerIcon.style.opacity = "1";
-            hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
-
-            closeIcon.style.opacity = "0";
-            closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
+            closeMenu();
           }
         });
       });
