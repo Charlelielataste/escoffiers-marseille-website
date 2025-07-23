@@ -1,11 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import ArticleCard from "../components/articles/ArticleCard.astro";
-import ArticleFilter from "../components/articles/ArticleFilter.astro";
-import FacebookSection from "../components/articles/FacebookSection.astro";
-import MobileFacebookSection from "../components/articles/MobileFacebookSection.astro";
-import ArticlesImage from "../assets/hero/articles.png";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import ArticleCard from "@/components/articles/ArticleCard.astro";
+import ArticleFilter from "@/components/articles/ArticleFilter.astro";
+import FacebookSection from "@/components/articles/FacebookSection.astro";
+import MobileFacebookSection from "@/components/articles/MobileFacebookSection.astro";
+import ArticlesImage from "@/assets/hero/articles.png";
 import { getCollection } from "astro:content";
 
 function formatDate(dateString: Date) {
@@ -18,20 +18,11 @@ function formatDate(dateString: Date) {
 }
 
 const articles = await getCollection("articles");
-const settings = await getCollection("settings");
 
-const featuredArticle = () => {
-  const featuredArticle = articles.find(
-    (article) => article.id === settings[0].data.slug
-  );
-  if (featuredArticle) {
-    return featuredArticle;
-  } else {
-    return articles[0];
-  }
-};
+const featuredFile = await import("../content/settings/featured.md");
+const slug = featuredFile.frontmatter.slug;
 
-const firstArticle = featuredArticle();
+const featuredArticle = articles.find((a) => a.id === slug);
 ---
 
 <Layout>
@@ -51,15 +42,24 @@ const firstArticle = featuredArticle();
       <div class="flex flex-col lg:flex-row gap-5 pb-10 max-w-6xl mx-auto">
         <MobileFacebookSection />
         {
-          firstArticle && (
+          featuredArticle ? (
             <ArticleCard
-              title={firstArticle.data.title}
-              date={formatDate(firstArticle.data.date)}
-              image={firstArticle.data.image}
-              excerpt={firstArticle.data.intro}
-              slug={firstArticle.id}
-              tags={firstArticle.data.tags}
+              title={featuredArticle.data.title}
+              date={formatDate(featuredArticle.data.date)}
+              image={featuredArticle.data.image}
+              excerpt={featuredArticle.data.intro}
+              slug={featuredArticle.id}
+              tags={featuredArticle.data.tags}
               is_first={true}
+            />
+          ) : (
+            <ArticleCard
+              title={articles[0].data.title}
+              date={formatDate(articles[0].data.date)}
+              image={articles[0].data.image}
+              excerpt={articles[0].data.intro}
+              slug={articles[0].id}
+              tags={articles[0].data.tags}
             />
           )
         }

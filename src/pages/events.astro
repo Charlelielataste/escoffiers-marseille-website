@@ -1,8 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import EventCard from "../components/events/EventCard.astro";
-import EventsImage from "../assets/hero/events.png";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import EventCard from "@/components/events/EventCard.astro";
+import EventsImage from "@/assets/hero/events.png";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const events = await getCollection("events");
