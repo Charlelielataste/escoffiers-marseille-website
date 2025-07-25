@@ -1,0 +1,122 @@
+---
+import Hero from "@/components/Hero.astro";
+import MembersCard from "@/components/members/MembersCard.astro";
+import Layout from "@/layouts/Layout.astro";
+import MembersImage from "@/assets/hero/members.png";
+import { getCollection } from "astro:content";
+
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
+const membres = await getCollection("members");
+
+// Filtrer les membres d'honneur et les membres normaux
+const membresHonneur = membres.filter((membre) => membre.data.is_honored);
+const membresNormaux = membres.filter((membre) => !membre.data.is_honored);
+---
+
+<Layout>
+  <div class="relative">
+    <Hero picture={MembersImage} pictureAlt="Les Disciples">
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Les Disciples</h1>
+        <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
+          Notre Équipe
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          Découvrez l&apos;équipe des Disciples d&apos;Escoffier de Marseille,
+          composée de membres de toutes les professions de la cuisine.
+        </p>
+      </div>
+    </Hero>
+    <section class="relative px-5 sm:px-10 bg-white py-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
+          >
+            Notre Président
+          </h3>
+
+          <div
+            class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+          >
+            <MembersCard
+              photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+              color={"#b91c1c"}
+              name={"Alain Laporte"}
+              role={"Président"}
+              description={"Membre fondateur des Disciples d'Escoffier de Marseille"}
+              email={"alain.laporte@disciples-marseille.fr"}
+              workplace={"Form'actions Consulting"}
+              size="150px"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Membres d'Honneur -->
+      <d class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12"
+          >
+            Nos Membres à l'Honneur
+          </h3>
+          <div class="flex justify-center">
+            <div
+              class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16"
+            >
+              {
+                membresHonneur.map((membre) => (
+                  <MembersCard
+                    photo={membre.data.image}
+                    color={membre.data.color}
+                    name={membre.data.name}
+                    role={membre.data.role}
+                    description={membre.data.description}
+                    email={membre.data.email}
+                    workplace={membre.data.workplace}
+                  />
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </d>
+
+      <!-- Section Membres Normaux -->
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12"
+          >
+            Nos Membres
+          </h3>
+
+          <div class="flex justify-center">
+            <div
+              class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16"
+            >
+              {
+                membresNormaux.map((membre) => (
+                  <MembersCard
+                    photo={membre.data.image}
+                    color={membre.data.color}
+                    name={membre.data.name}
+                    role={membre.data.role}
+                    description={membre.data.description}
+                    email={membre.data.email}
+                    workplace={membre.data.workplace}
+                  />
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -6,6 +6,11 @@ backend:
 
 # local_backend: true
 
+i18n:
+  structure: single_file
+  locales: [fr, en]
+  default_locale: fr
+
 media_folder: "public/uploads" # Où les images sont stockées
 public_folder: "/uploads" # URL publique des images
 
@@ -16,6 +21,7 @@ collections:
       preview: false
     folder: "src/content/articles"
     create: true
+    i18n: true
     fields:
       - {
           label: "Tags",
@@ -27,21 +33,24 @@ collections:
           value_field: "{{slug}}",
           multiple: true,
           hint: "Sélectionnez les tags associés à l'article (minimum 1, maximum 3)",
+          i18n: duplicate,
         }
-      - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Introduction", name: "intro", widget: "string" }
-      - { label: "Contenu", name: "body", widget: "markdown" }
+      - { label: "Titre", name: "title", widget: "string", i18n: true }
+      - { label: "Image", name: "image", widget: "image", i18n: duplicate }
+      - { label: "Date", name: "date", widget: "datetime", i18n: duplicate }
+      - { label: "Introduction", name: "intro", widget: "string", i18n: true }
+      - { label: "Contenu", name: "body", widget: "markdown", i18n: true }
 
   - label: "Tags"
     name: "tags"
     editor:
       preview: false
     folder: "src/content/tags"
+    i18n:
+      structure: single_file
     create: true
     fields:
-      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Titre", name: "title", widget: "string", i18n: true }
 
   - label: "Événements"
     name: "events"

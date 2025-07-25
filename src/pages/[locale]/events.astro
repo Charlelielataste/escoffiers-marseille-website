@@ -1,0 +1,129 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import EventCard from "@/components/events/EventCard.astro";
+import EventsImage from "@/assets/hero/events.png";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
+const events = await getCollection("events");
+
+function formatDateTime(dateString: Date) {
+  const date = new Date(dateString);
+  const dateFormatted = date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const timeFormatted = `${hours}h${minutes}`;
+  return `${dateFormatted} à ${timeFormatted}`;
+}
+
+// Fonction pour grouper les événements par mois/année
+function groupEventsByMonth(event: CollectionEntry<"events">[]) {
+  const grouped = events.reduce(
+    (acc, event) => {
+      const date = new Date(event.data.date);
+      const monthYear = date.toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+      });
+
+      if (!acc[monthYear]) {
+        acc[monthYear] = [];
+      }
+      acc[monthYear].push(event);
+
+      return acc;
+    },
+    {} as Record<string, typeof events>
+  );
+
+  // Trier les événements dans chaque groupe par date décroissante
+  Object.keys(grouped).forEach((monthYear) => {
+    grouped[monthYear].sort(
+      (a, b) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    );
+  });
+
+  // Trier les groupes par date décroissante (plus récent en premier)
+  const sortedGroups = Object.entries(grouped).sort(
+    ([monthYearA], [monthYearB]) => {
+      const dateA = new Date(grouped[monthYearA][0].data.date);
+      const dateB = new Date(grouped[monthYearB][0].data.date);
+      return dateB.getTime() - dateA.getTime();
+    }
+  );
+
+  return sortedGroups;
+}
+
+const groupedEvents = groupEventsByMonth(events);
+---
+
+<Layout>
+  <div class="relative">
+    <Hero picture={EventsImage} pictureAlt="Événements">
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Événements</h1>
+        <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
+          Nos Actions
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          Découvrez nos prochains événements bénévoles et nos soutiens pour la
+          ville de Marseille
+        </p>
+      </div>
+    </Hero>
+    <div class="relative px-5 sm:px-10 bg-white py-10">
+      <div class="max-w-6xl mx-auto m-10">
+        {
+          groupedEvents.map(([monthYear, events], groupIndex) => (
+            <div class="mb-12">
+              {/* En-tête du mois/année */}
+              <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                  {monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}
+                </h2>
+                <hr class="w-24 h-1 bg-primary mx-auto rounded-full" />
+              </div>
+
+              {/* Grille des événements pour ce mois */}
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+                {events.map((event) => (
+                  <EventCard
+                    title={event.data.title}
+                    slug={event.id}
+                    date={formatDateTime(event.data.date)}
+                    location={event.data.location}
+                    image={event.data.image}
+                    description={event.data.intro}
+                    locale={locale}
+                  />
+                ))}
+              </div>
+
+              {/* Séparateur entre les groupes (sauf pour le dernier) */}
+              {groupIndex < groupedEvents.length - 1 && (
+                <div class="flex items-center justify-center my-12">
+                  <div class="flex-grow h-px bg-gray-300" />
+                  <div class="mx-4">
+                    <div class="w-3 h-3 bg-primary rounded-full" />
+                  </div>
+                  <div class="flex-grow h-px bg-gray-300" />
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Layout>

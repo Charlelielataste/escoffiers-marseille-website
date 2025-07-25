@@ -25,6 +25,21 @@
   --color-text-secondary: var(--text-secondary);
 }
 
+.text-bordered {
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.text-bordered-light {
+  text-shadow:
+    0 0 1px black,
+    0 0 1px black,
+    0 0 1px black;
+}
+
 body {
   background: var(--background);
   color: var(--text-primary);

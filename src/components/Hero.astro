@@ -3,9 +3,14 @@ import { Image } from "astro:assets";
 export interface Props {
   picture: ImageMetadata;
   pictureAlt?: string;
+  has_scroll_indicator?: boolean;
 }
 
-const { picture, pictureAlt = "Hero image" } = Astro.props;
+const {
+  picture,
+  pictureAlt = "Hero image",
+  has_scroll_indicator = true,
+} = Astro.props;
 ---
 
 <section
@@ -34,7 +39,7 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       widths={[640, 1024, 1440, 1920]}
       sizes="100vw"
       format="webp"
-      class="fixed inset-0 w-full h-full object-cover transition-all duration-1000 ease-out opacity-0 scale-105"
+      class="fixed inset-0 w-full h-full object-cover transition-all duration-800 ease-out opacity-0 scale-105 blur-xl"
       id="hero-image"
       priority
     />
@@ -44,16 +49,18 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
   <slot />
 
   <!-- Scroll indicator -->
-  <div
-    class="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-700 ease-out opacity-0 translate-y-12"
-    id="scroll-indicator"
-  >
-    <div
-      class="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-black/20"
-    >
-      <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
-    </div>
-  </div>
+  {
+    has_scroll_indicator && (
+      <div
+        class="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-700 ease-out opacity-0 translate-y-12"
+        id="scroll-indicator"
+      >
+        <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-black/20">
+          <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce" />
+        </div>
+      </div>
+    )
+  }
 </section>
 
 <script>
@@ -78,19 +85,31 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       heroImage.style.opacity = "1";
       heroImage.style.transform = "scale(1)";
 
+      // Animation du blur progressif
+      let blurValue = 24; // blur-xl = 24px
+      const blurInterval = setInterval(() => {
+        blurValue -= 2;
+        if (blurValue >= 0) {
+          heroImage.style.filter = `blur(${blurValue}px)`;
+        } else {
+          clearInterval(blurInterval);
+          heroImage.style.filter = "blur(0px)";
+        }
+      }, 25); // 25ms entre chaque étape pour une animation plus rapide
+
       // Faire disparaître le placeholder avec un délai
       setTimeout(() => {
         if (placeholder) {
           placeholder.style.opacity = "0";
         }
-      }, 400);
+      }, 200);
 
       // Faire apparaître l'indicateur de scroll avec animation de bas en haut
       if (scrollIndicator) {
         setTimeout(() => {
           scrollIndicator.classList.remove("opacity-0", "translate-y-12");
           scrollIndicator.classList.add("opacity-100", "translate-y-0");
-        }, 800);
+        }, 400);
       }
     }
 
@@ -152,9 +171,6 @@ const { picture, pictureAlt = "Hero image" } = Astro.props;
       }
     };
   }
-
-  // Initialisation
-  document.addEventListener("DOMContentLoaded", initHeroEffects);
   document.addEventListener("astro:page-load", initHeroEffects);
 </script>
 

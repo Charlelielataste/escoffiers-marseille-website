@@ -10,7 +10,10 @@ export type Locale = "fr" | "en";
 export function getCurrentLocale(pathname: string): Locale {
   if (pathname.startsWith("/en")) {
     return "en";
+  } else if (pathname.startsWith("/fr")) {
+    return "fr";
   }
+  // Par défaut français si pas de préfixe reconnu
   return "fr";
 }
 
@@ -27,17 +30,14 @@ export function getAlternateLanguageUrl(
     return pathname;
   }
 
-  // Si on est en français (pas de préfixe), ajouter /en
-  if (currentLocale === "fr" && targetLocale === "en") {
-    return `/en${pathname}`;
+  // Enlever le préfixe de langue actuel
+  let cleanPath = pathname.replace(/^\/[a-z]{2}/, "");
+  if (!cleanPath.startsWith("/")) {
+    cleanPath = "/" + cleanPath;
   }
 
-  // Si on est en anglais (avec /en), enlever le préfixe
-  if (currentLocale === "en" && targetLocale === "fr") {
-    return pathname.replace(/^\/en/, "") || "/";
-  }
-
-  return pathname;
+  // Ajouter le nouveau préfixe de langue
+  return `/${targetLocale}${cleanPath}`;
 }
 
 /**
@@ -45,7 +45,7 @@ export function getAlternateLanguageUrl(
  */
 export function getNavUrls(currentLocale: Locale) {
   return {
-    home: currentLocale === "fr" ? "/" : "/en",
+    home: getRelativeLocaleUrl(currentLocale, "/"),
     about: getRelativeLocaleUrl(currentLocale, "/about"),
     articles: getRelativeLocaleUrl(currentLocale, "/articles"),
     events: getRelativeLocaleUrl(currentLocale, "/events"),
