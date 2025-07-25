@@ -4,7 +4,12 @@ import { glob } from "astro/loaders";
 const tagsCollection = defineCollection({
   type: "content",
   schema: z.object({
-    title: z.string(),
+    fr: z.object({
+      title: z.string(),
+    }),
+    en: z.object({
+      title: z.string(),
+    }),
   }),
 });
 
@@ -14,11 +19,22 @@ const articlesCollection = defineCollection({
     base: "src/content/articles",
   }),
   schema: z.object({
-    title: z.string(),
-    image: z.string(),
-    date: z.date(),
-    intro: z.string(),
-    tags: z.array(z.string()),
+    fr: z.object({
+      title: z.string(),
+      intro: z.string(),
+      image: z.string(),
+      date: z.string().or(z.date()),
+      tags: z.array(z.string()).optional(),
+      body: z.string(),
+    }),
+    en: z.object({
+      title: z.string(),
+      intro: z.string(),
+      image: z.string(),
+      date: z.string().or(z.date()),
+      tags: z.array(z.string()).optional(),
+      body: z.string(),
+    }),
   }),
 });
 
