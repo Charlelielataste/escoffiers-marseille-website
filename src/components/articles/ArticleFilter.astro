@@ -1,23 +1,17 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import ArticleCard from "./ArticleCard.astro";
+import type { Locale } from "@/lib/i18n";
+import { formatDate } from "@/lib/date";
 
 const tags = await getCollection("tags");
 
-function formatDate(dateString: Date) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export interface Props {
   articles: CollectionEntry<"articles">[];
+  locale: Locale;
 }
 
-const { articles } = Astro.props as Props;
+const { articles, locale } = Astro.props as Props;
 ---
 
 <div class="max-w-6xl mx-auto px-4">
@@ -39,9 +33,9 @@ const { articles } = Astro.props as Props;
         tags.map((tag) => (
           <button
             data-filter={tag.slug}
-            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
+            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white transition-all duration-200 font-bold"
           >
-            {tag.data.title}
+            {tag.data[locale].title}
           </button>
         ))
       }
@@ -52,24 +46,35 @@ const { articles } = Astro.props as Props;
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="articles-container">
     {
       articles.map((article) => (
-        <div class="article-card" data-tags={article.data.tags.join(",")}>
+        <div
+          class="article-card"
+          data-tags={(article.data[locale].tags || []).join(",")}
+        >
           <ArticleCard
-            tags={article.data.tags}
-            title={article.data.title}
-            date={formatDate(article.data.date)}
-            image={article.data.image}
-            excerpt={article.data.intro}
+            tags={article.data[locale].tags || []}
+            title={article.data[locale].title}
+            date={formatDate(new Date(article.data[locale].date), locale)}
+            image={article.data[locale].image}
+            excerpt={article.data[locale].intro}
             slug={article.id}
             is_first={false}
+            locale={locale}
           />
         </div>
       ))
     }
   </div>
+
+  <!-- Message quand aucun article ne correspond -->
+  <div id="no-articles-message" class="hidden text-center h-80 pt-8">
+    <p class="text-gray-600 text-lg">
+      Pas d'articles correspondant à cette catégorie
+    </p>
+  </div>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("astro:page-load", function () {
     const filterBtns = document.querySelectorAll(".filter-btn");
 
     // Variables pour tracker l'état
@@ -155,11 +160,20 @@ const { articles } = Astro.props as Props;
     }
 
     function filterArticles(selectedTag: string) {
+      let visibleCount = 0;
+
       articlesData.forEach((article) => {
         const shouldShow =
           selectedTag === "" || article.tags.includes(selectedTag);
         article.element.style.display = shouldShow ? "block" : "none";
+        if (shouldShow) visibleCount++;
       });
+
+      // Afficher ou masquer le message "pas d'articles"
+      const noArticlesMessage = document.getElementById("no-articles-message");
+      if (noArticlesMessage) {
+        noArticlesMessage.classList.toggle("hidden", visibleCount > 0);
+      }
     }
   });
 </script>
