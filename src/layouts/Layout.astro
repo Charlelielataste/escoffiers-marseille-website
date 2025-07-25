@@ -4,6 +4,7 @@ import Footer from "@/components/navigation/Footer.astro";
 import "../styles/global.css";
 import "../styles/fonts.css";
 import { type Locale } from "../lib/i18n";
+import { ClientRouter } from "astro:transitions";
 
 // Utiliser le helper natif d'Astro au lieu de notre fonction
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
@@ -23,7 +24,9 @@ const { title = "Les Disciples d'Escoffier Marseille" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Les Disciples d'Escoffier Marseille" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body class="font-['Museo_Sans']">
     <Navbar currentPath={Astro.url.pathname} />
