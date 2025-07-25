@@ -1,6 +1,8 @@
 ---
+import type { Locale } from "@/lib/i18n";
 import { cn } from "../../lib/utils";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 export interface Props {
   title: string;
@@ -10,6 +12,7 @@ export interface Props {
   slug: string;
   is_first?: boolean;
   tags: string[];
+  locale?: Locale;
 }
 const {
   title,
@@ -19,6 +22,7 @@ const {
   slug,
   is_first = false,
   tags,
+  locale = "fr",
 } = Astro.props as Props;
 
 const allTags = await getCollection("tags");
@@ -34,7 +38,7 @@ const findTag = (tags: string[]) => {
     is_first && "border-tertiary h-[540px]"
   )}
 >
-  <a href={`/articles/${slug}`} class="w-full p-5">
+  <a href={`/${locale}/articles/${slug}`} class="w-full p-5">
     {
       is_first && (
         <div class="absolute top-2 left-2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg z-10">
@@ -44,9 +48,12 @@ const findTag = (tags: string[]) => {
     }
 
     <div class="w-full flex flex-col h-full">
-      <img
+      <Image
         src={image}
         alt="Image de l'article"
+        loading="eager"
+        width={300}
+        height={192}
         class={cn(
           "object-cover w-full h-48 overflow-hidden rounded-2xl mb-4 border border-primary/20",
           is_first ? "border-tertiary/10 h-52" : "border-primary/10"
@@ -59,7 +66,7 @@ const findTag = (tags: string[]) => {
         {
           findTag(tags).map((tag) => (
             <span class="text-secondary py-1.5 px-3 rounded-full text-xs font-bold border-2 border-secondary">
-              {tag?.data.title}
+              {tag?.data[locale].title}
             </span>
           ))
         }
