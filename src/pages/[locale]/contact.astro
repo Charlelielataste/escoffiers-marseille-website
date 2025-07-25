@@ -3,6 +3,12 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import ContactForm from "@/components/contact/ContactForm.astro";
 import ContactImage from "@/assets/hero/contact.png";
+
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
 ---
 
 <Layout>
@@ -25,3 +31,4 @@ import ContactImage from "@/assets/hero/contact.png";
     <ContactForm />
   </div>
 </Layout>
+

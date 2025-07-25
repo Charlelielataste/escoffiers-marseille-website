@@ -5,6 +5,11 @@ import EventCard from "@/components/events/EventCard.astro";
 import EventsImage from "@/assets/hero/events.png";
 import { getCollection, type CollectionEntry } from "astro:content";
 
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
 const events = await getCollection("events");
 
 function formatDateTime(dateString: Date) {
@@ -100,6 +105,7 @@ const groupedEvents = groupEventsByMonth(events);
                     location={event.data.location}
                     image={event.data.image}
                     description={event.data.intro}
+                    locale={locale}
                   />
                 ))}
               </div>

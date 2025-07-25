@@ -2,6 +2,12 @@
 import Layout from "@/layouts/Layout.astro";
 import ContactImage from "@/assets/hero/contact.png";
 import { Image } from "astro:assets";
+
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
 ---
 
 <Layout title="Message envoyé - Les Disciples d'Escoffier Marseille">
@@ -72,14 +78,14 @@ import { Image } from "astro:assets";
       <!-- Boutons d'action -->
       <div class="space-y-2 sm:space-y-3">
         <a
-          href="/"
+          href={`/${locale}`}
           class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg inline-block"
         >
           Retour à l'accueil
         </a>
 
         <a
-          href="/about"
+          href={`/${locale}/about`}
           class="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 inline-block"
         >
           En savoir plus sur nous
@@ -98,3 +104,4 @@ import { Image } from "astro:assets";
     </div>
   </main>
 </Layout>
+

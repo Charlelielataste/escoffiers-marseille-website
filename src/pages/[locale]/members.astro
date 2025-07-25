@@ -5,9 +5,12 @@ import Layout from "@/layouts/Layout.astro";
 import MembersImage from "@/assets/hero/members.png";
 import { getCollection } from "astro:content";
 
-const membres = await getCollection("members");
+export function getStaticPaths() {
+  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
+}
 
-console.log(membres);
+const { locale } = Astro.params;
+const membres = await getCollection("members");
 
 // Filtrer les membres d'honneur et les membres normaux
 const membresHonneur = membres.filter((membre) => membre.data.is_honored);
