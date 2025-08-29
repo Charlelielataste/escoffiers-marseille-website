@@ -11,11 +11,11 @@ const navUrls = getNavUrls(currentLocale);
 const t = getTranslations(currentLocale);
 ---
 
-<footer class="bg-primary relative">
+<footer class="relative bg-primary">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
+    <div class="flex flex-col md:flex-row justify-between gap-10 pb-8">
       <!-- Logo et description -->
-      <div class="col-span-1 md:col-span-2">
+      <div class="w-full">
         <div class="flex items-center mb-4">
           <a
             href={navUrls.home}
@@ -69,69 +69,71 @@ const t = getTranslations(currentLocale);
       </div>
 
       <!-- Navigation -->
-      <div>
-        <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
-          Navigation
-        </h4>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href={navUrls.about}
-              class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              {t.nav.about}
-            </a>
-          </li>
-          <li>
-            <a
-              href={navUrls.articles}
-              class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              {t.nav.articles}
-            </a>
-          </li>
-          <li>
-            <a
-              href={navUrls.events}
-              class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              {t.nav.events}
-            </a>
-          </li>
-          <li>
-            <a
-              href={navUrls.members}
-              class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              {t.nav.members}
-            </a>
-          </li>
-        </ul>
-      </div>
+      <div class="flex flex-col sm:flex-row gap-10 justify-between w-full">
+        <div class="whitespace-nowrap">
+          <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
+            Navigation
+          </h4>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href={navUrls.about}
+                class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                {t.nav.about}
+              </a>
+            </li>
+            <li>
+              <a
+                href={navUrls.articles}
+                class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                {t.nav.articles}
+              </a>
+            </li>
+            <li>
+              <a
+                href={navUrls.events}
+                class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                {t.nav.events}
+              </a>
+            </li>
+            <li>
+              <a
+                href={navUrls.members}
+                class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                {t.nav.members}
+              </a>
+            </li>
+          </ul>
+        </div>
 
-      <!-- Contact -->
-      <div>
-        <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
-          Contact
-        </h4>
-        <div class="space-y-3">
-          <div class="flex items-center gap-x-2">
-            <MailIcon size="16" class="text-white" />
-            <a
-              href="mailto:Escoffiers@quelquechose.com"
-              class="text-white font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              Escoffiers@quelquechose.com
-            </a>
-          </div>
-          <div class="flex items-center gap-x-2">
-            <UserAddIcon size="16" class="text-white" />
-            <a
-              href={navUrls.contact}
-              class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
-            >
-              Je souhaite devenir membre
-            </a>
+        <!-- Contact -->
+        <div>
+          <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
+            Contact
+          </h4>
+          <div class="space-y-3">
+            <div class="flex items-center gap-x-2">
+              <MailIcon size="16" class="text-white shrink-0" />
+              <a
+                href="mailto:Escoffiers@quelquechose.com"
+                class="text-white font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                Escoffiers@quelquechose.com
+              </a>
+            </div>
+            <div class="flex items-center gap-x-2">
+              <UserAddIcon size="16" class="text-white shrink-0" />
+              <a
+                href={navUrls.contact}
+                class="text-text-secondary font-medium hover:text-tertiary transition-colors text-bordered-light"
+              >
+                Je souhaite devenir membre
+              </a>
+            </div>
           </div>
         </div>
       </div>

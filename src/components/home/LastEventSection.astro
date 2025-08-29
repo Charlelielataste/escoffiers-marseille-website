@@ -1,0 +1,71 @@
+---
+import { getSettings } from "@/lib/sanity-queries";
+import { fileUrl } from "@/lib/sanity";
+import { cn } from "@/lib/utils";
+
+const settings = await getSettings();
+
+if (!settings?.lastEventVideo.video) {
+  return null;
+}
+---
+
+<section class="relative py-10">
+  <div class="max-w-6xl mx-auto px-4 flex justify-center items-center">
+    {
+      settings.lastEventVideo.orientation === "portrait" && (
+        <div class="w-full h-[680px] relative rounded-lg hidden sm:block">
+          <video
+            src={fileUrl(settings.lastEventVideo.video)}
+            class="w-full h-[680px] object-cover rounded-lg shadow-lg blur-xs opacity-60"
+            autoplay
+            muted
+            loop
+          />
+          <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-[680px]">
+            <video
+              src={fileUrl(settings.lastEventVideo.video)}
+              class="w-full h-[680px] object-cover video-responsive"
+              autoplay
+              muted
+              loop
+            />
+          </div>
+        </div>
+      )
+    }
+    <div
+      class={cn(
+        "relative h-[680px]",
+        settings.lastEventVideo.orientation === "portrait"
+          ? "w-96 block sm:hidden"
+          : "w-full"
+      )}
+    >
+      <video
+        src={fileUrl(settings.lastEventVideo.video)}
+        class="w-full h-full object-cover rounded-lg shadow-lg video-responsive"
+        autoplay
+        muted
+        loop
+        controlslist="nodownload"
+        controls></video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-responsive:fullscreen {
+    object-fit: contain !important;
+  }
+
+  /* Pour WebKit (Safari, Chrome) */
+  .video-responsive:-webkit-full-screen {
+    object-fit: contain !important;
+  }
+
+  /* Pour Mozilla (Firefox) */
+  .video-responsive:-moz-full-screen {
+    object-fit: contain !important;
+  }
+</style>
