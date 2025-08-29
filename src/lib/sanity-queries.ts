@@ -1,5 +1,5 @@
 import { client } from "./sanity";
-import type { Article, Tag, Event, Member, Settings } from "./sanity";
+import type { Article, Tag, Event, Member, Settings, Partner } from "./sanity";
 
 export async function getAllArticles(): Promise<Article[]> {
   return await client.fetch(`
@@ -101,6 +101,19 @@ export async function getAllMembers(): Promise<Member[]> {
       description,
       workplace,
       email,
+      isHonored
+    }
+  `);
+}
+
+export async function getAllPartners(): Promise<Partner[]> {
+  return await client.fetch(`
+    *[_type == "partner"] | order(name asc) {
+      _id,
+      name,
+      image,
+      description,
+      link,
       isHonored
     }
   `);
