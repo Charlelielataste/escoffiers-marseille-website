@@ -15,18 +15,24 @@ import EnglishFlagIcon from "@/components/icons/EnglishFlagIcon.astro";
 // Props pour le composant
 export interface Props {
   currentPath?: string;
+  multilingualUrls?: {
+    fr: string;
+    en: string;
+  };
 }
 
-const { currentPath = "/" } = Astro.props;
+const { currentPath = "/", multilingualUrls } = Astro.props;
 
 // Utiliser le helper natif d'Astro au lieu de notre fonction
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const navUrls = getNavUrls(currentLocale);
 const t = getTranslations(currentLocale);
 
-// URLs pour changer de langue
-const frUrl = getAlternateLanguageUrl(currentPath, "fr");
-const enUrl = getAlternateLanguageUrl(currentPath, "en");
+// URLs pour changer de langue - utiliser les URLs multilingues personnalisées si disponibles
+const frUrl =
+  multilingualUrls?.fr || getAlternateLanguageUrl(currentPath, "fr");
+const enUrl =
+  multilingualUrls?.en || getAlternateLanguageUrl(currentPath, "en");
 
 // Helper function pour les classes des liens de navigation
 const getLinkClasses = (isActive: boolean) => {
@@ -92,14 +98,14 @@ const getMobileLinkClasses = (isActive: boolean) => {
           </a>
           <a
             href={navUrls.articles}
-            class={cn(getLinkClasses(navUrls.articles === currentPath), "w-16")}
+            class={cn(getLinkClasses(currentPath.includes("articles")), "w-16")}
           >
             {t.nav.articles}
           </a>
           <a
             href={navUrls.events}
             class={cn(
-              getLinkClasses(navUrls.events === currentPath),
+              getLinkClasses(currentPath.includes("events")),
               currentLocale === "fr" ? "w-20" : "w-14"
             )}
           >
@@ -250,7 +256,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
 
 <script>
   // Gestion smooth du menu mobile avec transitions et overlay
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", function () {
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");

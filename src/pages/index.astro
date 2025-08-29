@@ -1,4 +1,134 @@
 ---
-// Cette page redirige automatiquement vers la locale par défaut
-// Astro gère automatiquement la redirection vers /fr/ grâce à prefixDefaultLocale: true
+// Page de redirection avec loader pour améliorer l'UX
 ---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Délégation Escoffiers Provence Méditerranée</title>
+    <meta
+      name="description"
+      content="Institution culinaire bénévole au service des associations - Délégation Escoffiers Provence Méditerranée"
+    />
+
+    <!-- SEO: Redirection immédiate pour les moteurs de recherche -->
+    <meta http-equiv="refresh" content="0; url=/fr/" />
+    <link rel="canonical" href="/fr/" />
+
+    <!-- Preload de la page de destination -->
+    <link rel="preload" href="/fr/" as="document" />
+    <link rel="prefetch" href="/fr/" />
+
+    <!-- Styles inline pour éviter les FOUC -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: linear-gradient(135deg, #b0675c 0%, #ccb782 100%);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .loader-container {
+        text-align: center;
+        max-width: 500px;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.5s forwards;
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+        color: oklch(62.3% 0.214 259.815);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 1s forwards;
+      }
+
+      .spinner {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 2rem;
+        border: 4px solid oklch(62.3% 0.214 259.815);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Accessibilité */
+      @media (prefers-reduced-motion: reduce) {
+        .spinner {
+          animation: none;
+        }
+        h1,
+        .subtitle {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* Si JS est désactivé, afficher un lien de secours */
+      .fallback-link {
+        display: none;
+        margin-top: 2rem;
+      }
+
+      .fallback-link a {
+        color: white;
+        text-decoration: underline;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader-container">
+      <div class="spinner" aria-hidden="true"></div>
+
+      <h1>Délégation Escoffiers</h1>
+      <div class="subtitle">Provence Méditerranée</div>
+
+      <!-- Lien de secours si JS désactivé -->
+      <noscript>
+        <div class="fallback-link">
+          <a href="/fr/">Continuer vers le site →</a>
+        </div>
+      </noscript>
+    </div>
+  </body>
+</html>

@@ -13,7 +13,7 @@ export function getStaticPaths() {
 const { locale } = Astro.params;
 ---
 
-<Layout>
+<Layout title="À Propos">
   <div class="relative">
     <Hero picture={AboutImage} pictureAlt="A propos">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
@@ -33,4 +33,3 @@ const { locale } = Astro.params;
     <TeamSection />
   </div>
 </Layout>
-

@@ -1,20 +1,21 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
 import ArticleCard from "./ArticleCard.astro";
 import type { Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/date";
+import { urlFor, type Article } from "@/lib/sanity";
+import { getAllTags } from "@/lib/sanity-queries";
 
-const tags = await getCollection("tags");
+const tags = await getAllTags();
 
 export interface Props {
-  articles: CollectionEntry<"articles">[];
+  articles: Article[];
   locale: Locale;
 }
 
 const { articles, locale } = Astro.props as Props;
 ---
 
-<div class="max-w-6xl mx-auto px-4">
+<section class="max-w-6xl mx-auto">
   <!-- Filtres -->
   <div class="mb-8">
     <h3 class="text-xl font-semibold mb-4 text-center">
@@ -32,10 +33,10 @@ const { articles, locale } = Astro.props as Props;
       {
         tags.map((tag) => (
           <button
-            data-filter={tag.slug}
+            data-filter={tag.slug.current}
             class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white transition-all duration-200 font-bold"
           >
-            {tag.data[locale].title}
+            {tag.title[locale]}
           </button>
         ))
       }
@@ -48,15 +49,17 @@ const { articles, locale } = Astro.props as Props;
       articles.map((article) => (
         <div
           class="article-card"
-          data-tags={(article.data[locale].tags || []).join(",")}
+          data-tags={(article.tags || [])
+            .map((tag) => tag.slug.current)
+            .join(",")}
         >
           <ArticleCard
-            tags={article.data[locale].tags || []}
-            title={article.data[locale].title}
-            date={formatDate(new Date(article.data[locale].date), locale)}
-            image={article.data[locale].image}
-            excerpt={article.data[locale].intro}
-            slug={article.id}
+            tags={article.tags || []}
+            title={article.title[locale]}
+            date={formatDate(new Date(article.date), locale)}
+            image={urlFor(article.image).width(600).height(400).url()}
+            excerpt={article.intro[locale]}
+            slug={article.slug[locale].current}
             is_first={false}
             locale={locale}
           />
@@ -71,7 +74,7 @@ const { articles, locale } = Astro.props as Props;
       Pas d'articles correspondant à cette catégorie
     </p>
   </div>
-</div>
+</section>
 
 <script>
   document.addEventListener("astro:page-load", function () {

@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 export interface Props {
   picture: ImageMetadata;
   pictureAlt?: string;
@@ -11,48 +11,63 @@ const {
   pictureAlt = "Hero image",
   has_scroll_indicator = true,
 } = Astro.props;
+
+const optimized = await getImage({
+  src: picture,
+  widths: [640, 1024, 1440, 1920],
+  format: "webp",
+});
+
+// Générer un placeholder avec une version très petite pour un affichage immédiat
+const placeholder = await getImage({
+  src: picture,
+  width: 20,
+  height: 20,
+  format: "webp",
+  quality: 20,
+});
 ---
 
 <section
   class="relative h-screen flex items-center justify-center overflow-hidden"
   style="overscroll-behavior-y: none;"
 >
-  <!-- Image de fond -->
-  <div class="absolute inset-0 z-0 overflow-hidden">
-    <!-- Placeholder avec dégradé pendant le chargement -->
-    <div
-      id="hero-placeholder"
-      class="absolute inset-0 bg-container transition-opacity duration-1000 ease-out animate-pulse"
-    >
-    </div>
-
-    <!-- Overlay dégradé -->
-    <div
-      class="absolute rounded-full w-full sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/70 z-10 blur-3xl"
-    >
-    </div>
-
-    <!-- Image principale -->
-    <Image
-      src={picture}
-      alt={pictureAlt}
-      widths={[640, 1024, 1440, 1920]}
-      sizes="100vw"
-      format="webp"
-      class="fixed inset-0 w-full h-full object-cover transition-all duration-800 ease-out opacity-0 scale-105 blur-xl"
-      id="hero-image"
-      priority
-    />
+  <!-- Overlay dégradé -->
+  <div
+    class="absolute rounded-full w-full sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/70 z-10 blur-3xl"
+  >
   </div>
 
+  <!-- Image placeholder pour un affichage immédiat -->
+  <div
+    class="fixed w-full h-full top-14 sm:top-16 bg-cover bg-center bg-no-repeat"
+    style={`background-image: url('${placeholder.src}'); filter: blur(10px); transform: scale(1.1); will-change: transform, opacity; transition: opacity 1.5s ease-out, transform 0.1s linear;`}
+    id="hero-placeholder"
+  >
+  </div>
+
+  <!-- Image principale avec effet de zoom -->
+  <img
+    src={optimized.src}
+    srcset={optimized.srcSet.attribute}
+    sizes="100vw"
+    alt={pictureAlt}
+    class="fixed w-full h-full object-cover opacity-0 top-14 sm:top-16"
+    style="transform: scale(1); transition: opacity 1.2s ease-in-out, transform 0.1s linear; will-change: transform;"
+    id="hero-image"
+    onload="window.heroImageLoaded && window.heroImageLoaded()"
+  />
+
   <!-- Contenu du slot -->
-  <slot />
+  <div class="pt-14 sm:pt-0">
+    <slot />
+  </div>
 
   <!-- Scroll indicator -->
   {
     has_scroll_indicator && (
       <div
-        class="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-700 ease-out opacity-0 translate-y-12"
+        class="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         id="scroll-indicator"
       >
         <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-black/20">
@@ -64,140 +79,117 @@ const {
 </section>
 
 <script>
-  function initHeroEffects() {
-    const heroImage = document.getElementById(
-      "hero-image"
-    ) as HTMLImageElement | null;
-    const placeholder = document.getElementById(
+  // Effet de zoom sur l'image lors du scroll
+  function initHeroZoomEffect() {
+    const heroImage = document.getElementById("hero-image") as HTMLImageElement;
+    const heroPlaceholder = document.getElementById(
       "hero-placeholder"
-    ) as HTMLElement | null;
+    ) as HTMLDivElement;
     const scrollIndicator = document.getElementById(
       "scroll-indicator"
-    ) as HTMLElement | null;
+    ) as HTMLDivElement;
 
-    if (!heroImage || !placeholder) return;
+    if (!heroImage) return;
 
-    // Fonction pour gérer le chargement de l'image
-    function handleImageLoad() {
-      if (!heroImage || !placeholder) return;
-
-      // Faire apparaître l'image avec un fondu et réduire le scale
-      heroImage.style.opacity = "1";
-      heroImage.style.transform = "scale(1)";
-
-      // Animation du blur progressif
-      let blurValue = 24; // blur-xl = 24px
-      const blurInterval = setInterval(() => {
-        blurValue -= 2;
-        if (blurValue >= 0) {
-          heroImage.style.filter = `blur(${blurValue}px)`;
-        } else {
-          clearInterval(blurInterval);
-          heroImage.style.filter = "blur(0px)";
-        }
-      }, 25); // 25ms entre chaque étape pour une animation plus rapide
-
-      // Faire disparaître le placeholder avec un délai
-      setTimeout(() => {
-        if (placeholder) {
-          placeholder.style.opacity = "0";
-        }
-      }, 200);
-
-      // Faire apparaître l'indicateur de scroll avec animation de bas en haut
-      if (scrollIndicator) {
-        setTimeout(() => {
-          scrollIndicator.classList.remove("opacity-0", "translate-y-12");
-          scrollIndicator.classList.add("opacity-100", "translate-y-0");
-        }, 400);
-      }
-    }
-
-    // Vérifier si l'image est déjà chargée
-    if (heroImage.complete && heroImage.naturalHeight !== 0) {
-      handleImageLoad();
-    } else {
-      // Écouter les événements de chargement
-      heroImage.addEventListener("load", handleImageLoad);
-    }
-
-    // Fonction de scroll avec zoom parallax
-    function handleScroll() {
-      if (!heroImage) return;
-
-      const scrollTop = Math.max(
-        0,
-        window.pageYOffset || document.documentElement.scrollTop
-      );
-      const windowHeight = window.innerHeight;
-
-      // Calculer le facteur de zoom basé sur la position de scroll
-      const scrollProgress = Math.min(scrollTop / windowHeight, 1);
-      const zoomFactor = 1 + scrollProgress * 0.15; // Zoom plus prononcé
-
-      // Appliquer la transformation seulement si l'image est visible
-      if (heroImage.style.opacity === "1") {
-        heroImage.style.transform = `scale(${zoomFactor})`;
-      }
-
-      // Effet parallax sur l'indicateur de scroll
-      if (scrollIndicator && scrollProgress < 0.3) {
-        const indicatorOpacity = Math.max(0, 1 - scrollProgress * 3);
-        scrollIndicator.style.opacity = indicatorOpacity.toString();
-      }
-    }
-
-    // Throttling optimisé pour les performances
     let ticking = false;
 
-    function onScroll() {
+    function updateImageScale() {
+      // Calcul du facteur de zoom basé sur la position de scroll avec easing
+      const scrolled = window.pageYOffset;
+      const maxScrollForZoom = window.innerHeight * 2; // Zoom sur 2 hauteurs d'écran
+      const progress = Math.min(scrolled / maxScrollForZoom, 1); // Progression de 0 à 1
+
+      // Fonction d'easing pour un effet plus naturel (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+
+      // Calcul du scale avec interpolation fluide
+      const minScale = 1;
+      const maxScale = 1.2; // Zoom plus subtil
+      const finalScale = minScale + (maxScale - minScale) * easeOut;
+
+      // Appliquer la transformation avec interpolation
+      heroImage.style.transform = `scale(${finalScale.toFixed(4)})`;
+
+      // Appliquer la même transformation au placeholder si il est encore visible
+      if (
+        heroPlaceholder &&
+        parseFloat(window.getComputedStyle(heroPlaceholder).opacity) > 0
+      ) {
+        heroPlaceholder.style.transform = `scale(${(finalScale * 1.05).toFixed(4)})`;
+      }
+
+      // Animation fluide de l'indicateur de scroll
+      if (scrollIndicator) {
+        const indicatorOpacity = Math.max(0, 1 - scrolled / 100);
+        const indicatorScale = Math.max(0.8, 1 - scrolled / 500);
+
+        scrollIndicator.style.opacity = indicatorOpacity.toFixed(2);
+        scrollIndicator.style.transform = `translate(-50%, 0) scale(${indicatorScale.toFixed(2)})`;
+      }
+
+      ticking = false;
+    }
+
+    function requestTick() {
       if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
+        requestAnimationFrame(updateImageScale);
         ticking = true;
       }
     }
 
-    // Event listeners
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // Écouter les événements de scroll avec throttling
+    window.addEventListener("scroll", requestTick, { passive: true });
 
-    // Cleanup function
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (heroImage) {
-        heroImage.removeEventListener("load", handleImageLoad);
-      }
-    };
+    // Améliorer les performances avec Intersection Observer pour détecter la visibilité
+    const heroSection = heroImage.closest("section");
+    if (heroSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              window.addEventListener("scroll", requestTick, { passive: true });
+            } else {
+              window.removeEventListener("scroll", requestTick);
+            }
+          });
+        },
+        { rootMargin: "100px" }
+      );
+
+      observer.observe(heroSection);
+    }
+
+    // Initialiser l'état au chargement
+    updateImageScale();
+
+    // Fonction pour gérer la transition douce entre placeholder et image
+    function handleImageLoaded() {
+      // Attendre un petit délai pour s'assurer que l'image est bien rendue
+      setTimeout(() => {
+        // Faire apparaître l'image principale en douceur
+        heroImage.style.opacity = "1";
+
+        // Attendre que l'image soit visible avant de masquer le placeholder
+        setTimeout(() => {
+          if (heroPlaceholder) {
+            heroPlaceholder.style.opacity = "0";
+          }
+        }, 900); // Délai pour éviter le flash blanc
+      }, 10);
+    }
+
+    // Assigner la fonction globalement pour l'onload
+    (window as any).heroImageLoaded = handleImageLoaded;
+
+    // Précharger l'image pour améliorer les performances
+    if (heroImage.complete && heroImage.naturalHeight !== 0) {
+      handleImageLoaded();
+    }
   }
-  document.addEventListener("astro:page-load", initHeroEffects);
+
+  // Initialiser au chargement du DOM
+  document.addEventListener("DOMContentLoaded", initHeroZoomEffect);
+
+  // Réinitialiser lors de la navigation (pour les SPA)
+  document.addEventListener("astro:page-load", initHeroZoomEffect);
 </script>
-
-<style>
-  /* Styles globaux pour empêcher le bounce */
-  :global(html) {
-    overscroll-behavior-y: none;
-  }
-
-  :global(body) {
-    overscroll-behavior-y: none;
-  }
-
-  /* Animation personnalisée pour le placeholder (complément à Tailwind) */
-  #hero-placeholder {
-    animation: gentle-shimmer 4s ease-in-out infinite;
-  }
-
-  @keyframes gentle-shimmer {
-    0%,
-    100% {
-      transform: scale(1);
-      filter: brightness(1);
-    }
-    50% {
-      transform: scale(1.02);
-      filter: brightness(1.1);
-    }
-  }
-</style>

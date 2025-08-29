@@ -3,33 +3,24 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import EventCard from "@/components/events/EventCard.astro";
 import EventsImage from "@/assets/hero/events.png";
-import { getCollection, type CollectionEntry } from "astro:content";
+
+import { getAllEvents } from "@/lib/sanity-queries";
+import { urlFor, type Event } from "@/lib/sanity";
+import { formatDateTime } from "@/lib/date";
+import type { Locale } from "@/lib/i18n";
 
 export function getStaticPaths() {
   return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
 }
 
-const { locale } = Astro.params;
-const events = await getCollection("events");
-
-function formatDateTime(dateString: Date) {
-  const date = new Date(dateString);
-  const dateFormatted = date.toLocaleDateString("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  const timeFormatted = `${hours}h${minutes}`;
-  return `${dateFormatted} à ${timeFormatted}`;
-}
+const { locale } = Astro.params as { locale: Locale };
+const events = await getAllEvents();
 
 // Fonction pour grouper les événements par mois/année
-function groupEventsByMonth(event: CollectionEntry<"events">[]) {
+function groupEventsByMonth(events: Event[]) {
   const grouped = events.reduce(
     (acc, event) => {
-      const date = new Date(event.data.date);
+      const date = new Date(event.date);
       const monthYear = date.toLocaleDateString("fr-FR", {
         year: "numeric",
         month: "long",
@@ -48,16 +39,15 @@ function groupEventsByMonth(event: CollectionEntry<"events">[]) {
   // Trier les événements dans chaque groupe par date décroissante
   Object.keys(grouped).forEach((monthYear) => {
     grouped[monthYear].sort(
-      (a, b) =>
-        new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   });
 
   // Trier les groupes par date décroissante (plus récent en premier)
   const sortedGroups = Object.entries(grouped).sort(
     ([monthYearA], [monthYearB]) => {
-      const dateA = new Date(grouped[monthYearA][0].data.date);
-      const dateB = new Date(grouped[monthYearB][0].data.date);
+      const dateA = new Date(grouped[monthYearA][0].date);
+      const dateB = new Date(grouped[monthYearB][0].date);
       return dateB.getTime() - dateA.getTime();
     }
   );
@@ -82,8 +72,9 @@ const groupedEvents = groupEventsByMonth(events);
         </p>
       </div>
     </Hero>
-    <div class="relative px-5 sm:px-10 bg-white py-10">
-      <div class="max-w-6xl mx-auto m-10">
+    <div class="relative bg-white pb-10">
+      <div class="h-20" id="events-filter"></div>
+      <div class="max-w-5xl mx-auto px-5">
         {
           groupedEvents.map(([monthYear, events], groupIndex) => (
             <div class="mb-12">
@@ -96,15 +87,15 @@ const groupedEvents = groupEventsByMonth(events);
               </div>
 
               {/* Grille des événements pour ce mois */}
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                 {events.map((event) => (
                   <EventCard
-                    title={event.data.title}
-                    slug={event.id}
-                    date={formatDateTime(event.data.date)}
-                    location={event.data.location}
-                    image={event.data.image}
-                    description={event.data.intro}
+                    title={event.title[locale]}
+                    slug={event.slug[locale].current}
+                    date={formatDateTime(new Date(event.date))}
+                    location={event.location}
+                    image={urlFor(event.image).width(600).height(400).url()}
+                    description={event.intro[locale]}
                     locale={locale}
                   />
                 ))}

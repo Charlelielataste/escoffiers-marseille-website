@@ -6,6 +6,7 @@ import VolunteeringSection from "@/components/home/VolunteeringSection.astro";
 import AssociationsSection from "@/components/home/AssociationsSection.astro";
 import HomeImage from "@/assets/hero/home.jpg";
 import { getTranslations } from "@/lib/i18n";
+import LastEventSection from "@/components/home/LastEventSection.astro";
 
 export function getStaticPaths() {
   return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
@@ -47,6 +48,7 @@ const t = getTranslations(locale as "fr" | "en");
 
     <InstitutionSection />
     <VolunteeringSection />
+    <LastEventSection />
     <AssociationsSection />
   </div>
 </Layout>
