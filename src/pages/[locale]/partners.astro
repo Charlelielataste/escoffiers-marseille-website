@@ -42,15 +42,18 @@ const partners = allPartners.filter((membre) => !membre.isHonored);
         honnorPartners.length > 0 && (
           <div class="max-w-6xl mx-auto">
             <div class="flex justify-center">
-              <div class="mb-16 w-full">
+              <div class="mb-16 w-full flex flex-col gap-8">
                 {honnorPartners.map((partner) => (
                   <div class="border-2 w-full border-primary/20 rounded-2xl p-4 gap-8 flex md:flex-row flex-col items-center md:items-start justify-left">
+    
                     <Image
-                      src={urlFor(partner.image).width(150).height(150).url()}
+                      src={urlFor(partner.image).width(150).fit('max').url()}
                       alt={partner.name}
                       width={150}
                       height={150}
+                      class="object-contain"
                     />
+                  
                     <div class="flex flex-col items-start gap-3">
                       <h4 class="text-3xl font-bold text-center text-primary">
                         {partner.name}
