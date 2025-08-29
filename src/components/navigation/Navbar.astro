@@ -37,7 +37,7 @@ const enUrl =
 // Helper function pour les classes des liens de navigation
 const getLinkClasses = (isActive: boolean) => {
   return cn(
-    "py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center",
+    "text-sm py-1 font-medium transition-colors flex items-center justify-center",
     isActive ? "text-primary font-bold" : "text-text-primary hover:text-primary"
   );
 };
@@ -65,13 +65,13 @@ const getMobileLinkClasses = (isActive: boolean) => {
 >
   <div class="max-w-7xl lg:mx-auto sm:px-4 lg:px-8">
     <div
-      class="flex justify-between px-4 lg:px-0 items-center h-[60px] sm:h-[70px]"
+      class="flex justify-between px-4 gap-x-4 lg:px-0 items-center h-[60px] sm:h-[70px]"
     >
       <!-- Logo à gauche -->
       <div class="flex-shrink-0">
         <a
           href={navUrls.home}
-          class="flex items-center justify-center w-16 lg:w-20 h-[50px]"
+          class="flex items-center justify-center w-16 lg:w-24 h-[50px]"
         >
           <Image
             src="/logos/logo-face-color.png"
@@ -85,75 +85,83 @@ const getMobileLinkClasses = (isActive: boolean) => {
       </div>
 
       <!-- Liens centrés - Desktop -->
-      <div class="hidden md:block">
-        <div class="flex items-baseline gap-x-8">
-          <a
-            href={navUrls.about}
-            class={cn(
-              getLinkClasses(navUrls.about === currentPath),
-              currentLocale === "fr" ? "w-[70px]" : "w-14"
-            )}
-          >
-            {t.nav.about}
-          </a>
-          <a
-            href={navUrls.articles}
-            class={cn(getLinkClasses(currentPath.includes("articles")), "w-16")}
-          >
-            {t.nav.articles}
-          </a>
-          <a
-            href={navUrls.events}
-            class={cn(
-              getLinkClasses(currentPath.includes("events")),
-              currentLocale === "fr" ? "w-20" : "w-14"
-            )}
-          >
-            {t.nav.events}
-          </a>
-          <a
-            href={navUrls.members}
-            class={cn(getLinkClasses(navUrls.members === currentPath), "w-24")}
-          >
-            {t.nav.members}
-          </a>
-          <a
-            href={navUrls.contact}
-            class={cn(
-              getLinkClasses(navUrls.contact === currentPath),
-              currentLocale === "fr" ? "w-28" : "w-14"
-            )}
-          >
-            {t.nav.contact}
-          </a>
-        </div>
+      <div class="hidden md:flex md:flex-wrap items-baseline gap-x-6">
+        <a
+          href={navUrls.about}
+          class={cn(
+            getLinkClasses(navUrls.about === currentPath),
+            currentLocale === "fr" ? "w-[63px]" : "w-12"
+          )}
+        >
+          {t.nav.about}
+        </a>
+        <a
+          href={navUrls.articles}
+          class={cn(getLinkClasses(currentPath.includes("articles")), "w-14")}
+        >
+          {t.nav.articles}
+        </a>
+        <a
+          href={navUrls.events}
+          class={cn(
+            getLinkClasses(currentPath.includes("events")),
+            currentLocale === "fr" ? "w-20" : "w-12"
+          )}
+        >
+          {t.nav.events}
+        </a>
+        <a
+          href={navUrls.members}
+          class={cn(
+            getLinkClasses(navUrls.members === currentPath),
+            currentLocale === "fr" ? "w-[85px]" : "w-[88px]"
+          )}
+        >
+          {t.nav.members}
+        </a>
+        <a
+          href={navUrls.partners}
+          class={cn(
+            getLinkClasses(navUrls.partners === currentPath),
+            currentLocale === "fr" ? "w-[102px]" : "w-[85px]"
+          )}
+        >
+          {t.nav.partners}
+        </a>
+        <a
+          href={navUrls.contact}
+          class={cn(
+            getLinkClasses(navUrls.contact === currentPath),
+            currentLocale === "fr" ? "w-[100px]" : "w-14"
+          )}
+        >
+          {t.nav.contact}
+        </a>
       </div>
 
       <!-- Sélecteur de langue - Desktop -->
-      <div class="hidden md:flex w-20 items-center justify-center">
-        <div class="flex items-center gap-x-1">
-          <a
-            href={frUrl}
-            aria-label="Langue Française"
-            class={cn(
-              "px-2 py-1 rounded w-10 h-[32px] flex items-center border border-tertiary/40 justify-center hover:bg-tertiary/40",
-              currentLocale === "fr" && "bg-tertiary/40 text-white"
-            )}
-          >
-            <FrenchFlagIcon />
-          </a>
-          <span class="text-black px-1">|</span>
-          <a
-            href={enUrl}
-            aria-label="English Language"
-            class={cn(
-              "px-2 py-1 rounded w-10 h-[32px] flex items-center border border-tertiary/40 justify-center hover:bg-tertiary/40",
-              currentLocale === "en" && "bg-tertiary/40 text-white"
-            )}
-          >
-            <EnglishFlagIcon />
-          </a>
-        </div>
+      <div class="hidden md:flex w-24 items-center justify-center gap-x-1">
+        <a
+          href={frUrl}
+          aria-label="Langue Française"
+          class={cn(
+            "px-2 py-1 rounded w-10 h-[32px] flex items-center border border-tertiary/40 justify-center hover:bg-tertiary/40",
+            currentLocale === "fr" && "bg-tertiary/40 text-white"
+          )}
+        >
+          <FrenchFlagIcon />
+        </a>
+        <span class="text-black px-1">|</span>
+        <a
+          href={enUrl}
+          aria-label="English Language"
+          class={cn(
+            "px-2 py-1 rounded w-10 h-[32px] flex items-center border border-tertiary/40 justify-center hover:bg-tertiary/40",
+            currentLocale === "en" && "bg-tertiary/40 text-white"
+          )}
+        >
+          <EnglishFlagIcon />
+        </a>
       </div>
 
       <!-- Bouton Menu Mobile -->

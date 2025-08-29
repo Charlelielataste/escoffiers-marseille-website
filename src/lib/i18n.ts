@@ -50,6 +50,7 @@ export function getNavUrls(currentLocale: Locale) {
     articles: getRelativeLocaleUrl(currentLocale, "/articles"),
     events: getRelativeLocaleUrl(currentLocale, "/events"),
     members: getRelativeLocaleUrl(currentLocale, "/members"),
+    partners: getRelativeLocaleUrl(currentLocale, "/partners"),
     contact: getRelativeLocaleUrl(currentLocale, "/contact"),
   };
 }
