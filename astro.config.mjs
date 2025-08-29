@@ -22,7 +22,7 @@ export default defineConfig({
             en: "fr"
         },
         routing: {
-            prefixDefaultLocale: true,
+            prefixDefaultLocale: false,
             fallbackType: "rewrite"
         }
     }

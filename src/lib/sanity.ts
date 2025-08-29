@@ -108,6 +108,18 @@ export interface Member {
   isHonored: boolean;
 }
 
+export interface Partner {
+  _id: string;
+  name: string;
+  image: any;
+  description: {
+    fr: string;
+    en: string;
+  };
+  link: string;
+  isHonored: boolean;
+}
+
 export interface Settings {
   _id: string;
   featuredArticle: Article;
