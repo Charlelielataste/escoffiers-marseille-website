@@ -12,9 +12,14 @@ const currentLocale = (Astro.currentLocale || "fr") as Locale;
 // Props pour le Layout
 export interface Props {
   title?: string;
+  multilingualUrls?: {
+    fr: string;
+    en: string;
+  };
 }
 
-const { title = "Les Disciples d'Escoffier Marseille" } = Astro.props;
+const { title = "Les Disciples d'Escoffier Marseille", multilingualUrls } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -28,8 +33,11 @@ const { title = "Les Disciples d'Escoffier Marseille" } = Astro.props;
     <title>{title}</title>
     <ClientRouter />
   </head>
-  <body class="font-['Museo_Sans']">
-    <Navbar currentPath={Astro.url.pathname} />
+  <body class="font-['Museo_Sans']" style="overscroll-behavior: none;">
+    <Navbar
+      currentPath={Astro.url.pathname}
+      multilingualUrls={multilingualUrls}
+    />
     <slot />
     <Footer />
   </body>

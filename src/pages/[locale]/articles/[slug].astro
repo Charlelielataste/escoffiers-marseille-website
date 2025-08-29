@@ -1,25 +1,25 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { getCollection } from "astro:content";
 import type { Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/date";
+import { getAllArticles } from "@/lib/sanity-queries";
+import { urlFor } from "@/lib/sanity";
+import { PortableText } from "astro-portabletext";
 
 export async function getStaticPaths() {
-  const articles = await getCollection("articles");
+  const articles = await getAllArticles();
   const paths = [];
 
   for (const article of articles) {
     for (const locale of ["fr", "en"] as Locale[]) {
-      // Vérifier que l'article a une version dans cette locale
-      if (article.data[locale]) {
-        paths.push({
-          params: {
-            locale,
-            slug: article.id,
-          },
-          props: { article },
-        });
-      }
+      // Créer un chemin pour chaque locale
+      paths.push({
+        params: {
+          locale,
+          slug: article.slug[locale].current,
+        },
+        props: { article },
+      });
     }
   }
 
@@ -29,31 +29,28 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { locale } = Astro.params as { locale: Locale };
 
-const allTags = await getCollection("tags");
-
-const findTag = (tags: string[]) => {
-  return tags.map((tag) => allTags.find((t) => t.slug === tag));
+// Préparer les slugs multilingues pour la navigation
+const multilingualSlugs = {
+  fr: `/fr/articles/${article.slug.fr.current}`,
+  en: `/en/articles/${article.slug.en.current}`,
 };
-
-// Données localisées de l'article
-const articleData = article.data[locale];
 ---
 
-<Layout title={articleData.title}>
+<Layout title={article.title[locale]} multilingualUrls={multilingualSlugs}>
   <article class="max-w-6xl mx-auto px-6 py-20">
     <div class="mb-6 mt-4">
-      <button
-        onclick="history.back()"
+      <a
+        href={`/${locale}/articles#articles-filter`}
         class="inline-flex items-center text-sm gap-2 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
       >
         ← Retour aux articles
-      </button>
+      </a>
     </div>
     <!-- Image en haut -->
     <div class="mb-8">
       <img
-        src={articleData.image}
-        alt={articleData.title}
+        src={urlFor(article.image).width(1200).height(600).url()}
+        alt={article.title[locale]}
         class="w-full h-96 object-cover rounded-2xl shadow-lg"
       />
     </div>
@@ -61,24 +58,24 @@ const articleData = article.data[locale];
     <!-- Date -->
     <div class="mb-6">
       <time
-        datetime={new Date(articleData.date).toISOString()}
+        datetime={new Date(article.date).toISOString()}
         class="text-gray-600 text-lg font-medium"
       >
-        {formatDate(new Date(articleData.date), locale)}
+        {formatDate(new Date(article.date), locale)}
       </time>
     </div>
 
     <!-- Titre -->
     <h1 class="text-4xl md:text-5xl font-bold text-primary mb-8 leading-tight">
-      {articleData.title}
+      {article.title[locale]}
     </h1>
 
     <!-- Tags -->
     <div class="flex flex-wrap gap-3 mb-8">
       {
-        findTag(articleData.tags || []).map((tag) => (
+        (article.tags || []).map((tag) => (
           <span class="bg-secondary text-white py-2 px-4 rounded-full text-sm font-semibold shadow-sm">
-            {tag?.data[locale].title}
+            {tag.title[locale]}
           </span>
         ))
       }
@@ -89,7 +86,7 @@ const articleData = article.data[locale];
       <div
         class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
       >
-        {articleData.intro}
+        {article.intro[locale]}
       </div>
     </div>
 
@@ -97,7 +94,7 @@ const articleData = article.data[locale];
     <div
       class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-black max-w-none bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
     >
-      <div set:html={articleData.body} />
+      <PortableText value={article.body[locale]} />
     </div>
   </article>
 </Layout>
