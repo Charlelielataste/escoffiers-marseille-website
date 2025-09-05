@@ -1,6 +1,6 @@
 ---
 import ArticleCard from "./ArticleCard.astro";
-import type { Locale } from "@/lib/i18n";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/date";
 import { urlFor, type Article } from "@/lib/sanity";
 import { getAllTags } from "@/lib/sanity-queries";
@@ -13,13 +13,14 @@ export interface Props {
 }
 
 const { articles, locale } = Astro.props as Props;
+const t = getTranslations(locale);
 ---
 
 <section class="max-w-6xl mx-auto">
   <!-- Filtres -->
   <div class="mb-8">
     <h3 class="text-xl font-semibold mb-4 text-center">
-      Filtres par catégories
+      {t.articles.category}
     </h3>
 
     <div class="flex flex-wrap gap-3 justify-center">
@@ -27,7 +28,7 @@ const { articles, locale } = Astro.props as Props;
         data-filter=""
         class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
       >
-        Tous les articles
+        {t.articles.allArticles}
       </button>
 
       {

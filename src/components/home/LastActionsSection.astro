@@ -1,0 +1,40 @@
+---
+import { getAllLastActions } from "@/lib/sanity-queries";
+import type { Locale } from "@/lib/i18n";
+import { formatDate } from "@/lib/date";
+
+const { locale } = Astro.props as { locale: Locale };
+
+const lastActions = await getAllLastActions();
+
+if (lastActions.length === 0) {
+  return null;
+}
+---
+
+<section class="relative py-20 bg-primary">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="space-y-6">
+      <div class="relative border-t border-primary/50">
+        <div class="bg-container/90 backdrop-blur-sm shadow-2xl rounded-lg p-8">
+          <h3 class="text-2xl font-semibold text-text-primary mb-6">
+            Nos Actions Récentes
+          </h3>
+          <div class="space-y-4">
+            {
+              lastActions.map((action) => (
+                <div class="flex flex-col space-y-2 border-t pt-4 first:border-t-0 border-tertiary/50 first:pt-0">
+                  <div class="border font-medium border-tertiary w-fit px-2 py-1 rounded-md text-tertiary">
+                    {formatDate(new Date(action.date), locale)}
+                  </div>
+                  <p class="font-medium text-lg">{action.title[locale]}</p>
+                  <p>{action.intro[locale]}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

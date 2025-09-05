@@ -120,6 +120,32 @@ export interface Partner {
   isHonored: boolean;
 }
 
+export interface LastActions {
+  _id: string;
+  title: {
+    fr: string;
+    en: string;
+  };
+  date: string;
+  intro: {
+    fr: string;
+    en: string;
+  };
+}
+
+export interface NextEvents {
+  _id: string;
+  title: {
+    fr: string;
+    en: string;
+  };
+  date: string;
+  intro: {
+    fr: string;
+    en: string;
+  };
+}
+
 export interface Settings {
   _id: string;
   featuredArticle: Article;

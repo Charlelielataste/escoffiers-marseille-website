@@ -1,23 +1,15 @@
 ---
 import Hero from "@/components/Hero.astro";
-import MembersCard from "@/components/members/MembersCard.astro";
 import Layout from "@/layouts/Layout.astro";
 import PartnersImage from "@/assets/hero/partners.jpg";
 import { getAllPartners } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { Image } from "astro:assets";
 
-export function getStaticPaths() {
-  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
-}
-
-const { locale } = Astro.params;
-const typedLocale = locale as "fr" | "en";
 const allPartners = await getAllPartners();
 
-// Filtrer les membres d'honneur et les membres normaux
-const honnorPartners = allPartners.filter((membre) => membre.isHonored);
-const partners = allPartners.filter((membre) => !membre.isHonored);
+const honnorPartners = allPartners.filter((partner) => partner.isHonored);
+const partners = allPartners.filter((partner) => !partner.isHonored);
 ---
 
 <Layout>
@@ -35,7 +27,7 @@ const partners = allPartners.filter((membre) => !membre.isHonored);
     </Hero>
     <section class="relative lg:px-10 bg-white py-10">
         <h2 class="text-3xl md:text-5xl font-bold text-primary text-center mb-16">
-          Qui sont-ils ?
+          Merci à eux !
         </h2>
       <!-- Section Membres d'Honneur -->
       {
@@ -59,7 +51,7 @@ const partners = allPartners.filter((membre) => !membre.isHonored);
                         {partner.name}
                       </h4>
                       <p class="text-left text-gray-500">
-                        {partner.description[typedLocale]}
+                        {partner.description.fr}
                       </p>
                       <a href={partner.link} class="text-primary font-bold hover:text-secondary/80 transition-colors duration-300 hover:underline">Voir leur site</a>
                     </div>

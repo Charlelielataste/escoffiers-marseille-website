@@ -1,4 +1,6 @@
 ---
+import MailIcon from "@/components/icons/MailIcon.astro";
+
 // Composant de formulaire de contact pour Les Disciples d'Escoffier Marseille
 ---
 
@@ -211,60 +213,78 @@
           </div>
         </form>
       </div>
+      <div id="contact" class="p-5"></div>
+      <div
+        id="contact"
+        class="py-10 border-t px-8 border-b border-primary/40 flex flex-col items-center justify-center gap-y-6"
+      >
+        <h2 class="text-lg sm:text-2xl font-bold text-primary">
+          Pour toutes autres demandes, n'hésitez pas à nous contacter :
+        </h2>
+        <div class="flex items-center gap-x-4">
+          <MailIcon size="16" class="text-primary shrink-0" />
+          <a
+            href="mailto:Escoffiers@quelquechose.com"
+            class="font-medium hover:text-tertiary transition-colors sm:text-lg"
+          >
+            contact@disciplesescoffiers-provence-mediterranee.org
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const submitButton = document.getElementById(
-      "submit-button"
-    ) as HTMLButtonElement;
-    const requiredFields = [
-      document.getElementById("firstName") as HTMLInputElement,
-      document.getElementById("lastName") as HTMLInputElement,
-      document.getElementById("email") as HTMLInputElement,
-      document.getElementById("experience") as HTMLInputElement,
-      document.getElementById("message") as HTMLTextAreaElement,
-    ];
-    const checkboxes = document.querySelectorAll(
-      'input[name="engagement"]'
-    ) as NodeListOf<HTMLInputElement>;
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const submitButton = document.getElementById(
+        "submit-button"
+      ) as HTMLButtonElement;
+      const requiredFields = [
+        document.getElementById("firstName") as HTMLInputElement,
+        document.getElementById("lastName") as HTMLInputElement,
+        document.getElementById("email") as HTMLInputElement,
+        document.getElementById("experience") as HTMLInputElement,
+        document.getElementById("message") as HTMLTextAreaElement,
+      ];
+      const checkboxes = document.querySelectorAll(
+        'input[name="engagement"]'
+      ) as NodeListOf<HTMLInputElement>;
 
-    function checkFormValidity() {
-      // Vérifier que tous les champs obligatoires sont remplis
-      const allFieldsFilled = requiredFields.every(
-        (field) => field.value.trim() !== ""
-      );
+      function checkFormValidity() {
+        // Vérifier que tous les champs obligatoires sont remplis
+        const allFieldsFilled = requiredFields.every(
+          (field) => field.value.trim() !== ""
+        );
 
-      // Vérifier qu'au moins une checkbox est cochée
-      const atLeastOneChecked = Array.from(checkboxes).some(
-        (checkbox) => checkbox.checked
-      );
+        // Vérifier qu'au moins une checkbox est cochée
+        const atLeastOneChecked = Array.from(checkboxes).some(
+          (checkbox) => checkbox.checked
+        );
 
-      // Activer le bouton si tout est ok
-      if (allFieldsFilled && atLeastOneChecked) {
-        submitButton.disabled = false;
-        submitButton.className =
-          "w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2 cursor-pointer";
-      } else {
-        submitButton.disabled = true;
-        submitButton.className =
-          "w-full bg-primary/50 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-not-allowed";
+        // Activer le bouton si tout est ok
+        if (allFieldsFilled && atLeastOneChecked) {
+          submitButton.disabled = false;
+          submitButton.className =
+            "w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2 cursor-pointer";
+        } else {
+          submitButton.disabled = true;
+          submitButton.className =
+            "w-full bg-primary/50 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-not-allowed";
+        }
       }
-    }
 
-    // Écouter les changements sur les champs obligatoires
-    requiredFields.forEach((field) => {
-      field.addEventListener("input", checkFormValidity);
+      // Écouter les changements sur les champs obligatoires
+      requiredFields.forEach((field) => {
+        field.addEventListener("input", checkFormValidity);
+      });
+
+      // Écouter les changements sur les checkboxes
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", checkFormValidity);
+      });
+
+      // Vérification initiale
+      checkFormValidity();
     });
-
-    // Écouter les changements sur les checkboxes
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", checkFormValidity);
-    });
-
-    // Vérification initiale
-    checkFormValidity();
-  });
-</script>
+  </script>
+</section>

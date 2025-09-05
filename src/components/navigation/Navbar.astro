@@ -12,7 +12,6 @@ import {
 import FrenchFlagIcon from "@/components/icons/FrenchFlagIcon.astro";
 import EnglishFlagIcon from "@/components/icons/EnglishFlagIcon.astro";
 
-// Props pour le composant
 export interface Props {
   currentPath?: string;
   multilingualUrls?: {
@@ -23,7 +22,6 @@ export interface Props {
 
 const { currentPath = "/", multilingualUrls } = Astro.props;
 
-// Utiliser le helper natif d'Astro au lieu de notre fonction
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const navUrls = getNavUrls(currentLocale);
 const t = getTranslations(currentLocale);
@@ -34,7 +32,6 @@ const frUrl =
 const enUrl =
   multilingualUrls?.en || getAlternateLanguageUrl(currentPath, "en");
 
-// Helper function pour les classes des liens de navigation
 const getLinkClasses = (isActive: boolean) => {
   return cn(
     "text-sm py-1 font-medium transition-colors flex items-center justify-center",
@@ -42,7 +39,6 @@ const getLinkClasses = (isActive: boolean) => {
   );
 };
 
-// Helper function pour les classes des liens mobiles
 const getMobileLinkClasses = (isActive: boolean) => {
   return cn(
     "block px-3 py-2 rounded-md text-base font-medium transition-colors",
@@ -53,7 +49,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
 };
 ---
 
-<!-- Overlay pour le menu mobile -->
+<!-- Overlay for the mobile menu -->
 <div
   id="mobile-menu-overlay"
   class="fixed h-[100vh] w-screen bg-black/40 z-40 md:hidden opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
@@ -67,7 +63,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
     <div
       class="flex justify-between px-4 gap-x-4 lg:px-0 items-center h-[60px] sm:h-[70px]"
     >
-      <!-- Logo à gauche -->
+      <!-- Logo on the left -->
       <div class="flex-shrink-0">
         <a
           href={navUrls.home}
@@ -84,7 +80,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
         </a>
       </div>
 
-      <!-- Liens centrés - Desktop -->
+      <!-- Centered links - Desktop -->
       <div class="hidden md:flex md:flex-wrap items-baseline gap-x-6">
         <a
           href={navUrls.about}
@@ -104,7 +100,11 @@ const getMobileLinkClasses = (isActive: boolean) => {
         <a
           href={navUrls.events}
           class={cn(
-            getLinkClasses(currentPath.includes("events")),
+            getLinkClasses(
+              currentPath.includes(
+                currentLocale === "fr" ? "evenements" : "events"
+              )
+            ),
             currentLocale === "fr" ? "w-20" : "w-12"
           )}
         >
@@ -139,7 +139,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
         </a>
       </div>
 
-      <!-- Sélecteur de langue - Desktop -->
+      <!-- Switch language - Desktop -->
       <div class="hidden md:flex w-24 items-center justify-center gap-x-1">
         <a
           href={frUrl}
@@ -164,7 +164,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
         </a>
       </div>
 
-      <!-- Bouton Menu Mobile -->
+      <!-- Mobile Menu Button -->
       <div class="md:hidden">
         <button id="mobile-menu-toggle" class="p-2 relative" aria-label="Menu">
           <div
@@ -235,7 +235,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
           {t.nav.contact}
         </a>
 
-        <!-- Sélecteur de langue mobile -->
+        <!-- Switch language Mobile -->
         <div
           class="pt-4 px-3 flex items-center justify-between border-t border-primary/40"
         >
@@ -269,7 +269,6 @@ const getMobileLinkClasses = (isActive: boolean) => {
 </nav>
 
 <script>
-  // Gestion smooth du menu mobile avec transitions et overlay
   document.addEventListener("astro:page-load", function () {
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
@@ -286,19 +285,15 @@ const getMobileLinkClasses = (isActive: boolean) => {
     ) {
       let isMenuOpen = false;
 
-      // Fonction pour ouvrir le menu
       const openMenu = () => {
         isMenuOpen = true;
 
-        // Ouvrir le menu avec animation fluide
         mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
         mobileMenu.style.opacity = "1";
 
-        // Afficher l'overlay
         mobileMenuOverlay.style.opacity = "1";
         mobileMenuOverlay.style.pointerEvents = "auto";
 
-        // Transition fluide des icônes
         hamburgerIcon.style.opacity = "0";
         hamburgerIcon.style.transform = "rotate(180deg) scale(0.8)";
 
@@ -306,19 +301,15 @@ const getMobileLinkClasses = (isActive: boolean) => {
         closeIcon.style.transform = "rotate(0deg) scale(1)";
       };
 
-      // Fonction pour fermer le menu
       const closeMenu = () => {
         isMenuOpen = false;
 
-        // Fermer le menu avec animation fluide
         mobileMenu.style.maxHeight = "0px";
         mobileMenu.style.opacity = "0";
 
-        // Masquer l'overlay
         mobileMenuOverlay.style.opacity = "0";
         mobileMenuOverlay.style.pointerEvents = "none";
 
-        // Transition fluide des icônes
         hamburgerIcon.style.opacity = "1";
         hamburgerIcon.style.transform = "rotate(0deg) scale(1)";
 
@@ -326,7 +317,6 @@ const getMobileLinkClasses = (isActive: boolean) => {
         closeIcon.style.transform = "rotate(-180deg) scale(0.8)";
       };
 
-      // Toggle du menu via le bouton
       mobileMenuToggle.addEventListener("click", () => {
         if (isMenuOpen) {
           closeMenu();
@@ -335,14 +325,12 @@ const getMobileLinkClasses = (isActive: boolean) => {
         }
       });
 
-      // Fermer le menu en cliquant sur l'overlay
       mobileMenuOverlay.addEventListener("click", () => {
         if (isMenuOpen) {
           closeMenu();
         }
       });
 
-      // Fermer le menu en cliquant sur un lien avec animation
       const mobileLinks = mobileMenu.querySelectorAll("a");
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
