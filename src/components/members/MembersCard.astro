@@ -1,4 +1,6 @@
 ---
+import { getTranslations, type Locale } from "@/lib/i18n";
+
 export interface Props {
   photo: string;
   color: string;
@@ -8,6 +10,7 @@ export interface Props {
   email?: string;
   workplace?: string;
   size?: string;
+  locale: Locale;
 }
 
 const {
@@ -19,7 +22,10 @@ const {
   email,
   workplace,
   size = "112px",
+  locale,
 } = Astro.props;
+
+const t = getTranslations(locale);
 ---
 
 <div class="flex flex-col items-center text-center w-full sm:w-80">
@@ -70,7 +76,7 @@ const {
       >
         ✉️{" "}
         <span class="hover:text-secondary/80 hover:underline">
-          Contactez-moi
+          {t.members.contact}
         </span>
       </a>
     )

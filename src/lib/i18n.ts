@@ -1,63 +1,86 @@
 import { translations } from "@/lib/translations";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-// Types pour les langues supportées
 export type Locale = "fr" | "en";
 
-/**
- * Détecte la langue courante à partir de l'URL
- */
-export function getCurrentLocale(pathname: string): Locale {
-  if (pathname.startsWith("/en")) {
-    return "en";
-  } else if (pathname.startsWith("/fr")) {
-    return "fr";
-  }
-  // Par défaut français si pas de préfixe reconnu
-  return "fr";
-}
+const slugMap: Record<string, Record<Locale, string>> = {
+  "/a-propos/": { fr: "/a-propos/", en: "/en/about/" },
+  "/en/about/": { fr: "/a-propos/", en: "/en/about/" },
+  "/articles/": { fr: "/articles/", en: "/en/articles/" },
+  "/en/articles/": { fr: "/articles/", en: "/en/articles/" },
+  "/en/articles": {
+    fr: "/articles/",
+    en: "/en/articles/",
+  },
+  "/articles": {
+    fr: "/articles/",
+    en: "/en/articles/",
+  },
+  "/les-disciples/": { fr: "/les-disciples/", en: "/en/members/" },
+  "/en/members/": { fr: "/les-disciples/", en: "/en/members/" },
+  "/partenaires/": { fr: "/partenaires/", en: "/en/partners/" },
+  "/en/partners/": { fr: "/partenaires/", en: "/en/partners/" },
+  "/evenements/": { fr: "/evenements/", en: "/en/events/" },
+  "/en/events": {
+    fr: "/evenements/",
+    en: "/en/events/",
+  },
+  "/evenements": {
+    fr: "/evenements/",
+    en: "/en/events/",
+  },
+  "/en/events/": { fr: "/evenements/", en: "/en/events/" },
+  "/nous-rejoindre/": { fr: "/nous-rejoindre/", en: "/en/contact/" },
+  "/en/contact/": { fr: "/nous-rejoindre/", en: "/en/contact/" },
+  "/nous-rejoindre": { fr: "/nous-rejoindre/", en: "/en/contact/" },
+  "/en/contact": { fr: "/nous-rejoindre/", en: "/en/contact/" },
+  "/": { fr: "/", en: "/en" },
+  "/en": { fr: "/", en: "/en" },
+};
 
 /**
- * Génère l'URL pour changer de langue en gardant la même page
+ * Return the corresponding URL in the target language
  */
 export function getAlternateLanguageUrl(
   pathname: string,
   targetLocale: Locale
 ): string {
-  const currentLocale = getCurrentLocale(pathname);
+  const mapped = slugMap[pathname];
+  if (mapped) return mapped[targetLocale];
 
-  if (currentLocale === targetLocale) {
-    return pathname;
-  }
-
-  // Enlever le préfixe de langue actuel
-  let cleanPath = pathname.replace(/^\/[a-z]{2}/, "");
-  if (!cleanPath.startsWith("/")) {
-    cleanPath = "/" + cleanPath;
-  }
-
-  // Ajouter le nouveau préfixe de langue
-  return `/${targetLocale}${cleanPath}`;
+  return targetLocale === "fr" ? "/" : "/en";
 }
 
 /**
- * Génère les URLs de navigation adaptées à la langue courante
+ * Generate the navigation URLs adapted to the current language
  */
 export function getNavUrls(currentLocale: Locale) {
   return {
     home: getRelativeLocaleUrl(currentLocale, "/"),
-    about: getRelativeLocaleUrl(currentLocale, "/about"),
+    about: getRelativeLocaleUrl(
+      currentLocale,
+      currentLocale === "fr" ? "/a-propos" : "/about"
+    ),
     articles: getRelativeLocaleUrl(currentLocale, "/articles"),
-    events: getRelativeLocaleUrl(currentLocale, "/events"),
-    members: getRelativeLocaleUrl(currentLocale, "/members"),
-    partners: getRelativeLocaleUrl(currentLocale, "/partners"),
-    contact: getRelativeLocaleUrl(currentLocale, "/contact"),
+    events: getRelativeLocaleUrl(
+      currentLocale,
+      currentLocale === "fr" ? "/evenements" : "/events"
+    ),
+    members: getRelativeLocaleUrl(
+      currentLocale,
+      currentLocale === "fr" ? "/les-disciples" : "/members"
+    ),
+    partners: getRelativeLocaleUrl(
+      currentLocale,
+      currentLocale === "fr" ? "/partenaires" : "/partners"
+    ),
+    contact: getRelativeLocaleUrl(
+      currentLocale,
+      currentLocale === "fr" ? "/nous-rejoindre" : "/contact"
+    ),
   };
 }
 
-/**
- * Obtient les traductions pour la langue courante
- */
 export function getTranslations(locale: Locale) {
   return translations[locale];
 }

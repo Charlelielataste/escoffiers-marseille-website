@@ -1,57 +1,50 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import type { Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/date";
-import { getAllArticles } from "@/lib/sanity-queries";
+import { getArticleBySlug, getArticleSlugs } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { PortableText } from "astro-portabletext";
 
 export async function getStaticPaths() {
-  const articles = await getAllArticles();
-  const paths = [];
+  const articles = await getArticleSlugs();
 
-  for (const article of articles) {
-    for (const locale of ["fr", "en"] as Locale[]) {
-      // Créer un chemin pour chaque locale
-      paths.push({
-        params: {
-          locale,
-          slug: article.slug[locale].current,
-        },
-        props: { article },
-      });
-    }
-  }
-
-  return paths;
+  return articles.map((article) => ({
+    params: {
+      slug: article.slug.en.current,
+    },
+  }));
 }
 
-const { article } = Astro.props;
-const { locale } = Astro.params as { locale: Locale };
+const { slug } = Astro.params;
+const article = await getArticleBySlug(slug!, "en");
+
+if (!article) {
+  return Astro.redirect("/en/articles");
+}
 
 // Préparer les slugs multilingues pour la navigation
 const multilingualSlugs = {
-  fr: `/fr/articles/${article.slug.fr.current}`,
+  fr: `/articles/${article.slug.fr.current}`,
   en: `/en/articles/${article.slug.en.current}`,
 };
 ---
 
-<Layout title={article.title[locale]} multilingualUrls={multilingualSlugs}>
+<Layout title={article.title.en} multilingualUrls={multilingualSlugs}>
   <article class="max-w-6xl mx-auto px-6 py-20">
     <div class="mb-6 mt-4">
       <a
-        href={`/${locale}/articles#articles-filter`}
+        href={`/en/articles#articles`}
         data-astro-reload
         class="inline-flex items-center text-sm gap-2 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
       >
-        ← Retour aux articles
+        ← Back to articles
       </a>
     </div>
     <!-- Image en haut -->
     <div class="mb-8">
       <img
         src={urlFor(article.image).width(1200).height(600).url()}
-        alt={article.title[locale]}
+        alt={article.title.en}
         class="w-full h-96 object-cover rounded-2xl shadow-lg"
       />
     </div>
@@ -62,13 +55,13 @@ const multilingualSlugs = {
         datetime={new Date(article.date).toISOString()}
         class="text-gray-600 text-lg font-medium"
       >
-        {formatDate(new Date(article.date), locale)}
+        {formatDate(new Date(article.date), "en")}
       </time>
     </div>
 
     <!-- Titre -->
     <h1 class="text-4xl md:text-5xl font-bold text-primary mb-8 leading-tight">
-      {article.title[locale]}
+      {article.title.en}
     </h1>
 
     <!-- Tags -->
@@ -76,7 +69,7 @@ const multilingualSlugs = {
       {
         (article.tags || []).map((tag) => (
           <span class="bg-secondary text-white py-2 px-4 rounded-full text-sm font-semibold shadow-sm">
-            {tag.title[locale]}
+            {tag.title.en}
           </span>
         ))
       }
@@ -85,17 +78,17 @@ const multilingualSlugs = {
     <!-- Introduction -->
     <div class="mb-12">
       <div
-        class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+        class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
       >
-        {article.intro[locale]}
+        {article.intro.en}
       </div>
     </div>
 
     <!-- Contenu principal -->
     <div
-      class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-black max-w-none bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+      class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-h3:text-primary prose-black max-w-none bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
     >
-      <PortableText value={article.body[locale]} />
+      <PortableText value={article.body.en} />
     </div>
   </article>
 </Layout>

@@ -1,5 +1,14 @@
 import { client } from "./sanity";
-import type { Article, Tag, Event, Member, Settings, Partner } from "./sanity";
+import type {
+  Article,
+  Tag,
+  Event,
+  Member,
+  Settings,
+  Partner,
+  LastActions,
+  NextEvents,
+} from "./sanity";
 
 export async function getAllArticles(): Promise<Article[]> {
   return await client.fetch(`
@@ -16,6 +25,16 @@ export async function getAllArticles(): Promise<Article[]> {
       date,
       intro,
       body
+    }
+  `);
+}
+
+export async function getArticleSlugs(): Promise<
+  { slug: { fr: { current: string }; en: { current: string } } }[]
+> {
+  return await client.fetch(`
+    *[_type == "article"] {
+      slug
     }
   `);
 }
@@ -71,11 +90,24 @@ export async function getAllEvents(): Promise<Event[]> {
   `);
 }
 
-export async function getEventBySlug(slug: string): Promise<Event | null> {
+export async function getEventSlugs(): Promise<
+  { slug: { fr: { current: string }; en: { current: string } } }[]
+> {
+  return await client.fetch(`
+    *[_type == "event"] {
+      slug
+    }
+  `);
+}
+
+export async function getEventBySlug(
+  slug: string,
+  locale: string = "fr"
+): Promise<Event | null> {
   return await client.fetch(
     `
-    *[_type == "event" && slug.current == $slug][0] {
-      _id,
+    *[_type == "event" && slug.${locale}.current == $slug][0] {
+       _id,
       title,
       slug,
       image,
@@ -140,4 +172,30 @@ export async function getSettings(): Promise<Settings | null> {
       lastEventVideo
     }
   `);
+}
+
+export async function getAllLastActions(): Promise<LastActions[]> {
+  return await client.fetch(`
+    *[_type == "last-actions"] | order(date desc) [0...2] {
+      _id,
+      title,
+      date,
+      intro,
+    }
+  `);
+}
+
+export async function getAllNextEvents(): Promise<NextEvents[]> {
+  const now = new Date().toISOString();
+  return await client.fetch(
+    `
+    *[_type == "next-events" && date >= $now] | order(date asc) [0...2] {
+      _id,
+      title,
+      date,
+      intro,
+    }
+  `,
+    { now }
+  );
 }

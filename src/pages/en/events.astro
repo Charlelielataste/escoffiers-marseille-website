@@ -7,13 +7,7 @@ import EventsImage from "@/assets/hero/events.png";
 import { getAllEvents } from "@/lib/sanity-queries";
 import { urlFor, type Event } from "@/lib/sanity";
 import { formatDateTime } from "@/lib/date";
-import type { Locale } from "@/lib/i18n";
 
-export function getStaticPaths() {
-  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
-}
-
-const { locale } = Astro.params as { locale: Locale };
 const events = await getAllEvents();
 
 // Fonction pour grouper les événements par mois/année
@@ -21,7 +15,7 @@ function groupEventsByMonth(events: Event[]) {
   const grouped = events.reduce(
     (acc, event) => {
       const date = new Date(event.date);
-      const monthYear = date.toLocaleDateString("fr-FR", {
+      const monthYear = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
       });
@@ -60,9 +54,9 @@ const groupedEvents = groupEventsByMonth(events);
 
 <Layout>
   <div class="relative">
-    <Hero picture={EventsImage} pictureAlt="Événements">
+    <Hero picture={EventsImage} pictureAlt="Events">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6">Événements</h1>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Events</h1>
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
           Nos Actions
         </h2>
@@ -73,7 +67,7 @@ const groupedEvents = groupEventsByMonth(events);
       </div>
     </Hero>
     <div class="relative bg-white pb-10">
-      <div class="h-20" id="events-filter"></div>
+      <div class="h-20" id="events"></div>
       <div class="max-w-5xl mx-auto px-5">
         {
           groupedEvents.map(([monthYear, events], groupIndex) => (
@@ -90,13 +84,13 @@ const groupedEvents = groupEventsByMonth(events);
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                 {events.map((event) => (
                   <EventCard
-                    title={event.title[locale]}
-                    slug={event.slug[locale].current}
+                    title={event.title.en}
+                    slug={event.slug.en.current}
                     date={formatDateTime(new Date(event.date))}
                     location={event.location}
                     image={urlFor(event.image).width(600).height(400).url()}
-                    description={event.intro[locale]}
-                    locale={locale}
+                    description={event.intro.en}
+                    locale="en"
                   />
                 ))}
               </div>

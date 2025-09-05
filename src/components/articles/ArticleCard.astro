@@ -24,6 +24,9 @@ const {
   tags,
   locale = "fr",
 } = Astro.props as Props;
+
+const articlePath =
+  locale === "fr" ? `/articles/${slug}` : `/en/articles/${slug}`;
 ---
 
 <div
@@ -32,7 +35,7 @@ const {
     is_first && "border-tertiary h-[540px]"
   )}
 >
-  <a href={`/${locale}/articles/${slug}`} class="w-full p-5">
+  <a href={articlePath} class="w-full p-5">
     {
       is_first && (
         <div class="absolute top-2 left-2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg z-10">

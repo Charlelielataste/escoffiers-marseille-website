@@ -19,6 +19,13 @@ export const translations = {
       backHome: "Retour à l'accueil",
       reportProblem: "Signaler un problème",
     },
+    articles: {
+      category: "Filtres par catégories",
+      allArticles: "Tous les articles",
+    },
+    members: {
+      contact: "Contactez-moi",
+    },
   },
   en: {
     nav: {
@@ -38,6 +45,13 @@ export const translations = {
         "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!",
       backHome: "Back to home",
       reportProblem: "Report a problem",
+    },
+    articles: {
+      category: "Filters by categories",
+      allArticles: "All articles",
+    },
+    members: {
+      contact: "Contact me",
     },
   },
 } as const;

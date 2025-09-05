@@ -22,8 +22,8 @@ export default defineConfig({
             en: "fr"
         },
         routing: {
-            prefixDefaultLocale: true,
-            fallbackType: "rewrite"
+            prefixDefaultLocale: false,
+            fallbackType: "rewrite",
         }
     }
 });

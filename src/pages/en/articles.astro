@@ -8,14 +8,7 @@ import MobileFacebookSection from "@/components/articles/MobileFacebookSection.a
 import ArticlesImage from "@/assets/hero/articles.png";
 import { getAllArticles, getSettings } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
-import type { Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/date";
-
-export function getStaticPaths() {
-  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
-}
-
-const { locale } = Astro.params as { locale: Locale };
 
 const allArticles = await getAllArticles();
 const settings = await getSettings();
@@ -42,14 +35,14 @@ const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
       {
         hasFeaturedArticle ? (
           <ArticleCard
-            title={featuredArticle.title[locale]}
-            date={formatDate(new Date(featuredArticle.date), locale)}
+            title={featuredArticle.title.en}
+            date={formatDate(new Date(featuredArticle.date), "en")}
             image={urlFor(featuredArticle.image).width(600).height(400).url()}
-            excerpt={featuredArticle.intro[locale]}
-            slug={featuredArticle.slug[locale].current}
+            excerpt={featuredArticle.intro.en}
+            slug={featuredArticle.slug.en.current}
             tags={featuredArticle.tags || []}
             is_first={true}
-            locale={locale}
+            locale="en"
           />
         ) : (
           <div class="flex rounded-3xl bg-white shadow-xl w-full h-[540px] border border-tertiary/20 relative">
@@ -66,8 +59,8 @@ const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
       }
       <FacebookSection />
     </div>
-    <div class="h-20" id="articles-filter"></div>
+    <div class="h-20" id="articles"></div>
     <!-- Filtres et Articles -->
-    <ArticleFilter articles={allArticles} locale={locale} />
+    <ArticleFilter articles={allArticles} locale="en" />
   </div>
 </Layout>

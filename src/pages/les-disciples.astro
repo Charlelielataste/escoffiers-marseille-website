@@ -6,15 +6,8 @@ import MembersImage from "@/assets/hero/members.png";
 import { getAllMembers } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 
-export function getStaticPaths() {
-  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
-}
-
-const { locale } = Astro.params;
-const typedLocale = locale as "fr" | "en";
 const membres = await getAllMembers();
 
-// Filtrer les membres d'honneur et les membres normaux
 const honnorMembers = membres.filter((membre) => membre.isHonored);
 const members = membres.filter((membre) => !membre.isHonored);
 ---
@@ -43,7 +36,7 @@ const members = membres.filter((membre) => !membre.isHonored);
           </h3>
 
           <div
-            class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto mb-16"
+            class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto pb-16"
           >
             <MembersCard
               photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
@@ -54,6 +47,7 @@ const members = membres.filter((membre) => !membre.isHonored);
               email={"alain.laporte@disciples-marseille.fr"}
               workplace={"Form'actions Consulting"}
               size="150px"
+              locale="fr"
             />
           </div>
         </div>
@@ -74,10 +68,11 @@ const members = membres.filter((membre) => !membre.isHonored);
                       photo={urlFor(membre.image).width(150).height(150).url()}
                       color={membre.color}
                       name={membre.name}
-                      role={membre.role[typedLocale]}
-                      description={membre.description[typedLocale]}
+                      role={membre.role.fr}
+                      description={membre.description.fr}
                       email={membre.email}
                       workplace={membre.workplace}
+                      locale="fr"
                     />
                   ))}
                 </div>
@@ -103,10 +98,11 @@ const members = membres.filter((membre) => !membre.isHonored);
                       photo={urlFor(membre.image).width(150).height(150).url()}
                       color={membre.color}
                       name={membre.name}
-                      role={membre.role[typedLocale]}
-                      description={membre.description[typedLocale]}
+                      role={membre.role.fr}
+                      description={membre.description.fr}
                       email={membre.email}
                       workplace={membre.workplace}
+                      locale="fr"
                     />
                   ))}
                 </div>
