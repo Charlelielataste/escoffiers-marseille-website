@@ -44,7 +44,11 @@ import NextEventsSection from "@/components/home/NextEventsSection.astro";
     <VolunteeringSection />
     <LastEventSection />
     <AssociationsSection />
-    <LastActionsSection locale="fr" />
-    <NextEventsSection locale="fr" />
+    <section class="relative py-20">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 gap-6">
+        <LastActionsSection locale="fr" />
+        <NextEventsSection locale="fr" />
+      </div>
+    </section>
   </div>
 </Layout>
