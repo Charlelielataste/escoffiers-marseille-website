@@ -26,7 +26,6 @@ const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const navUrls = getNavUrls(currentLocale);
 const t = getTranslations(currentLocale);
 
-// URLs pour changer de langue - utiliser les URLs multilingues personnalisées si disponibles
 const frUrl =
   multilingualUrls?.fr || getAlternateLanguageUrl(currentPath, "fr");
 const enUrl =
@@ -35,7 +34,7 @@ const enUrl =
 const getLinkClasses = (isActive: boolean) => {
   return cn(
     "text-sm py-1 font-medium transition-colors flex items-center justify-center",
-    isActive ? "text-primary font-bold" : "text-text-primary hover:text-primary"
+    isActive ? "text-primary font-bold" : "text-black hover:text-primary"
   );
 };
 
@@ -44,7 +43,7 @@ const getMobileLinkClasses = (isActive: boolean) => {
     "block px-3 py-2 rounded-md text-base font-medium transition-colors",
     isActive
       ? "text-primary font-bold bg-primary/10"
-      : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+      : "text-black hover:text-gray-900 hover:bg-gray-50"
   );
 };
 ---
@@ -70,11 +69,11 @@ const getMobileLinkClasses = (isActive: boolean) => {
           class="flex items-center justify-center w-16 lg:w-24 h-[50px]"
         >
           <Image
-            src="/logos/logo-face-color.png"
+            src="/logos/logo-escoffier-nav.png"
             alt="Logo des Disciples des Escoffiers"
-            width="40"
-            height="40"
-            class="w-[35px] lg:w-[40px]"
+            width="200"
+            height="200"
+            class="w-[50px] lg:w-[50px]"
             loading="eager"
           />
         </a>
@@ -131,7 +130,11 @@ const getMobileLinkClasses = (isActive: boolean) => {
         <a
           href={navUrls.contact}
           class={cn(
-            getLinkClasses(navUrls.contact === currentPath),
+            getLinkClasses(
+              currentPath.includes(
+                currentLocale === "fr" ? "nous-rejoindre" : "join-us"
+              )
+            ),
             currentLocale === "fr" ? "w-[100px]" : "w-14"
           )}
         >
@@ -212,7 +215,11 @@ const getMobileLinkClasses = (isActive: boolean) => {
         </a>
         <a
           href={navUrls.events}
-          class={getMobileLinkClasses(currentPath.includes("events"))}
+          class={getMobileLinkClasses(
+            currentPath.includes(
+              currentLocale === "fr" ? "evenements" : "events"
+            )
+          )}
         >
           {t.nav.events}
         </a>
@@ -230,7 +237,11 @@ const getMobileLinkClasses = (isActive: boolean) => {
         </a>
         <a
           href={navUrls.contact}
-          class={getMobileLinkClasses(navUrls.contact === currentPath)}
+          class={getMobileLinkClasses(
+            currentPath.includes(
+              currentLocale === "fr" ? "nous-rejoindre" : "join-us"
+            )
+          )}
         >
           {t.nav.contact}
         </a>
