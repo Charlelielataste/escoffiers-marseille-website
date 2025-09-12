@@ -5,7 +5,7 @@ import ContactForm from "@/components/contact/ContactForm.astro";
 import ContactImage from "@/assets/hero/contact.png";
 ---
 
-<Layout>
+<Layout title="Nous Rejoindre">
   <div class="relative">
     <Hero picture={ContactImage} pictureAlt="Nous Rejoindre">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
@@ -22,6 +22,6 @@ import ContactImage from "@/assets/hero/contact.png";
     </Hero>
 
     <!-- Formulaire de contact -->
-    <ContactForm />
+    <ContactForm locale="fr" />
   </div>
 </Layout>

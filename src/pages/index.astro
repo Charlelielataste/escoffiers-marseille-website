@@ -5,14 +5,15 @@ import InstitutionSection from "@/components/home/InstitutionSection.astro";
 import VolunteeringSection from "@/components/home/VolunteeringSection.astro";
 import AssociationsSection from "@/components/home/AssociationsSection.astro";
 import HomeImage from "@/assets/hero/home.jpg";
-import LastEventSection from "@/components/home/LastEventSection.astro";
+import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
+import InternationalBanner from "@/components/home/InternationalBanner.astro";
 ---
 
 <Layout>
   <div class="relative">
-    <Hero picture={HomeImage} pictureAlt="Escoffiers Marseille">
+    <Hero picture={HomeImage} pictureAlt="Escoffiers Provence Méditerranée">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">
           Délégation Escoffiers
@@ -21,7 +22,7 @@ import NextEventsSection from "@/components/home/NextEventsSection.astro";
           Provence Méditerranée
         </h2>
         <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
-          Institution culinaire bénévole au service des associations
+          Ensemble, faisons grandir la gastronomie dans toute sa diversité.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
@@ -42,13 +43,14 @@ import NextEventsSection from "@/components/home/NextEventsSection.astro";
 
     <InstitutionSection />
     <VolunteeringSection />
-    <LastEventSection />
+    <HomeVideoSection />
     <AssociationsSection />
     <section class="relative py-20">
       <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 gap-6">
-        <LastActionsSection locale="fr" />
-        <NextEventsSection locale="fr" />
+        <LastActionsSection />
+        <NextEventsSection />
       </div>
     </section>
+    <InternationalBanner />
   </div>
 </Layout>
