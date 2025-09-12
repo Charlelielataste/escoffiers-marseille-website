@@ -28,6 +28,8 @@ if (!settings?.lastEventVideo.video) {
               class="w-full h-[680px] object-cover video-responsive"
               autoplay
               muted
+              controlslist="nodownload"
+              controls
               loop
             />
           </div>
@@ -59,12 +61,12 @@ if (!settings?.lastEventVideo.video) {
     object-fit: contain !important;
   }
 
-  /* Pour WebKit (Safari, Chrome) */
+  /* WebKit (Safari, Chrome) */
   .video-responsive:-webkit-full-screen {
     object-fit: contain !important;
   }
 
-  /* Pour Mozilla (Firefox) */
+  /* Mozilla (Firefox) */
   .video-responsive:-moz-full-screen {
     object-fit: contain !important;
   }
