@@ -5,12 +5,6 @@ import Layout from "@/layouts/Layout.astro";
 import ValuesSection from "@/components/about/ValuesSection.astro";
 import TeamSection from "@/components/about/TeamSection.astro";
 import AboutImage from "@/assets/hero/about.avif";
-
-export function getStaticPaths() {
-  return [{ params: { locale: "fr" } }, { params: { locale: "en" } }];
-}
-
-const { locale } = Astro.params;
 ---
 
 <Layout title="À Propos">

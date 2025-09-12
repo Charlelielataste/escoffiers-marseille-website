@@ -18,8 +18,7 @@ export interface Props {
   };
 }
 
-const { title = "Les Disciples d'Escoffier Marseille", multilingualUrls } =
-  Astro.props;
+const { title, multilingualUrls } = Astro.props;
 ---
 
 <html lang={currentLocale}>
@@ -28,8 +27,17 @@ const { title = "Les Disciples d'Escoffier Marseille", multilingualUrls } =
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Les Disciples d'Escoffier Marseille" />
-    <title>{title}</title>
+    <meta
+      name="description"
+      content="Les Disciples d'Escoffier Provence Méditerranée"
+    />
+    <title>
+      {
+        title
+          ? `${title} - Les Disciples d'Escoffier Provence Méditerranée`
+          : "Les Disciples d'Escoffier Provence Méditerranée"
+      }
+    </title>
     <ClientRouter />
   </head>
   <body class="font-['Museo_Sans']" style="overscroll-behavior: none;">

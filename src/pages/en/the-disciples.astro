@@ -1,0 +1,116 @@
+---
+import Hero from "@/components/Hero.astro";
+import MembersCard from "@/components/members/MembersCard.astro";
+import Layout from "@/layouts/Layout.astro";
+import MembersImage from "@/assets/hero/members.png";
+import { getAllMembers } from "@/lib/sanity-queries";
+import { urlFor } from "@/lib/sanity";
+
+const membres = await getAllMembers();
+
+const honnorMembers = membres.filter((membre) => membre.isHonored);
+const members = membres.filter((membre) => !membre.isHonored);
+---
+
+<Layout title="The Disciples">
+  <div class="relative">
+    <Hero picture={MembersImage} pictureAlt="The Disciples">
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">The Disciples</h1>
+        <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
+          Our Team
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          Découvrez l&apos;équipe des Disciples d&apos;Escoffier de Marseille,
+          composée de membres de toutes les professions de la cuisine.
+        </p>
+      </div>
+    </Hero>
+    <section class="relative px-5 sm:px-10 bg-white py-10">
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3
+            class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
+          >
+            Our President
+          </h3>
+
+          <div
+            class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto pb-16"
+          >
+            <MembersCard
+              photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+              color={"#b91c1c"}
+              name={"Alain Laporte"}
+              role={"President"}
+              description={"Founder of the Disciples d'Escoffier de Marseille"}
+              email={"alain.laporte@formactions.fr"}
+              workplace={"Form'actions Consulting"}
+              size="150px"
+              locale="en"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Membres d'Honneur -->
+      {
+        honnorMembers.length > 0 && (
+          <div class="max-w-6xl mx-auto">
+            <div class="container mx-auto px-4">
+              <h3 class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12">
+                Our Honorary Members
+              </h3>
+              <div class="flex justify-center">
+                <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
+                  {honnorMembers.map((membre) => (
+                    <MembersCard
+                      photo={urlFor(membre.image).width(150).height(150).url()}
+                      color={membre.color}
+                      name={membre.name}
+                      role={membre.role.en}
+                      description={membre.description.en}
+                      email={membre.email}
+                      workplace={membre.workplace}
+                      locale="en"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Section Membres Normaux -->
+      {
+        members.length > 0 && (
+          <div class="max-w-6xl mx-auto">
+            <div class="container mx-auto px-4">
+              <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12">
+                Our Members
+              </h3>
+
+              <div class="flex justify-center">
+                <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
+                  {members.map((membre) => (
+                    <MembersCard
+                      photo={urlFor(membre.image).width(150).height(150).url()}
+                      color={membre.color}
+                      name={membre.name}
+                      role={membre.role.en}
+                      description={membre.description.en}
+                      email={membre.email}
+                      workplace={membre.workplace}
+                      locale="en"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </section>
+  </div>
+</Layout>

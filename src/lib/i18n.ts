@@ -6,6 +6,7 @@ export type Locale = "fr" | "en";
 const slugMap: Record<string, Record<Locale, string>> = {
   "/a-propos/": { fr: "/a-propos/", en: "/en/about/" },
   "/en/about/": { fr: "/a-propos/", en: "/en/about/" },
+
   "/articles/": { fr: "/articles/", en: "/en/articles/" },
   "/en/articles/": { fr: "/articles/", en: "/en/articles/" },
   "/en/articles": {
@@ -16,11 +17,15 @@ const slugMap: Record<string, Record<Locale, string>> = {
     fr: "/articles/",
     en: "/en/articles/",
   },
-  "/les-disciples/": { fr: "/les-disciples/", en: "/en/members/" },
-  "/en/members/": { fr: "/les-disciples/", en: "/en/members/" },
+
+  "/les-disciples/": { fr: "/les-disciples/", en: "/en/the-disciples/" },
+  "/en/the-disciples/": { fr: "/les-disciples/", en: "/en/the-disciples/" },
+
   "/partenaires/": { fr: "/partenaires/", en: "/en/partners/" },
   "/en/partners/": { fr: "/partenaires/", en: "/en/partners/" },
+
   "/evenements/": { fr: "/evenements/", en: "/en/events/" },
+  "/en/events/": { fr: "/evenements/", en: "/en/events/" },
   "/en/events": {
     fr: "/evenements/",
     en: "/en/events/",
@@ -29,13 +34,12 @@ const slugMap: Record<string, Record<Locale, string>> = {
     fr: "/evenements/",
     en: "/en/events/",
   },
-  "/en/events/": { fr: "/evenements/", en: "/en/events/" },
-  "/nous-rejoindre/": { fr: "/nous-rejoindre/", en: "/en/contact/" },
-  "/en/contact/": { fr: "/nous-rejoindre/", en: "/en/contact/" },
-  "/nous-rejoindre": { fr: "/nous-rejoindre/", en: "/en/contact/" },
-  "/en/contact": { fr: "/nous-rejoindre/", en: "/en/contact/" },
-  "/": { fr: "/", en: "/en" },
-  "/en": { fr: "/", en: "/en" },
+
+  "/nous-rejoindre/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
+  "/en/join-us/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
+
+  "/": { fr: "/", en: "/en/" },
+  "/en/": { fr: "/", en: "/en/" },
 };
 
 /**
@@ -48,7 +52,7 @@ export function getAlternateLanguageUrl(
   const mapped = slugMap[pathname];
   if (mapped) return mapped[targetLocale];
 
-  return targetLocale === "fr" ? "/" : "/en";
+  return targetLocale === "fr" ? "/" : "/en/";
 }
 
 /**
@@ -68,7 +72,7 @@ export function getNavUrls(currentLocale: Locale) {
     ),
     members: getRelativeLocaleUrl(
       currentLocale,
-      currentLocale === "fr" ? "/les-disciples" : "/members"
+      currentLocale === "fr" ? "/les-disciples" : "/the-disciples"
     ),
     partners: getRelativeLocaleUrl(
       currentLocale,
@@ -76,7 +80,7 @@ export function getNavUrls(currentLocale: Locale) {
     ),
     contact: getRelativeLocaleUrl(
       currentLocale,
-      currentLocale === "fr" ? "/nous-rejoindre" : "/contact"
+      currentLocale === "fr" ? "/nous-rejoindre" : "/join-us"
     ),
   };
 }

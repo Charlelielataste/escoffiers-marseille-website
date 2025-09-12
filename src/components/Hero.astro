@@ -34,7 +34,7 @@ const placeholder = await getImage({
 >
   <!-- Overlay dégradé -->
   <div
-    class="absolute rounded-full w-full sm:w-[50%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/70 z-10 blur-3xl"
+    class="absolute rounded-full w-full sm:w-[50%] h-[40%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-black/80 to-black/70 z-10 blur-3xl"
   >
   </div>
 
@@ -91,9 +91,12 @@ const placeholder = await getImage({
 
     if (!heroImage) return;
 
+    const isMobile = window.innerWidth < 768;
+
     let ticking = false;
 
     function updateImageScale() {
+      if (isMobile) return;
       // Calcul du facteur de zoom basé sur la position de scroll avec easing
       const scrolled = window.pageYOffset;
       const maxScrollForZoom = window.innerHeight * 2; // Zoom sur 2 hauteurs d'écran
@@ -186,9 +189,6 @@ const placeholder = await getImage({
       handleImageLoaded();
     }
   }
-
-  // Initialiser au chargement du DOM
-  document.addEventListener("DOMContentLoaded", initHeroZoomEffect);
 
   // Réinitialiser lors de la navigation (pour les SPA)
   document.addEventListener("astro:page-load", initHeroZoomEffect);

@@ -1,30 +1,109 @@
 ---
-const values = [
+import type { Locale } from "@/lib/i18n";
+import TransmissionIcon from "@/components/icons/TransmissionIcon.astro";
+import CompetitionIcon from "@/components/icons/CompetitionIcon.astro";
+import HonorIcon from "@/components/icons/HonorIcon.astro";
+import InculcateIcon from "@/components/icons/InculcateIcon.astro";
+import PromoteIcon from "@/components/icons/PromoteIcon.astro";
+import BringTogetherIcon from "@/components/icons/BringTogetherIcon.astro";
+import ValueFoodIcon from "@/components/icons/ValueFoodIcon.astro";
+import ServiceIcon from "@/components/icons/ServiceIcon.astro";
+
+const valuesFr = [
   {
-    title: "Excellence",
+    title: "Inculquer",
     description:
-      "Nous maintenons les plus hauts standards de qualité culinaire, hérités de la tradition d'Escoffier.",
-    icon: "🏆",
+      "Inculquer aux professionnels de la gastronomie l'esprit humaniste d'Auguste Escoffier.",
+    icon: InculcateIcon,
   },
   {
-    title: "Bénévolat",
-    description:
-      "Notre engagement désintéressé au service de la communauté marseillaise et des associations locales.",
-    icon: "🤝",
+    title: "Promouvoir",
+    description: "Promouvoir le métier de cuisinier et des métiers de bouches.",
+    icon: PromoteIcon,
   },
   {
-    title: "Tradition",
+    title: "Transmettre",
     description:
-      "Nous perpétuons les techniques et savoir-faire de la cuisine française classique.",
-    icon: "🇫🇷",
+      "Assurer la transmission des savoirs entre les générations de cuisinier.",
+    icon: TransmissionIcon,
   },
   {
-    title: "Innovation",
+    title: "Concours",
     description:
-      "Nous adaptons nos compétences aux besoins modernes tout en respectant nos racines.",
-    icon: "✨",
+      "Organiser un concours international « Jeunes Talents Escoffier ».",
+    icon: CompetitionIcon,
+  },
+  {
+    title: "Honorer",
+    description: "Honorer la mémoire et l'héritage d'Auguste Escoffier.",
+    icon: HonorIcon,
+  },
+  {
+    title: "Rapprocher",
+    description: "Rapprocher la cuisine et les métiers de la salle.",
+    icon: BringTogetherIcon,
+  },
+  {
+    title: "Valoriser",
+    description: "Valoriser les produits de qualité.",
+    icon: ValueFoodIcon,
+  },
+  {
+    title: "Organiser",
+    description: "Organiser des manifestations gastronomiques.",
+    icon: ServiceIcon,
   },
 ];
+
+const valuesEn = [
+  {
+    title: "Inculcate",
+    description:
+      "Inculcate the humanist spirit of Auguste Escoffier to professionals of gastronomy.",
+    icon: InculcateIcon,
+  },
+  {
+    title: "Promote",
+    description:
+      "Promote the profession of chef and the professions of the kitchen.",
+    icon: PromoteIcon,
+  },
+  {
+    title: "Transmit",
+    description:
+      "Ensure the transmission of knowledge between generations of chefs.",
+    icon: TransmissionIcon,
+  },
+  {
+    title: "Competition",
+    description:
+      "Organize an international competition « Jeunes Talents Escoffier ».",
+    icon: CompetitionIcon,
+  },
+  {
+    title: "Honor",
+    description: "Honor the memory and the legacy of Auguste Escoffier.",
+    icon: HonorIcon,
+  },
+  {
+    title: "Bring together",
+    description: "Bring together cuisine and service.",
+    icon: BringTogetherIcon,
+  },
+  {
+    title: "Value",
+    description: "Value the quality of products.",
+    icon: ValueFoodIcon,
+  },
+  {
+    title: "Organize",
+    description: "Organize gastronomic manifestations.",
+    icon: ServiceIcon,
+  },
+];
+
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const values = currentLocale === "fr" ? valuesFr : valuesEn;
 ---
 
 <section class="relative py-20 bg-transparent">
@@ -46,13 +125,18 @@ const values = [
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
       {
-        values.map((value) => (
-          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="text-4xl mb-4">{value.icon}</div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-            <p class="text-gray-600 leading-relaxed">{value.description}</p>
-          </div>
-        ))
+        values.map((value) => {
+          const IconComponent = value.icon;
+          return (
+            <div class="bg-white p-8 rounded-2xl shadow-lg hover:scale-102 duration-300">
+              <div class="text-primary mb-5 flex">
+                <IconComponent size="48" class="text-primary" />
+              </div>
+              <h3 class="text-xl font-bold mb-3">{value.title}</h3>
+              <p class="text-gray-600 leading-relaxed">{value.description}</p>
+            </div>
+          );
+        })
       }
     </div>
   </div>

@@ -3,12 +3,12 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import ArticleCard from "@/components/articles/ArticleCard.astro";
 import ArticleFilter from "@/components/articles/ArticleFilter.astro";
-import FacebookSection from "@/components/articles/FacebookSection.astro";
 import MobileFacebookSection from "@/components/articles/MobileFacebookSection.astro";
 import ArticlesImage from "@/assets/hero/articles.png";
 import { getAllArticles, getSettings } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { formatDate } from "@/lib/date";
+import FacebookSection from "@/components/articles/FacebookSection.astro";
 
 const allArticles = await getAllArticles();
 const settings = await getSettings();
@@ -17,7 +17,7 @@ const featuredArticle = settings?.featuredArticle || allArticles[0];
 const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
 ---
 
-<Layout>
+<Layout title="Articles">
   <Hero picture={ArticlesImage} pictureAlt="Articles">
     <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
       <h1 class="text-5xl md:text-7xl font-bold mb-6">Articles</h1>
@@ -37,7 +37,7 @@ const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
           <ArticleCard
             title={featuredArticle.title.fr}
             date={formatDate(new Date(featuredArticle.date), "fr")}
-            image={urlFor(featuredArticle.image).width(600).height(400).url()}
+            image={urlFor(featuredArticle.image).width(1000).height(600).url()}
             excerpt={featuredArticle.intro.fr}
             slug={featuredArticle.slug.fr.current}
             tags={featuredArticle.tags || []}
