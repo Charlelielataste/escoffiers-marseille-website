@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 export interface Props {
   title: string;
   date: string;
@@ -22,38 +24,37 @@ const eventPath =
   locale === "fr" ? `/evenements/${slug}` : `/en/events/${slug}`;
 ---
 
-<a
-  href={eventPath}
-  class="relative rounded-3xl shadow-xl w-full border group border-tertiary/20 h-[550px] sm:h-[700px] overflow-hidden transition-transform duration-300 hover:scale-102"
-  style={`background-image: url(${image}); background-size: cover; background-position: center;`}
+<div
+  class="relative rounded-3xl shadow-xl w-full group p-1 bg-tertiary h-[550px] sm:h-[700px] overflow-hidden transition-transform duration-300 hover:scale-102"
 >
-  <!-- Overlay -->
-  <div
-    class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
-  >
-    <div class="relative h-full flex flex-col justify-end p-6">
-      <div
-        class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 border border-white/20"
-      >
-        <h3 class="text-2xl font-bold text-tertiary mb-2 leading-tight">
-          {title}
-        </h3>
-        <div class="mb-3">
-          <div class="text-lg font-bold text-gray-800 mb-1">{date}</div>
-          <div class="text-base text-primary">{location}</div>
-        </div>
+  <Image
+    src={image}
+    alt={title}
+    class="absolute inset-0 w-full h-full p-1 rounded-3xl object-cover opacity-90"
+    width={600}
+    height={550}
+    loading="lazy"
+  />
+  <a href={eventPath} class="relative h-full flex flex-col justify-end p-6">
+    <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-5 shadow-xl">
+      <h3 class="text-2xl font-bold text-tertiary mb-2 leading-tight">
+        {title}
+      </h3>
+      <div class="mb-3">
+        <div class="text-lg font-bold text-gray-800 mb-1">{date}</div>
+        <div class="text-base text-primary">{location}</div>
+      </div>
 
-        <p class="text-gray-700 text-sm leading-relaxed mb-6 line-clamp-3">
-          {description}
-        </p>
-        <div class="flex justify-center">
-          <div
-            class="w-[80%] text-center bg-tertiary hover:bg-tertiary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform group-hover:scale-[1.02] group-hover:shadow-lg flex items-center justify-center"
-          >
-            En savoir plus
-          </div>
+      <p class="text-gray-700 text-sm leading-relaxed mb-6 line-clamp-3">
+        {description}
+      </p>
+      <div class="flex justify-center">
+        <div
+          class="w-[80%] text-center bg-tertiary hover:bg-tertiary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform group-hover:scale-[1.02] group-hover:shadow-lg flex items-center justify-center"
+        >
+          En savoir plus
         </div>
       </div>
     </div>
-  </div>
-</a>
+  </a>
+</div>

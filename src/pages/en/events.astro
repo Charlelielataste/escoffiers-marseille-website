@@ -52,13 +52,13 @@ function groupEventsByMonth(events: Event[]) {
 const groupedEvents = groupEventsByMonth(events);
 ---
 
-<Layout>
+<Layout title="Events">
   <div class="relative">
     <Hero picture={EventsImage} pictureAlt="Events">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Events</h1>
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
-          Nos Actions
+          Our Actions
         </h2>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
           Découvrez nos prochains événements bénévoles et nos soutiens pour la
@@ -88,7 +88,7 @@ const groupedEvents = groupEventsByMonth(events);
                     slug={event.slug.en.current}
                     date={formatDateTime(new Date(event.date))}
                     location={event.location}
-                    image={urlFor(event.image).width(600).height(400).url()}
+                    image={urlFor(event.image).width(1200).height(800).url()}
                     description={event.intro.en}
                     locale="en"
                   />

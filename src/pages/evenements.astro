@@ -52,7 +52,7 @@ function groupEventsByMonth(events: Event[]) {
 const groupedEvents = groupEventsByMonth(events);
 ---
 
-<Layout>
+<Layout title="Événements">
   <div class="relative">
     <Hero picture={EventsImage} pictureAlt="Événements">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
@@ -88,7 +88,7 @@ const groupedEvents = groupEventsByMonth(events);
                     slug={event.slug.fr.current}
                     date={formatDateTime(new Date(event.date))}
                     location={event.location}
-                    image={urlFor(event.image).width(600).height(400).url()}
+                    image={urlFor(event.image).width(1200).height(800).url()}
                     description={event.intro.fr}
                     locale="fr"
                   />

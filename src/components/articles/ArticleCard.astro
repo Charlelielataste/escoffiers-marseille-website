@@ -47,13 +47,13 @@ const articlePath =
     <div class="w-full flex flex-col h-full">
       <Image
         src={image}
-        alt="Image de l'article"
-        loading="eager"
+        alt={`Illustration de l'article ${title}`}
+        loading="lazy"
         width={300}
         height={192}
         class={cn(
           "object-cover w-full h-48 overflow-hidden rounded-2xl mb-4 border border-primary/20",
-          is_first ? "border-tertiary/10 h-52" : "border-primary/10"
+          is_first ? "border-tertiary/10 lg:h-52" : "border-primary/10"
         )}
       />
 
@@ -70,7 +70,7 @@ const articlePath =
       </div>
       <h3
         class={cn(
-          "text-2xl font-bold mb-3",
+          "text-2xl font-bold mb-3 line-clamp-2",
           is_first ? "text-tertiary" : "text-primary"
         )}
       >
