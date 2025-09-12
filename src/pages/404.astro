@@ -9,7 +9,7 @@ const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const t = getTranslations(currentLocale);
 ---
 
-<Layout title="Page non trouvée - Les Disciples d'Escoffier Marseille">
+<Layout title={`${t.error404.metaTitle}`}>
   <Hero
     picture={Image404}
     pictureAlt="404 background"

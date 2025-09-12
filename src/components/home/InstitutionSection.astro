@@ -1,58 +1,67 @@
+---
+import { getTranslations, type Locale } from "@/lib/i18n";
+import { Image } from "astro:assets";
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
+---
+
 <section class="relative py-20 bg-background">
   <div class="max-w-6xl mx-auto px-4">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div>
         <h2 class="text-4xl font-bold text-primary mb-6">
-          Une Institution Culinaire
+          {t.home.institutionSection.title}
         </h2>
-        <p class="text-lg text-text-primary mb-6 leading-relaxed">
-          Les Escoffiers représentent l'excellence culinaire française depuis
-          plus d'un siècle. Notre délégation marseillaise perpétue cette
-          tradition d'excellence au service de la communauté.
+        <p class="text-lg mb-6 leading-relaxed">
+          {t.home.institutionSection.description}
         </p>
-        <p class="text-lg text-text-primary mb-6 leading-relaxed">
-          Nous sommes fiers de porter les valeurs de sobriété, de respect des
-          traditions et d'engagement envers les plus démunis, héritées du grand
-          Auguste Escoffier.
+        <p class="text-lg mb-6 leading-relaxed">
+          {t.home.institutionSection.nextParagraph}
         </p>
         <div class="flex items-center space-x-4">
           <div
             class="w-12 h-12 relative rounded-full flex items-center justify-center"
           >
-            <img
-              src="/logos/circular-logo.png"
-              alt="Cuillère"
+            <Image
+              width="50"
+              height="50"
+              src="/logos/boucle.png"
+              alt={t.home.institutionSection.boucleAlt}
               class="w-full h-full object-contain"
             />
           </div>
-          <span class="text-text-primary font-medium">
-            Tradition & Excellence
-          </span>
+          <span class="font-bold text-primary"> Tradition & Excellence </span>
         </div>
       </div>
       <div class="relative">
         <div class="bg-container rounded-lg p-8 shadow-lg">
-          <h3 class="text-2xl font-semibold text-text-primary mb-4">
-            Nos Valeurs
+          <h3 class="text-2xl font-semibold mb-4">
+            {t.home.institutionSection.values.title}
           </h3>
           <ul class="space-y-3">
             <li class="flex items-center space-x-3">
               <div class="w-2 h-2 bg-primary rounded-full"></div>
-              <span class="text-text-primary">
-                Sobriété et respect des traditions
-              </span>
+              <span> {t.home.institutionSection.values.honor} </span>
             </li>
             <li class="flex items-center space-x-3">
               <div class="w-2 h-2 bg-primary rounded-full"></div>
-              <span class="text-text-primary"> Excellence culinaire </span>
+              <span> {t.home.institutionSection.values.transmit} </span>
             </li>
             <li class="flex items-center space-x-3">
               <div class="w-2 h-2 bg-primary rounded-full"></div>
-              <span class="text-text-primary"> Engagement bénévole </span>
+              <span> {t.home.institutionSection.values.promote} </span>
             </li>
             <li class="flex items-center space-x-3">
               <div class="w-2 h-2 bg-primary rounded-full"></div>
-              <span class="text-text-primary"> Service aux associations </span>
+              <span> {t.home.institutionSection.values.bringTogether} </span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-primary rounded-full"></div>
+              <span> {t.home.institutionSection.values.organize} </span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-primary rounded-full"></div>
+              <span> {t.home.institutionSection.values.value} </span>
             </li>
           </ul>
         </div>
