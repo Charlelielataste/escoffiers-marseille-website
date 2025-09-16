@@ -117,7 +117,6 @@ export interface Partner {
     en: string;
   };
   link: string;
-  isHonored: boolean;
 }
 
 export interface LastActions {

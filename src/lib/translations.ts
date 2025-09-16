@@ -29,6 +29,7 @@ export const translations = {
         title: "Nos Événements à venir",
       },
       internationalBanner: "Nous sommes une délégation de l'association",
+      partnersBanner: "Nos Partenaires",
       institutionSection: {
         title: "Une Institution Culinaire",
         description:
@@ -108,6 +109,7 @@ export const translations = {
         title: "Our Upcoming Events",
       },
       internationalBanner: "We are a delegation of the association",
+      partnersBanner: "Our Partners",
       institutionSection: {
         title: "A Culinary Institution",
         description:
