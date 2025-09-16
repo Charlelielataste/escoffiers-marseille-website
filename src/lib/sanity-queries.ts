@@ -146,7 +146,6 @@ export async function getAllPartners(): Promise<Partner[]> {
       image,
       description,
       link,
-      isHonored
     }
   `);
 }
