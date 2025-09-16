@@ -1,0 +1,197 @@
+---
+import { getAllPartners } from "@/lib/sanity-queries";
+import { urlFor } from "@/lib/sanity";
+import { Image } from "astro:assets";
+import { getTranslations, type Locale } from "@/lib/i18n";
+
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const partners = await getAllPartners();
+
+if (partners.length === 0) {
+  return null;
+}
+
+const partnersPath = currentLocale === "fr" ? `/partenaires/` : `/en/partners/`;
+const t = getTranslations(currentLocale);
+---
+
+<section class="relative py-7 bg-background">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-center text-2xl font-semibold text-primary mb-7">
+      {t.home.partnersBanner}
+    </h3>
+    <div
+      class="partners-marquee-container overflow-hidden flex flex-row relative"
+      style="
+              --pause-on-hover: paused;
+              --pause-on-click: paused;
+              --width: 100%;
+              --transform: none;
+            "
+    >
+      <!-- Gradient overlay pour l'effet de transition -->
+      <div
+        class="partners-overlay absolute h-full w-full before:pointer-events-none before:absolute before:top-0 before:right-0 before:z-[2] before:w-[20%] before:rotate-180 before:touch-none after:pointer-events-none after:absolute after:top-0 after:left-0 after:z-[2] after:w-[20%] after:touch-none"
+      >
+      </div>
+
+      <!-- Premier marquee -->
+      <div
+        class="partners-marquee z-[1] flex flex-row"
+        style="
+                --play: running;
+                --direction: normal;
+                --delay: 0s;
+                --iteration-count: infinite;
+                --min-width: 100%;
+              "
+      >
+        <div
+          class="partners-initial-child-container flex flex-row items-center"
+        >
+          {
+            partners.map((partner) => (
+              <a
+                href={partnersPath}
+                class="sm:mx-8 mx-4 w-[120px] h-24 flex items-center justify-center py-2"
+              >
+                <Image
+                  src={urlFor(partner.image).width(200).fit("max").url()}
+                  alt={partner.name}
+                  width={200}
+                  height={200}
+                  class="pointer-events-none max-h-16 w-auto object-contain opacity-60 select-none hover:opacity-80 transition-opacity duration-300"
+                />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Deuxième marquee pour la continuité -->
+      <div
+        aria-hidden="true"
+        class="partners-marquee flex items-center"
+        style="
+                --play: running;
+                --direction: normal;
+                --delay: 0s;
+                --iteration-count: infinite;
+                --min-width: 100%;
+              "
+      >
+        {
+          partners.map((partner) => (
+            <a
+              href={partnersPath}
+              class="sm:mx-8 mx-4 w-[120px] h-20 flex items-center justify-center py-2"
+            >
+              <Image
+                src={urlFor(partner.image).width(200).fit("max").url()}
+                alt={partner.name}
+                width={200}
+                height={200}
+                class="pointer-events-none max-h-16 w-auto object-contain opacity-60 select-none"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let observers: ResizeObserver[] = [];
+
+  document.addEventListener("astro:page-load", () => {
+    // Clean up existing observers
+    observers.forEach((observer) => observer.disconnect());
+    observers = [];
+
+    const containers = document.querySelectorAll(".partners-marquee-container");
+
+    containers.forEach((container) => {
+      const marquee = container?.querySelector(
+        ".partners-marquee"
+      ) as HTMLElement;
+      const initialChildContainer = container?.querySelector(
+        ".partners-initial-child-container"
+      );
+
+      if (!container || !marquee || !initialChildContainer) {
+        console.error("Partners marquee elements not found");
+      } else {
+        const calculateWidth = () => {
+          const marqueeRect = marquee.getBoundingClientRect();
+          let marqueeWidth = marqueeRect.width;
+
+          const marquees = container.querySelectorAll(".partners-marquee");
+          marquees.forEach((m) => {
+            // Vitesse plus lente pour un défilement plus lisible
+            const duration = marqueeWidth / 30; // 30px par seconde
+            (m as HTMLElement).style.setProperty("--duration", `${duration}s`);
+          });
+        };
+
+        calculateWidth();
+
+        const resizeObserver = new ResizeObserver(calculateWidth);
+        resizeObserver.observe(container);
+        resizeObserver.observe(marquee);
+
+        // Store the observer for cleanup
+        observers.push(resizeObserver);
+      }
+    });
+  });
+</script>
+
+<style>
+  .partners-marquee-container {
+    width: 100%;
+    transform: none;
+  }
+
+  .partners-marquee-container:hover .partners-marquee {
+    animation-play-state: var(--pause-on-hover);
+  }
+
+  .partners-marquee-container:active .partners-marquee {
+    animation-play-state: var(--pause-on-click);
+  }
+
+  .partners-overlay::before,
+  .partners-overlay::after {
+    background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+    content: "";
+    height: 100%;
+    width: 20%;
+  }
+
+  .partners-overlay::before {
+    right: -4px;
+  }
+
+  .partners-overlay::after {
+    left: -4px;
+  }
+
+  .partners-marquee {
+    flex: 0 0 auto;
+    animation: partners-scroll var(--duration) linear var(--delay)
+      var(--iteration-count);
+    animation-play-state: var(--play);
+    animation-delay: var(--delay);
+    animation-direction: var(--direction);
+  }
+
+  @keyframes partners-scroll {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
