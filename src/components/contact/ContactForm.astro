@@ -417,11 +417,11 @@ const t = getTranslations(locale);
           body: JSON.stringify({
             sender: {
               name: "Site Disciples d'Escoffier",
-              email: "latastecharlelie@gmail.com",
+              email: import.meta.env.PUBLIC_BREVO_SENDER,
             },
             to: [
               {
-                email: "latastecharlelie@gmail.com",
+                email: import.meta.env.PUBLIC_BREVO_TO,
               },
             ],
             replyTo: {
