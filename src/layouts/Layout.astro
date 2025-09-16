@@ -6,10 +6,7 @@ import "../styles/fonts.css";
 import { type Locale } from "../lib/i18n";
 import { ClientRouter } from "astro:transitions";
 
-// Utiliser le helper natif d'Astro au lieu de notre fonction
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
-
-// Props pour le Layout
 export interface Props {
   title?: string;
   multilingualUrls?: {
@@ -25,7 +22,16 @@ const { title, multilingualUrls } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      href="/favicon-primary.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="/favicon-white.svg"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="generator" content={Astro.generator} />
     <meta
       name="description"
