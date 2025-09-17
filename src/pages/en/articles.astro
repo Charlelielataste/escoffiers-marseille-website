@@ -15,6 +15,10 @@ const settings = await getSettings();
 
 const featuredArticle = settings?.featuredArticle || allArticles[0];
 const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
+
+const articlesWithoutFeatured = featuredArticle
+  ? allArticles.filter((article) => article._id !== featuredArticle._id)
+  : allArticles;
 ---
 
 <Layout title="Articles">
@@ -61,6 +65,6 @@ const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
     </div>
     <div class="h-20" id="articles"></div>
     <!-- Filtres et Articles -->
-    <ArticleFilter articles={allArticles} locale="en" />
+    <ArticleFilter articles={articlesWithoutFeatured} locale="en" />
   </div>
 </Layout>

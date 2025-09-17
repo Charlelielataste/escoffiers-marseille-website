@@ -52,7 +52,7 @@ const t = getTranslations(currentLocale);
           {
             partners.map((partner) => (
               <a
-                href={partnersPath}
+                href={`${partnersPath}#${partner.name}`}
                 class="sm:mx-8 mx-4 w-[120px] h-24 flex items-center justify-center py-2"
               >
                 <Image

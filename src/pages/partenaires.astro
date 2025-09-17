@@ -33,7 +33,11 @@ const partners = await getAllPartners();
             <div class="flex justify-center">
               <div class="mb-16 w-full flex flex-col gap-8">
                 {partners.map((partner) => (
-                  <div class="border-2 w-full border-primary/20 rounded-2xl p-4 gap-8 flex md:flex-row flex-col items-center justify-left">
+                  <div
+                    id={partner.name}
+                    style="scroll-margin-top: 200px;"
+                    class="border-2 w-full border-primary/20 rounded-2xl p-4 gap-8 flex md:flex-row flex-col items-center justify-left"
+                  >
                     <Image
                       src={urlFor(partner.image).width(200).fit("max").url()}
                       alt={partner.name}
