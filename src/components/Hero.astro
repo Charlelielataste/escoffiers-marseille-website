@@ -40,7 +40,7 @@ const placeholder = await getImage({
 
   <!-- Image placeholder pour un affichage immédiat -->
   <div
-    class="fixed w-full h-full top-14 sm:top-16 bg-cover bg-center bg-no-repeat"
+    class="fixed w-full h-full top-[60px] sm:top-[71px] bg-cover bg-center bg-no-repeat"
     style={`background-image: url('${placeholder.src}'); filter: blur(10px); transform: scale(1.1); will-change: transform, opacity; transition: opacity 1.5s ease-out, transform 0.1s linear;`}
     id="hero-placeholder"
   >
@@ -52,16 +52,15 @@ const placeholder = await getImage({
     srcset={optimized.srcSet.attribute}
     sizes="100vw"
     alt={pictureAlt}
-    class="fixed w-full h-full object-cover opacity-0 top-14 sm:top-16"
+    class="fixed w-full h-full object-cover opacity-0 top-[60px] sm:top-[71px]"
     style="transform: scale(1); transition: opacity 1.2s ease-in-out, transform 0.1s linear; will-change: transform;"
     id="hero-image"
     onload="window.heroImageLoaded && window.heroImageLoaded()"
   />
 
   <!-- Contenu du slot -->
-  <div class="pt-14 sm:pt-0">
-    <slot />
-  </div>
+
+  <slot />
 
   <!-- Scroll indicator -->
   {
@@ -150,7 +149,9 @@ const placeholder = await getImage({
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              window.addEventListener("scroll", requestTick, { passive: true });
+              window.addEventListener("scroll", requestTick, {
+                passive: true,
+              });
             } else {
               window.removeEventListener("scroll", requestTick);
             }

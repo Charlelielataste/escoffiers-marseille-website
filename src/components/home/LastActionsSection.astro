@@ -11,7 +11,9 @@ const t = getTranslations(locale);
 ---
 
 <div class="relative">
-  <div class="bg-container/90 backdrop-blur-sm shadow-lg rounded-lg p-8">
+  <div
+    class="bg-white/90 backdrop-blur-sm shadow-lg rounded-lg p-8 border-2 border-tertiary"
+  >
     <h3 class="text-2xl font-semibold mb-6">
       {t.home.lastActionsSection.title}
     </h3>
@@ -19,8 +21,8 @@ const t = getTranslations(locale);
       {
         lastActions.length > 0 ? (
           lastActions.map((action) => (
-            <div class="flex flex-col space-y-2 border-t pt-4 first:border-t-0 border-tertiary/50 first:pt-0">
-              <div class="border font-medium border-tertiary w-fit px-2 py-1 rounded-md text-tertiary">
+            <div class="flex flex-col space-y-2 border-t pt-4 first:border-t-0 border-tertiary first:pt-0">
+              <div class="font-bold border-2 border-tertiary w-fit px-2 py-1 rounded-md">
                 {formatDate(new Date(action.date), locale)}
               </div>
               <p class="font-medium text-lg">{action.title[locale]}</p>
