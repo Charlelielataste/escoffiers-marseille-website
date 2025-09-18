@@ -28,7 +28,7 @@ const {
 } = Astro.props as Props;
 
 const articlePath =
-  locale === "fr" ? `/articles/${slug}` : `/en/articles/${slug}`;
+  locale === "fr" ? `/articles/${slug}/` : `/en/articles/${slug}/`;
 const t = getTranslations(locale);
 ---
 

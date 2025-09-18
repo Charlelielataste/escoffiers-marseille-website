@@ -22,7 +22,7 @@ const {
 } = Astro.props as Props;
 
 const eventPath =
-  locale === "fr" ? `/evenements/${slug}` : `/en/events/${slug}`;
+  locale === "fr" ? `/evenements/${slug}/` : `/en/events/${slug}/`;
 const t = getTranslations(locale);
 ---
 
