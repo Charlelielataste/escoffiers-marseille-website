@@ -1,46 +1,50 @@
 ---
-
+import { getTranslations, type Locale } from "@/lib/i18n";
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
 ---
 
 <section class="relative py-20 bg-background">
   <div class="max-w-6xl mx-auto px-4">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold mb-6">
-        Au Service des Associations
+        {t.home.associationsSection.title}
       </h2>
       <p class="text-xl max-w-3xl mx-auto">
-        Nous soutenons activement les associations locales en mettant notre
-        expertise culinaire au service de leurs causes.
+        {t.home.associationsSection.description}
       </p>
     </div>
     <div class="space-y-6">
       <div
         class="bg-tertiary/20 rounded-lg p-6 border-l-4 border-tertiary shadow-lg"
       >
-        <h3 class="text-xl font-semibold mb-3">Dîners de Gala</h3>
+        <h3 class="text-xl font-semibold mb-3">
+          {t.home.associationsSection.dinnerTitle}
+        </h3>
         <p>
-          Organisation d'événements gastronomiques pour collecter des fonds en
-          faveur des associations caritatives.
+          {t.home.associationsSection.dinnerDescription}
         </p>
       </div>
 
       <div
         class="bg-tertiary/20 rounded-lg p-6 border-l-4 border-tertiary shadow-lg"
       >
-        <h3 class="text-xl font-semibold mb-3">Formation Culinaire</h3>
+        <h3 class="text-xl font-semibold mb-3">
+          {t.home.associationsSection.culinaryTrainingTitle}
+        </h3>
         <p>
-          Ateliers de cuisine pour les jeunes et les personnes en difficulté,
-          transmettant notre passion et nos valeurs.
+          {t.home.associationsSection.culinaryTrainingDescription}
         </p>
       </div>
 
       <div
         class="bg-tertiary/20 rounded-lg p-6 border-l-4 border-tertiary shadow-lg"
       >
-        <h3 class="text-xl font-semibold mb-3">Soutien Logistique</h3>
+        <h3 class="text-xl font-semibold mb-3">
+          {t.home.associationsSection.supportTitle}
+        </h3>
         <p>
-          Assistance technique et conseils culinaires pour les événements
-          organisés par nos partenaires associatifs.
+          {t.home.associationsSection.supportDescription}
         </p>
       </div>
     </div>

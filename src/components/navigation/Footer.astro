@@ -19,24 +19,23 @@ const t = getTranslations(currentLocale);
         <div class="flex items-center mb-4">
           <a
             href={navUrls.home}
-            class="hover:scale-110 w-10 h-10 flex items-center justify-center transition-colors bg-white rounded-full mr-2 border border-black/60"
+            class="hover:scale-110 shrink-0 w-10 h-10 flex items-center justify-center transition-colors bg-white rounded-full mr-2 border border-black/60"
           >
             <Image
-              src="/logos/logo-face-color.png"
+              src="/logos/logo-escoffier-nav.png"
               alt="Logo Escoffiers"
-              width="50"
-              height="50"
-              class="h-9 w-auto p-1"
+              width="100"
+              height="100"
+              class="h-10 w-auto p-1"
               loading="lazy"
             />
           </a>
           <h3 class="text-xl font-bold text-white text-bordered-light">
-            Les Disciples d'Escoffier
+            Disciples d'Escoffier Provence Méditerranée
           </h3>
         </div>
         <p class="text-white mb-6 max-w-md text-bordered-light font-medium">
-          Association culinaire dédiée à la promotion de l'art culinaire et à la
-          transmission des valeurs d'excellence d'Auguste Escoffier.
+          {t.footer.description}
         </p>
         <div class="flex items-center space-x-4">
           <a
@@ -68,7 +67,7 @@ const t = getTranslations(currentLocale);
       >
         <div class="whitespace-nowrap">
           <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
-            Navigation
+            {t.footer.navigation}
           </h4>
           <ul class="space-y-2">
             <li>
@@ -109,7 +108,7 @@ const t = getTranslations(currentLocale);
         <!-- Contact -->
         <div>
           <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
-            Liens utiles
+            {t.footer.usefulLinks}
           </h4>
           <ul class="space-y-2">
             <li>
@@ -155,7 +154,9 @@ const t = getTranslations(currentLocale);
     <div class="pt-6 mt-6 border-t border-white/20">
       <div class="flex flex-col lg:flex-row justify-between lg:items-center">
         <p class="text-white font-medium text-bordered-light">
-          © {currentYear} Les Disciples d'Escoffier. Tous droits réservés.
+          © {currentYear} Les Disciples d'Escoffier. {
+            t.footer.allRightsReserved
+          }
         </p>
         <div
           class="flex items-center justify-between lg:justify-end space-x-6 mt-6 lg:mt-0"
@@ -167,8 +168,8 @@ const t = getTranslations(currentLocale);
               class="flex text-white font-medium hover:text-tertiary transition-colors text-bordered-light"
               aria-label="Activer/Désactiver le curseur personnalisé"
             >
-              <span id="cursor-toggle-text text-center"
-                >Désactiver curseur personnalisé</span
+              <span id="cursor-toggle-text" class="text-center"
+                >{t.footer.disableCursor}</span
               >
             </button>
           </div>
@@ -176,13 +177,13 @@ const t = getTranslations(currentLocale);
             href="/mentions-legales"
             class="text-white text-center font-medium hover:text-tertiary transition-colors text-bordered-light"
           >
-            Mentions légales
+            {t.footer.legalMentions}
           </a>
           <a
             href="/politique-confidentialite"
             class="text-white text-center font-medium hover:text-tertiary transition-colors text-bordered-light"
           >
-            Politique de confidentialité
+            {t.footer.privacyPolicy}
           </a>
         </div>
       </div>
@@ -190,9 +191,11 @@ const t = getTranslations(currentLocale);
   </div>
 </footer>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("astro:page-load", function () {
     const cursorToggle = document.getElementById("cursor-toggle");
     const cursorToggleText = document.getElementById("cursor-toggle-text");
+
+    const locale = window.location.pathname.startsWith("/en") ? "en" : "fr";
 
     // Vérifier l'état actuel du curseur personnalisé
     const customCursorDisabled =
@@ -219,12 +222,18 @@ const t = getTranslations(currentLocale);
       if (disabled) {
         document.body.classList.add("custom-cursor-disabled");
         if (cursorToggleText) {
-          cursorToggleText.textContent = "Activer curseur personnalisé";
+          cursorToggleText.textContent =
+            locale === "fr"
+              ? "Activer curseur personnalisé"
+              : "Enable custom cursor";
         }
       } else {
         document.body.classList.remove("custom-cursor-disabled");
         if (cursorToggleText) {
-          cursorToggleText.textContent = "Désactiver curseur personnalisé";
+          cursorToggleText.textContent =
+            locale === "fr"
+              ? "Désactiver curseur personnalisé"
+              : "Disable custom cursor";
         }
       }
     }

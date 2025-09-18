@@ -29,13 +29,13 @@ const t = getTranslations(currentLocale);
               --transform: none;
             "
     >
-      <!-- Gradient overlay pour l'effet de transition -->
+      <!-- Gradient transition -->
       <div
         class="partners-overlay absolute h-full w-full before:pointer-events-none before:absolute before:top-0 before:right-0 before:z-[2] before:w-[20%] before:rotate-180 before:touch-none after:pointer-events-none after:absolute after:top-0 after:left-0 after:z-[2] after:w-[20%] after:touch-none"
       >
       </div>
 
-      <!-- Premier marquee -->
+      <!-- First marquee -->
       <div
         class="partners-marquee z-[1] flex flex-row"
         style="
@@ -53,6 +53,7 @@ const t = getTranslations(currentLocale);
             partners.map((partner) => (
               <a
                 href={`${partnersPath}#${partner.name}`}
+                aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
                 class="sm:mx-8 mx-4 w-[120px] h-24 flex items-center justify-center py-2"
               >
                 <Image
@@ -68,7 +69,7 @@ const t = getTranslations(currentLocale);
         </div>
       </div>
 
-      <!-- Deuxième marquee pour la continuité -->
+      <!-- Second marquee for continuity -->
       <div
         aria-hidden="true"
         class="partners-marquee flex items-center"
@@ -84,6 +85,7 @@ const t = getTranslations(currentLocale);
           partners.map((partner) => (
             <a
               href={partnersPath}
+              aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
               class="sm:mx-8 mx-4 w-[120px] h-20 flex items-center justify-center py-2"
             >
               <Image
@@ -105,7 +107,6 @@ const t = getTranslations(currentLocale);
   let observers: ResizeObserver[] = [];
 
   document.addEventListener("astro:page-load", () => {
-    // Clean up existing observers
     observers.forEach((observer) => observer.disconnect());
     observers = [];
 
@@ -128,8 +129,8 @@ const t = getTranslations(currentLocale);
 
           const marquees = container.querySelectorAll(".partners-marquee");
           marquees.forEach((m) => {
-            // Vitesse plus lente pour un défilement plus lisible
-            const duration = marqueeWidth / 30; // 30px par seconde
+            // Slower speed for a more readable scrolling
+            const duration = marqueeWidth / 30; // 30px per second
             (m as HTMLElement).style.setProperty("--duration", `${duration}s`);
           });
         };
@@ -140,58 +141,8 @@ const t = getTranslations(currentLocale);
         resizeObserver.observe(container);
         resizeObserver.observe(marquee);
 
-        // Store the observer for cleanup
         observers.push(resizeObserver);
       }
     });
   });
 </script>
-
-<style>
-  .partners-marquee-container {
-    width: 100%;
-    transform: none;
-  }
-
-  .partners-marquee-container:hover .partners-marquee {
-    animation-play-state: var(--pause-on-hover);
-  }
-
-  .partners-marquee-container:active .partners-marquee {
-    animation-play-state: var(--pause-on-click);
-  }
-
-  .partners-overlay::before,
-  .partners-overlay::after {
-    background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
-    content: "";
-    height: 100%;
-    width: 20%;
-  }
-
-  .partners-overlay::before {
-    right: -4px;
-  }
-
-  .partners-overlay::after {
-    left: -4px;
-  }
-
-  .partners-marquee {
-    flex: 0 0 auto;
-    animation: partners-scroll var(--duration) linear var(--delay)
-      var(--iteration-count);
-    animation-play-state: var(--play);
-    animation-delay: var(--delay);
-    animation-direction: var(--direction);
-  }
-
-  @keyframes partners-scroll {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-</style>

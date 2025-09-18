@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import EventCard from "@/components/events/EventCard.astro";
-import EventsImage from "@/assets/hero/events.png";
+import EventsImage from "@/assets/hero/events.jpg";
 
 import { getAllEvents } from "@/lib/sanity-queries";
 import { urlFor, type Event } from "@/lib/sanity";
@@ -60,9 +60,10 @@ const groupedEvents = groupEventsByMonth(events);
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
           Our Actions
         </h2>
-        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-          Découvrez nos prochains événements bénévoles et nos soutiens pour la
-          ville de Marseille
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-bordered"
+        >
+          Discover our latest actions and upcoming culinary events
         </p>
       </div>
     </Hero>
@@ -86,7 +87,7 @@ const groupedEvents = groupEventsByMonth(events);
                   <EventCard
                     title={event.title.en}
                     slug={event.slug.en.current}
-                    date={formatDateTime(new Date(event.date))}
+                    date={formatDateTime(new Date(event.date), "en-US")}
                     location={event.location}
                     image={urlFor(event.image).width(1200).height(800).url()}
                     description={event.intro.en}

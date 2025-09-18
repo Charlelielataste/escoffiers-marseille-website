@@ -5,7 +5,7 @@ import ArticleCard from "@/components/articles/ArticleCard.astro";
 import ArticleFilter from "@/components/articles/ArticleFilter.astro";
 import FacebookSection from "@/components/articles/FacebookSection.astro";
 import MobileFacebookSection from "@/components/articles/MobileFacebookSection.astro";
-import ArticlesImage from "@/assets/hero/articles.png";
+import ArticlesImage from "@/assets/hero/articles.jpeg";
 import { getAllArticles, getSettings } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { formatDate } from "@/lib/date";
@@ -28,13 +28,15 @@ const articlesWithoutFeatured = featuredArticle
       <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
         Our Knowledge
       </h2>
-      <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-        Restez informés de nos dernières actualités, conseils et recettes
+      <p
+        class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-bordered"
+      >
+        Stay informed about our latest news, tips and recipes
       </p>
     </div>
   </Hero>
-  <div class="relative px-5 sm:px-10 bg-white py-10">
-    <div class="flex flex-col lg:flex-row gap-5 max-w-6xl mx-auto">
+  <div class="relative px-5 sm:px-10 bg-white py-10 space-y-10">
+    <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 max-w-6xl mx-auto">
       <MobileFacebookSection />
       {
         hasFeaturedArticle ? (
@@ -63,7 +65,6 @@ const articlesWithoutFeatured = featuredArticle
       }
       <FacebookSection />
     </div>
-    <div class="h-20" id="articles"></div>
     <!-- Filtres et Articles -->
     <ArticleFilter articles={articlesWithoutFeatured} locale="en" />
   </div>

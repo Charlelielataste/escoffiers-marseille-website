@@ -2,7 +2,7 @@
 import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import ContactForm from "@/components/contact/ContactForm.astro";
-import ContactImage from "@/assets/hero/contact.png";
+import ContactImage from "@/assets/hero/contact.jpg";
 ---
 
 <Layout title="Nous Rejoindre">
@@ -13,15 +13,33 @@ import ContactImage from "@/assets/hero/contact.png";
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
           Contactez-nous
         </h2>
-        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-          Passionné(e) de cuisine française et désireux(se) de perpétuer
-          l'héritage d'Auguste Escoffier ? Contactez-nous pour découvrir comment
-          devenir disciple et servir notre communauté marseillaise.
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-bordered"
+        >
+          Passionné(e) de cuisine ou des métiers de la salle et désireux(se) de
+          perpétuer l'héritage d'Auguste Escoffier ? Contactez-nous pour
+          découvrir comment devenir disciple et servir la gastronomie
         </p>
       </div>
     </Hero>
-
-    <!-- Formulaire de contact -->
-    <ContactForm locale="fr" />
+    <section class="relative py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div
+            class="border-l-4 border-primary bg-primary/10 p-6 rounded-lg mb-10 flex flex-col items-center justify-center shadow-lg"
+          >
+            <blockquote class="text-lg italic text-text-primary mb-3">
+              "La cuisine est un art qui doit être traité avec respect et
+              passion."
+            </blockquote>
+            <cite class="font-semibold text-primary-accessible"
+              >Auguste Escoffier</cite
+            >
+          </div>
+          <!-- Formulaire de contact -->
+          <ContactForm locale="fr" />
+        </div>
+      </div>
+    </section>
   </div>
 </Layout>

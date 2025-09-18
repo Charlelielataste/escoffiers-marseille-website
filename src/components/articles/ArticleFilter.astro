@@ -26,7 +26,7 @@ const t = getTranslations(locale);
     <div class="flex flex-wrap gap-3 justify-center">
       <button
         data-filter=""
-        class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
+        class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
       >
         {t.articles.allArticles}
       </button>
@@ -35,7 +35,7 @@ const t = getTranslations(locale);
         tags.map((tag) => (
           <button
             data-filter={tag.slug.current}
-            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-secondary bg-white hover:text-white hover:bg-secondary transition-all duration-200 font-bold"
+            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
           >
             {tag.title[locale]}
           </button>
@@ -157,13 +157,13 @@ const t = getTranslations(locale);
     });
 
     function resetButton(btn: HTMLButtonElement) {
-      btn.classList.remove("bg-secondary", "text-white");
-      btn.classList.add("bg-white", "text-secondary");
+      btn.classList.remove("bg-secondary/40", "text-black");
+      btn.classList.add("bg-white", "text-black");
     }
 
     function activateButton(btn: HTMLButtonElement) {
-      btn.classList.remove("bg-white", "text-secondary");
-      btn.classList.add("bg-secondary", "text-white");
+      btn.classList.remove("bg-white", "text-black");
+      btn.classList.add("bg-secondary/40", "text-black");
     }
 
     function filterArticles(selectedTag: string) {

@@ -2,7 +2,7 @@
 import Hero from "@/components/Hero.astro";
 import MembersCard from "@/components/members/MembersCard.astro";
 import Layout from "@/layouts/Layout.astro";
-import MembersImage from "@/assets/hero/members.png";
+import MembersImage from "@/assets/hero/members.jpg";
 import { getAllMembers } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 
@@ -20,9 +20,11 @@ const members = membres.filter((membre) => !membre.isHonored);
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
           Notre Équipe
         </h2>
-        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-          Découvrez l&apos;équipe des Disciples d&apos;Escoffier de Marseille,
-          composée de membres de toutes les professions de la cuisine.
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-bordered"
+        >
+          Découvrez l'équipe des Disciples d'Escoffier Provence Mediterranée,
+          composée de membres de toutes les professions de la gastronomie
         </p>
       </div>
     </Hero>
@@ -30,11 +32,11 @@ const members = membres.filter((membre) => !membre.isHonored);
       <div class="max-w-6xl mx-auto">
         <div class="container mx-auto px-4">
           <h3
-            class="text-3xl md:text-4xl font-bold text-center text-primary my-12"
+            class="text-3xl md:text-4xl font-bold text-center text-primary mt-12 mb-5"
           >
             Notre Président
           </h3>
-
+          <hr class="w-24 h-1 bg-primary mx-auto rounded-full mb-12" />
           <div
             class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto pb-16"
           >
@@ -58,9 +60,10 @@ const members = membres.filter((membre) => !membre.isHonored);
         honnorMembers.length > 0 && (
           <div class="max-w-6xl mx-auto">
             <div class="container mx-auto px-4">
-              <h3 class="text-3xl md:text-4xl font-bold text-center text-tertiary my-12">
+              <h3 class="text-3xl md:text-4xl font-bold text-center text-tertiary-accessible mt-12 mb-5">
                 Nos Membres à l'Honneur
               </h3>
+              <hr class="w-24 h-1 bg-tertiary-accessible mx-auto rounded-full mb-12" />
               <div class="flex justify-center">
                 <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
                   {honnorMembers.map((membre) => (
@@ -87,10 +90,10 @@ const members = membres.filter((membre) => !membre.isHonored);
         members.length > 0 && (
           <div class="max-w-6xl mx-auto">
             <div class="container mx-auto px-4">
-              <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 my-12">
+              <h3 class="text-3xl md:text-4xl font-bold text-center text-black mt-12 mb-5">
                 Nos Membres
               </h3>
-
+              <hr class="w-24 h-1 bg-black mx-auto rounded-full mb-12" />
               <div class="flex justify-center">
                 <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
                   {members.map((membre) => (

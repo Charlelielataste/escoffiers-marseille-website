@@ -10,30 +10,50 @@ import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import InternationalBanner from "@/components/home/InternationalBanner.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
+
+// const jsonLd = {
+//   "@context": "https://schema.org",
+//   "@type": "WebSite",
+//   name: "Disciples d'Escoffier Provence Méditerranée",
+//   url: "https://votre-domaine.com",
+//   description:
+//     "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne. Événements, formations et networking culinaire.",
+// };
+
+// description="Découvrez les Disciples d'Escoffier Provence Méditerranée, association dédiée à la gastronomie française. Événements culinaires, formations et réseau professionnel en Provence."
+//   keywords="Disciples Escoffier, gastronomie Provence, événements culinaires, association gastronomique, cuisine française, Marseille, formations culinaires"
+//   jsonLd={jsonLd}
 ---
 
-<Layout>
+<Layout title="Accueil - Site Officiel">
   <div class="relative">
-    <Hero picture={HomeImage} pictureAlt="Escoffiers Provence Méditerranée">
+    <Hero
+      picture={HomeImage}
+      pictureAlt="Disciples d'Escoffier Provence Méditerranée"
+    >
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 class="text-5xl md:text-7xl font-bold mb-6">
-          Délégation Escoffiers
+          Disciples d'Escoffier
         </h1>
         <h2 class="text-3xl md:text-5xl mb-8 text-blue-500 font-bold">
           Provence Méditerranée
         </h2>
-        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed">
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed text-bordered"
+        >
           Ensemble, faisons grandir la gastronomie dans toute sa diversité.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href={`/a-propos`}
+            aria-label="vers la page à propos"
             class="bg-primary text-bordered hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:shadow-lg flex items-center justify-center"
           >
             Qui sommes-nous ?
           </a>
           <a
             href={`/evenements`}
+            aria-label="vers la page événements"
             class="border-2 border-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-semibold transition-colors"
           >
             Nos événements

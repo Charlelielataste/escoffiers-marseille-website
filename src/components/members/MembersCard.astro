@@ -1,5 +1,6 @@
 ---
 import MailIcon from "@/components/icons/MailIcon.astro";
+import MapIcon from "@/components/icons/MapIcon.astro";
 import { getTranslations, type Locale } from "@/lib/i18n";
 import { Image } from "astro:assets";
 
@@ -64,8 +65,9 @@ const t = getTranslations(locale);
         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(workplace)}`}
         target="_blank"
         rel="noopener noreferrer"
+        class="flex items-center gap-x-2"
       >
-        📍{" "}
+        <MapIcon size="16" class="text-red-500" />
         <span class="text-sm hover:text-secondary/80 underline">
           {workplace}
         </span>
@@ -74,14 +76,11 @@ const t = getTranslations(locale);
   }
   {
     email && (
-      <a
-        href={`mailto:${email}`}
-        class="text-sm text-primary mt-2 flex items-center gap-x-2"
-      >
+      <a href={`mailto:${email}`} class="mt-2 flex items-center gap-x-2">
         <MailIcon size="16" class="text-primary shrink-0" />
-        <strong class="hover:text-secondary/80 hover:underline mt-0.5">
+        <span class="hover:text-secondary/80 hover:underline mt-0.5 text-sm">
           {t.members.contact}
-        </strong>
+        </span>
       </a>
     )
   }

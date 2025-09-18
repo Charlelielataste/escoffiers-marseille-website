@@ -1,3 +1,12 @@
+---
+import { Image } from "astro:assets";
+import { getTranslations, type Locale } from "@/lib/i18n";
+import TeamImage from "@/assets/about/team.jpg";
+import { getAssociationAge } from "@/lib/date";
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
+---
+
 <section class="relative py-20 bg-white">
   <div class="container mx-auto px-4">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -5,13 +14,15 @@
         <div
           class="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl"
         >
-          <img
-            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-            alt="Équipe culinaire"
-            class="object-cover"
+          <Image
+            width="1080"
+            height="900"
+            src={TeamImage}
+            alt="Cuisine professionnelle"
+            class="object-cover w-full h-full"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+            class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
           >
           </div>
         </div>
@@ -19,27 +30,27 @@
 
       <div class="space-y-8">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Notre Équipe
+          {t.about.teamSection.title}
         </h2>
         <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          Notre équipe est composée de professionnels passionnés, formés aux
-          techniques culinaires traditionnelles et engagés dans la transmission
-          de notre savoir-faire.
+          {t.about.teamSection.description}
         </p>
         <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          Chaque membre apporte son expertise unique, créant une synergie qui
-          nous permet de réaliser des événements culinaires d&apos;exception au
-          service de la communauté.
+          {t.about.teamSection.nextParagraph}
         </p>
 
         <div class="grid grid-cols-2 gap-6">
           <div class="text-center">
-            <div class="text-3xl font-bold text-primary mb-2">15+</div>
-            <div class="text-gray-600">Années d&apos;expérience</div>
+            <div class="text-3xl font-bold text-primary mb-2">
+              {getAssociationAge()}
+            </div>
+            <div class="text-gray-600">
+              {t.about.teamSection.yearsOfExperience}
+            </div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-primary mb-2">50+</div>
-            <div class="text-gray-600">Événements par an</div>
+            <div class="text-3xl font-bold text-primary mb-2">30+</div>
+            <div class="text-gray-600">{t.about.teamSection.eventsPerYear}</div>
           </div>
         </div>
       </div>

@@ -6,8 +6,11 @@
   --foreground: #f9f5db;
 
   --primary: #B0675C;
+  --primary-accessible: #9a5a51;
   --secondary: #8ccab2;
+  --secondary-accessible: #517568;
   --tertiary: #ccb782;
+  --tertiary-accessible: #a88d3d;
 
   --container: #f3f4f6;
 }
@@ -17,26 +20,15 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-secondary-accessible: var(--secondary-accessible);
   --color-tertiary: var(--tertiary);
   --color-container: var(--container);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-primary-accessible: var(--primary-accessible);
+  --color-tertiary-accessible: var(--tertiary-accessible);
 }
 
-.text-bordered {
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
-.text-bordered-light {
-  text-shadow:
-    0 0 1px black,
-    0 0 1px black,
-    0 0 1px black;
-}
 
 body {
   background: var(--background);
@@ -86,4 +78,67 @@ body.custom-cursor-disabled input:disabled,
 body.custom-cursor-disabled textarea:disabled,
 body.custom-cursor-disabled select:disabled {
   cursor: not-allowed !important;
+}
+
+.text-bordered {
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.text-bordered-light {
+  text-shadow:
+    0 0 1px black,
+    0 0 1px black,
+    0 0 1px black,
+    0 0 1px black;
+}
+
+.partners-marquee-container {
+  width: 100%;
+  transform: none;
+}
+
+.partners-marquee-container:hover .partners-marquee {
+  animation-play-state: var(--pause-on-hover);
+}
+
+.partners-marquee-container:active .partners-marquee {
+  animation-play-state: var(--pause-on-click);
+}
+
+.partners-overlay::before,
+.partners-overlay::after {
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+  content: "";
+  height: 100%;
+  width: 20%;
+}
+
+.partners-overlay::before {
+  right: -4px;
+}
+
+.partners-overlay::after {
+  left: -4px;
+}
+
+.partners-marquee {
+  flex: 0 0 auto;
+  animation: partners-scroll var(--duration) linear var(--delay)
+    var(--iteration-count);
+  animation-play-state: var(--play);
+  animation-delay: var(--delay);
+  animation-direction: var(--direction);
+}
+
+@keyframes partners-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

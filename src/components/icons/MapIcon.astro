@@ -1,0 +1,18 @@
+---
+const size = Astro.props.size ?? 24;
+const className = Astro.props.class ?? "";
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  height={size}
+  width={size}
+  class={className}
+>
+  <path
+    d="M12 0a9.51 9.51 0 0 0 -9.5 9.5C2.5 16.05 9 22 11 23.65a1.49 1.49 0 0 0 1.92 0C15 22 21.5 16.05 21.5 9.5A9.51 9.51 0 0 0 12 0Zm0 14.5a5 5 0 1 1 5 -5 5 5 0 0 1 -5 5Z"
+    fill="currentColor"
+    stroke-width="1"></path>
+</svg>

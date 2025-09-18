@@ -12,9 +12,11 @@ const t = getTranslations(currentLocale);
       <a
         href={`https://disciplesescoffier.org/${currentLocale === "fr" ? "" : "en/"}`}
         rel="noopener noreferrer"
-        aria-label="vers le site des Disciples d'Escoffier International"
+        aria-label={currentLocale === "fr"
+          ? "vers le site des Disciples d'Escoffier International"
+          : "to the site of the International Disciples d'Escoffier"}
         target="_blank"
-        class="hover:underline hover:text-secondary"
+        class="hover:underline hover:text-secondary font-bold text-primary-accessible"
       >
         <strong>"Les Disciples d'Escoffier International"</strong>
       </a>

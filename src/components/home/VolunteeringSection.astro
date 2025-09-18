@@ -1,60 +1,78 @@
+---
+import GastronomyIcon from "@/components/icons/GastronomyIcon.astro";
+import PartnersIcon from "@/components/icons/PartnersIcon.astro";
+import VolunterringIcon from "@/components/icons/VolunterringIcon.astro";
+import { getTranslations, type Locale } from "@/lib/i18n";
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
+---
+
 <section class="relative py-20 bg-primary text-white overflow-hidden">
   <div class="relative z-10 max-w-6xl mx-auto px-4">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">Engagement Bénévole</h2>
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        {t.home.volunteeringSection.title}
+      </h2>
       <p class="text-xl max-w-3xl mx-auto text-bordered-light">
-        Nos chefs cuisiniers bénévoles mettent leur expertise au service des
-        associations et des événements caritatifs de la région marseillaise.
+        {t.home.volunteeringSection.description}
       </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-8">
       <div
-        class="bg-container/90 backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
+        class="bg-container backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
       >
         <div
           class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <img
-            src="/icons/spoon-icon.svg"
-            alt="Chefs Bénévoles"
-            class="w-8 h-8"
+          <VolunterringIcon
+            alt={t.home.volunteeringSection.charityTitle}
+            size="30"
           />
         </div>
-        <h3 class="text-xl font-semibold mb-3 text-black">Chefs Bénévoles</h3>
+        <h3 class="text-xl font-semibold mb-3 text-black">
+          {t.home.volunteeringSection.charityTitle}
+        </h3>
         <p class="text-black">
-          Des professionnels expérimentés qui donnent de leur temps et de leur
-          savoir-faire.
+          {t.home.volunteeringSection.charityDescription}
         </p>
       </div>
 
       <div
-        class="bg-container/90 backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
+        class="bg-container backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
       >
         <div
           class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <img src="/icons/spoon-icon.svg" alt="Partenariats" class="w-8 h-8" />
+          <PartnersIcon
+            alt={t.home.volunteeringSection.partnershipTitle}
+            size="35"
+          />
         </div>
-        <h3 class="text-xl font-semibold mb-3 text-black">Partenariats</h3>
+        <h3 class="text-xl font-semibold mb-3 text-black">
+          {t.home.volunteeringSection.partnershipTitle}
+        </h3>
         <p class="text-black">
-          Collaboration avec les associations locales pour des événements
-          caritatifs.
+          {t.home.volunteeringSection.partnershipDescription}
         </p>
       </div>
 
       <div
-        class="bg-container/90 backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
+        class="bg-container backdrop-blur-sm shadow-2xl rounded-lg p-6 text-center"
       >
         <div
           class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <img src="/icons/spoon-icon.svg" alt="Événements" class="w-8 h-8" />
+          <GastronomyIcon
+            alt={t.home.volunteeringSection.gastronomyTitle}
+            size="33"
+          />
         </div>
-        <h3 class="text-xl font-semibold mb-3 text-black">Événements</h3>
+        <h3 class="text-xl font-semibold mb-3 text-black">
+          {t.home.volunteeringSection.gastronomyTitle}
+        </h3>
         <p class="text-black">
-          Organisation de dîners de gala et d'événements culinaires pour
-          collecter des fonds.
+          {t.home.volunteeringSection.gastronomyDescription}
         </p>
       </div>
     </div>

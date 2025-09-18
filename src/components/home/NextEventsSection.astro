@@ -15,7 +15,7 @@ if (nextEvents.length === 0) {
 
 <div class="relative">
   <div
-    class="bg-white/90 backdrop-blur-sm shadow-lg rounded-lg p-8 border-2 border-secondary"
+    class="bg-white/90 backdrop-blur-sm shadow-lg rounded-lg p-8 border-2 border-tertiary"
   >
     <h3 class="text-2xl font-semibold mb-6">
       {t.home.nextEventsSection.title}
@@ -23,8 +23,8 @@ if (nextEvents.length === 0) {
     <div class="space-y-4">
       {
         nextEvents.map((event) => (
-          <div class="flex flex-col space-y-2 border-t pt-4 first:border-t-0 border-secondary first:pt-0">
-            <div class="font-bold border-2 border-secondary w-fit px-2 py-1 rounded-md">
+          <div class="flex flex-col space-y-2 border-t pt-4 first:border-t-0 border-tertiary first:pt-0">
+            <div class="font-bold bg-tertiary/40 border-l-4 border-tertiary rounded-sm w-fit px-2 py-1">
               {formatDate(new Date(event.date), locale)}
             </div>
             <p class="font-medium text-lg">{event.title[locale]}</p>

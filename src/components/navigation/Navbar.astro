@@ -24,6 +24,7 @@ const { currentPath = "/", multilingualUrls } = Astro.props;
 
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const navUrls = getNavUrls(currentLocale);
+
 const t = getTranslations(currentLocale);
 
 const frUrl =
@@ -34,7 +35,9 @@ const enUrl =
 const getLinkClasses = (isActive: boolean) => {
   return cn(
     "text-sm py-1 font-medium transition-colors flex items-center justify-center",
-    isActive ? "text-primary font-bold" : "text-black hover:text-primary"
+    isActive
+      ? "text-primary-accessible font-bold"
+      : "text-black hover:text-primary-accessible"
   );
 };
 
@@ -42,8 +45,8 @@ const getMobileLinkClasses = (isActive: boolean) => {
   return cn(
     "block px-3 py-2 rounded-md text-base font-medium transition-colors",
     isActive
-      ? "text-primary font-bold bg-primary/10"
-      : "text-black hover:text-gray-900 hover:bg-gray-50"
+      ? "text-primary-accessible font-bold bg-primary/10"
+      : "text-black hover:text-primary-accessible hover:bg-gray-50"
   );
 };
 ---
@@ -71,8 +74,8 @@ const getMobileLinkClasses = (isActive: boolean) => {
           <Image
             src="/logos/logo-escoffier-nav.png"
             alt="Logo des Disciples des Escoffiers"
-            width="200"
-            height="200"
+            width="500"
+            height="500"
             class="w-[50px] lg:w-[50px]"
             loading="eager"
           />

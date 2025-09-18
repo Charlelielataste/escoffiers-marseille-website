@@ -1,5 +1,5 @@
 ---
-import type { Locale } from "@/lib/i18n";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import TransmissionIcon from "@/components/icons/TransmissionIcon.astro";
 import CompetitionIcon from "@/components/icons/CompetitionIcon.astro";
 import HonorIcon from "@/components/icons/HonorIcon.astro";
@@ -104,22 +104,19 @@ const valuesEn = [
 
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const values = currentLocale === "fr" ? valuesFr : valuesEn;
+const t = getTranslations(currentLocale);
 ---
 
-<section class="relative py-20 bg-transparent">
+<section class="relative py-20 bg-primary">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16 relative">
       <div class="relative z-10">
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-          Nos Valeurs
+          {t.about.valuesSection.title}
         </h2>
-        <p class="text-xl text-white max-w-3xl mx-auto">
-          Les principes qui guident notre action au quotidien
+        <p class="text-xl text-white text-bordered-light max-w-3xl mx-auto">
+          {t.about.valuesSection.description}
         </p>
-      </div>
-      <div
-        class="absolute rounded-full w-full sm:w-[40%] h-[60%] sm:h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black blur-2xl"
-      >
       </div>
     </div>
 

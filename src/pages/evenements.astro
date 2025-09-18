@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import EventCard from "@/components/events/EventCard.astro";
-import EventsImage from "@/assets/hero/events.png";
+import EventsImage from "@/assets/hero/events.jpg";
 
 import { getAllEvents } from "@/lib/sanity-queries";
 import { urlFor, type Event } from "@/lib/sanity";
@@ -60,9 +60,11 @@ const groupedEvents = groupEventsByMonth(events);
         <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
           Nos Actions
         </h2>
-        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-          Découvrez nos prochains événements bénévoles et nos soutiens pour la
-          ville de Marseille
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-bordered"
+        >
+          Retrouvez nos dernières actions et découvrez nos prochains évènements
+          culinaire
         </p>
       </div>
     </Hero>
