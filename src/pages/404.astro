@@ -5,8 +5,26 @@ import { Image } from "astro:assets";
 import Image404 from "@/assets/hero/404.png";
 import Hero from "@/components/Hero.astro";
 
-const url = new URL(Astro.request.url);
-const locale: Locale = url.pathname.startsWith("/en") ? "en" : "fr";
+// Détecter la langue préférée via l'en-tête Accept-Language
+function detectLocale(request: Request): Locale {
+  const acceptLanguage = request.headers.get("accept-language") || "";
+  const url = new URL(request.url);
+
+  // D'abord, vérifier l'URL si elle contient /en
+  if (url.pathname.startsWith("/en")) {
+    return "en";
+  }
+
+  // Ensuite, vérifier l'en-tête Accept-Language
+  if (acceptLanguage.includes("en")) {
+    return "en";
+  }
+
+  // Par défaut, français
+  return "fr";
+}
+
+const locale = detectLocale(Astro.request);
 const t = getTranslations(locale);
 ---
 
@@ -72,3 +90,55 @@ const t = getTranslations(locale);
     </div>
   </Hero>
 </Layout>
+
+<script>
+  // Script de secours pour s'assurer que les traductions sont correctes côté client
+  document.addEventListener("astro:page-load", function () {
+    // Détecter la langue depuis l'URL actuelle
+    const currentPath = window.location.pathname;
+    const isEnglish = currentPath.startsWith("/en");
+
+    // Traductions
+    const translations = {
+      fr: {
+        heading: "Oups ! Cette page n'existe pas...",
+        description:
+          "Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas ou n'est plus disponible sur notre site !",
+        homeButton: "Retour à l'accueil",
+        reportButton: "Signaler un problème",
+      },
+      en: {
+        heading: "Oops! This page doesn't exist...",
+        description:
+          "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!",
+        homeButton: "Back to home",
+        reportButton: "Report a problem",
+      },
+    };
+
+    const t = translations[isEnglish ? "en" : "fr"];
+
+    // Mettre à jour les textes si nécessaire
+    const heading = document.querySelector("h2");
+    const description = document.querySelector("p");
+    const homeButton = document.querySelector('a[href*="/"]');
+    const reportButton = document.querySelector('a[href*="mailto"]');
+
+    if (heading && heading.textContent?.trim() !== t.heading) {
+      heading.textContent = t.heading;
+    }
+
+    if (description && description.textContent?.trim() !== t.description) {
+      description.textContent = t.description;
+    }
+
+    if (homeButton && homeButton.textContent?.trim() !== t.homeButton) {
+      homeButton.textContent = t.homeButton;
+      homeButton.setAttribute("href", isEnglish ? "/en/" : "/");
+    }
+
+    if (reportButton && reportButton.textContent?.trim() !== t.reportButton) {
+      reportButton.textContent = t.reportButton;
+    }
+  });
+</script>
