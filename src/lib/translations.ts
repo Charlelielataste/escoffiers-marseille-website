@@ -26,14 +26,6 @@ export const translations = {
       enableCursor: "Activer curseur personnalisé",
       allRightsReserved: "Tous droits réservés",
     },
-    error404: {
-      metaTitle: "Page non trouvée",
-      title: "Oups ! Cette page n'existe pas...",
-      subtitle:
-        "Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas ou n'est plus disponible sur notre site !",
-      backHome: "Retour à l'accueil",
-      reportProblem: "Signaler un problème",
-    },
     home: {
       associationsSection: {
         title: "Au Service de la Gastronomie",
@@ -157,6 +149,14 @@ export const translations = {
         submit: "Envoyer ma candidature",
       },
     },
+    notFound: {
+      title: "Page non trouvée",
+      heading: "Oups ! Cette page n'existe pas...",
+      description:
+        "Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas ou n'est plus disponible sur notre site !",
+      homeButton: "Retour à l'accueil",
+      reportButton: "Signaler un problème",
+    },
   },
   en: {
     nav: {
@@ -181,14 +181,6 @@ export const translations = {
       disableCursor: "Disable custom cursor",
       enableCursor: "Enable custom cursor",
       allRightsReserved: "All rights reserved",
-    },
-    error404: {
-      metaTitle: "Page not found",
-      title: "Oops! This page doesn't exist...",
-      subtitle:
-        "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!",
-      backHome: "Back to home",
-      reportProblem: "Report a problem",
     },
     home: {
       associationsSection: {
@@ -311,6 +303,14 @@ export const translations = {
           "Tell us why you want to join the Disciples d'Escoffier and how you intend to contribute to our mission...",
         submit: "Send",
       },
+    },
+    notFound: {
+      title: "Page not found",
+      heading: "Oops! This page doesn't exist...",
+      description:
+        "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!",
+      homeButton: "Back to home",
+      reportButton: "Report a problem",
     },
   },
 } as const;
