@@ -32,25 +32,36 @@ import Hero from "@/components/Hero.astro";
         <span class="text-primary lg:text-5xl text-3xl font-bold">4</span>
       </div>
 
-      <h2 class="text-3xl md:text-4xl font-bold text-black mb-8">
-        Oops ! Page not found...
+      <h2
+        id="error-title"
+        class="text-3xl md:text-4xl font-bold text-black mb-6"
+      >
+        Oups ! Cette page n'existe pas...
       </h2>
+
+      <p
+        id="error-description"
+        class="text-lg md:text-xl text-primary-accessible mb-8 max-w-2xl mx-auto"
+      >
+        Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas
+        ou n'est plus disponible sur notre site !
+      </p>
 
       <div
         class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full"
       >
         <a
-          href={"/"}
-          aria-label="Retour à l'accueil"
+          id="home-fr"
+          href="/"
           class="bg-primary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
           Retour à l'accueil
         </a>
 
         <a
-          href={"/en/"}
-          aria-label="Back to home"
-          class="bg-primary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          id="home-en"
+          href="/en/"
+          class="bg-secondary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
           Back to home
         </a>
@@ -58,3 +69,54 @@ import Hero from "@/components/Hero.astro";
     </div>
   </Hero>
 </Layout>
+
+<script is:inline>
+  // Script très simple pour la traduction 404 - fonctionne en production
+  (function () {
+    // Attendre que le DOM soit chargé
+    function init() {
+      try {
+        // Détecter la langue depuis l'URL
+        var path = window.location.pathname || "";
+        var isEnglish = path.indexOf("/en/") === 0;
+
+        // Éléments à modifier
+        var title = document.getElementById("error-title");
+        var description = document.getElementById("error-description");
+        var frButton = document.getElementById("home-fr");
+        var enButton = document.getElementById("home-en");
+
+        if (isEnglish) {
+          // Version anglaise
+          if (title) title.textContent = "Oops! This page doesn't exist...";
+          if (description)
+            description.textContent =
+              "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!";
+
+          // Mettre en évidence le bouton anglais
+          if (enButton) {
+            enButton.className = enButton.className.replace(
+              "bg-secondary",
+              "bg-primary"
+            );
+          }
+          if (frButton) {
+            frButton.className = frButton.className.replace(
+              "bg-primary",
+              "bg-secondary"
+            );
+          }
+        }
+      } catch (e) {
+        // Silencieux en cas d'erreur
+      }
+    }
+
+    // Exécuter immédiatement si le DOM est prêt, sinon attendre
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>
