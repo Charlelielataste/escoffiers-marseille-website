@@ -1,14 +1,17 @@
 ---
+import { cn } from "@/lib/utils";
 import { getImage } from "astro:assets";
 export interface Props {
   picture: ImageMetadata;
   pictureAlt?: string;
   has_scroll_indicator?: boolean;
+  is_404?: boolean;
 }
 
 const {
   picture,
   pictureAlt = "Hero image",
+  is_404 = false,
   has_scroll_indicator = true,
 } = Astro.props;
 
@@ -28,11 +31,17 @@ const placeholder = await getImage({
 ---
 
 <section
-  class="relative h-[600px] md:h-[100dvh] pt-12 md:pt-0 flex items-center justify-center overflow-hidden"
+  class={cn(
+    "relative h-[600px] md:h-[100dvh] pt-12 md:pt-0 flex items-center justify-center overflow-hidden",
+    is_404 && "h-[100dvh]"
+  )}
   style="overscroll-behavior-y: none;"
 >
   <div
-    class="fixed w-full h-[600px] md:h-full top-[60px] sm:top-[71px] bg-cover bg-center bg-no-repeat md:scale-110"
+    class={cn(
+      "fixed w-full h-[600px] md:h-full top-[60px] sm:top-[71px] bg-cover bg-center bg-no-repeat md:scale-110",
+      is_404 && "top-0 sm:top-0 h-full"
+    )}
     style={`background-image: url('${placeholder.src}'); filter: blur(10px); will-change: opacity; transition: opacity 1.5s ease-out;`}
     id="hero-placeholder"
   >
@@ -43,7 +52,10 @@ const placeholder = await getImage({
     srcset={optimized.srcSet.attribute}
     sizes="100vw"
     alt={pictureAlt}
-    class="fixed w-full h-[600px] md:h-full object-cover opacity-0 top-[60px] sm:top-[71px]"
+    class={cn(
+      "fixed w-full h-[600px] md:h-full object-cover opacity-0 top-[60px] sm:top-[71px]",
+      is_404 && "top-0 sm:top-0 h-full"
+    )}
     style="transition: opacity 1.2s ease-in-out; will-change: opacity;"
     id="hero-image"
     onload="window.heroImageLoaded && window.heroImageLoaded()"

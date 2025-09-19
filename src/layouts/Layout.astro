@@ -8,6 +8,7 @@ import { ClientRouter } from "astro:transitions";
 
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 export interface Props {
+  navbar?: boolean;
   title?: string;
   multilingualUrls?: {
     fr: string;
@@ -15,7 +16,7 @@ export interface Props {
   };
 }
 
-const { title, multilingualUrls } = Astro.props;
+const { title, multilingualUrls, navbar = true } = Astro.props;
 ---
 
 <html lang={currentLocale}>
@@ -47,11 +48,15 @@ const { title, multilingualUrls } = Astro.props;
     <ClientRouter />
   </head>
   <body class="font-['Museo_Sans']" style="overscroll-behavior: none;">
-    <Navbar
-      currentPath={Astro.url.pathname}
-      multilingualUrls={multilingualUrls}
-    />
+    {
+      navbar && (
+        <Navbar
+          currentPath={Astro.url.pathname}
+          multilingualUrls={multilingualUrls}
+        />
+      )
+    }
     <slot />
-    <Footer />
+    {navbar && <Footer />}
   </body>
 </html>
