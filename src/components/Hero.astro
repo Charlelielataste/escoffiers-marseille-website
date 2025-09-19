@@ -32,7 +32,7 @@ const placeholder = await getImage({
   style="overscroll-behavior-y: none;"
 >
   <div
-    class="fixed w-full h-full top-[60px] sm:top-[71px] bg-cover bg-center bg-no-repeat md:scale-110"
+    class="fixed w-full h-[600px] md:h-full top-[60px] sm:top-[71px] bg-cover bg-center bg-no-repeat md:scale-110"
     style={`background-image: url('${placeholder.src}'); filter: blur(10px); will-change: opacity; transition: opacity 1.5s ease-out;`}
     id="hero-placeholder"
   >
@@ -43,7 +43,7 @@ const placeholder = await getImage({
     srcset={optimized.srcSet.attribute}
     sizes="100vw"
     alt={pictureAlt}
-    class="fixed w-full h-full object-cover opacity-0 top-[60px] sm:top-[71px]"
+    class="fixed w-full h-[600px] md:h-full object-cover opacity-0 top-[60px] sm:top-[71px]"
     style="transition: opacity 1.2s ease-in-out; will-change: opacity;"
     id="hero-image"
     onload="window.heroImageLoaded && window.heroImageLoaded()"
