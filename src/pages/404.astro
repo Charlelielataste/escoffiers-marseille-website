@@ -5,7 +5,8 @@ import { Image } from "astro:assets";
 import Image404 from "@/assets/hero/404.png";
 import Hero from "@/components/Hero.astro";
 
-const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const containEnglish = Astro.url.pathname.includes("/en/");
+const currentLocale = containEnglish ? "en" : "fr";
 const t = getTranslations(currentLocale);
 const linkToHome = currentLocale === "fr" ? "/" : "/en/";
 ---
