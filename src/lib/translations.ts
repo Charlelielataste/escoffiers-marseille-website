@@ -149,14 +149,6 @@ export const translations = {
         submit: "Envoyer ma candidature",
       },
     },
-    notFound: {
-      title: "Page non trouvée",
-      heading: "Oups ! Cette page n'existe pas...",
-      description:
-        "Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas ou n'est plus disponible sur notre site !",
-      homeButton: "Retour à l'accueil",
-      reportButton: "Signaler un problème",
-    },
   },
   en: {
     nav: {
@@ -303,14 +295,6 @@ export const translations = {
           "Tell us why you want to join the Disciples d'Escoffier and how you intend to contribute to our mission...",
         submit: "Send",
       },
-    },
-    notFound: {
-      title: "Page not found",
-      heading: "Oops! This page doesn't exist...",
-      description:
-        "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!",
-      homeButton: "Back to home",
-      reportButton: "Report a problem",
     },
   },
 } as const;
