@@ -5,7 +5,7 @@ import Image404 from "@/assets/hero/404.png";
 import Hero from "@/components/Hero.astro";
 ---
 
-<Layout title="404">
+<Layout title="Page non trouvée">
   <Hero picture={Image404} pictureAlt="404" has_scroll_indicator={false}>
     <div class="absolute inset-0 bg-black/30"></div>
     <div
@@ -51,19 +51,18 @@ import Hero from "@/components/Hero.astro";
         class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full"
       >
         <a
-          id="home-fr"
+          id="home"
           href="/"
           class="bg-primary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
           Retour à l'accueil
         </a>
-
         <a
-          id="home-en"
-          href="/en/"
+          id="report-problem"
+          href="mailto:contact@disciplesescoffier-provence-mediterranee.org?subject=Signalement%20de%20problème%20sur%20le%20site"
           class="bg-secondary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
-          Back to home
+          Signaler un problème
         </a>
       </div>
     </div>
@@ -71,48 +70,36 @@ import Hero from "@/components/Hero.astro";
 </Layout>
 
 <script is:inline>
-  // Script très simple pour la traduction 404 - fonctionne en production
   (function () {
-    // Attendre que le DOM soit chargé
     function init() {
       try {
-        // Détecter la langue depuis l'URL
         var path = window.location.pathname || "";
         var isEnglish = path.indexOf("/en/") === 0;
 
-        // Éléments à modifier
         var title = document.getElementById("error-title");
         var description = document.getElementById("error-description");
-        var frButton = document.getElementById("home-fr");
-        var enButton = document.getElementById("home-en");
+        var button = document.getElementById("home");
+        var reportProblem = document.getElementById("report-problem");
 
         if (isEnglish) {
-          // Version anglaise
+          document.title =
+            "Page not found - Disciples d'Escoffier Provence Méditerranée";
           if (title) title.textContent = "Oops! This page doesn't exist...";
           if (description)
             description.textContent =
               "Don't panic! It seems you've been looking for a page that's not or is no longer available on our site!";
-
-          // Mettre en évidence le bouton anglais
-          if (enButton) {
-            enButton.className = enButton.className.replace(
-              "bg-secondary",
-              "bg-primary"
-            );
-          }
-          if (frButton) {
-            frButton.className = frButton.className.replace(
-              "bg-primary",
-              "bg-secondary"
-            );
-          }
+          if (button) button.textContent = "Back to home";
+          if (button) button.href = "/en/";
+          if (reportProblem) reportProblem.textContent = "Report a problem";
+          if (reportProblem)
+            reportProblem.href =
+              "mailto:contact@disciplesescoffier-provence-mediterranee.org?subject=Report%20a%20problem%20on%20the%20site";
         }
       } catch (e) {
-        // Silencieux en cas d'erreur
+        console.error(e);
       }
     }
 
-    // Exécuter immédiatement si le DOM est prêt, sinon attendre
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", init);
     } else {
