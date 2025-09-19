@@ -84,6 +84,7 @@ const t = getTranslations(currentLocale);
         {
           partners.map((partner) => (
             <a
+              tabindex="-1"
               href={`${partnersPath}#${partner.name}/`}
               aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
               class="sm:mx-8 mx-4 w-[120px] h-20 flex items-center justify-center py-2"

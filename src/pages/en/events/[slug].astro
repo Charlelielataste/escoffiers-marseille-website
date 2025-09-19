@@ -35,9 +35,9 @@ const multilingualSlugs = {
       <a
         href={`/en/events#${event.slug.en.current}`}
         data-astro-reload
-        class="inline-flex items-center text-sm gap-3 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
+        class="inline-flex items-center text-sm gap-3 bg-tertiary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
       >
-        <ArrowLeft size={12} />
+        <ArrowLeft size={12} class="text-white" />
         <span class="mt-0.5 text-bordered-light">Back to events</span>
       </a>
     </div>
@@ -54,7 +54,7 @@ const multilingualSlugs = {
     <div class="mb-6">
       <time
         datetime={new Date(event.date).toISOString()}
-        class="text-black text-lg font-bold"
+        class="text-gray-600 text-lg font-bold"
       >
         {formatDateTime(new Date(event.date), "en-US")}
       </time>
