@@ -14,7 +14,6 @@ const t = getTranslations(currentLocale);
 <footer class="relative bg-primary border-t border-tertiary">
   <div class="max-w-6xl mx-auto p-6">
     <div class="flex flex-col md:flex-row justify-between gap-10">
-      <!-- Logo and description -->
       <div class="w-full">
         <div class="flex items-center mb-4">
           <a
@@ -105,7 +104,7 @@ const t = getTranslations(currentLocale);
           </ul>
         </div>
 
-        <!-- Contact -->
+        <!-- Useful links -->
         <div>
           <h4 class="text-lg font-bold text-white mb-4 text-bordered-light">
             {t.footer.usefulLinks}
@@ -150,7 +149,6 @@ const t = getTranslations(currentLocale);
       </div>
     </div>
 
-    <!-- Ligne de séparation -->
     <div class="pt-6 mt-6 border-t border-white/20">
       <div class="flex flex-col lg:flex-row justify-between lg:items-center">
         <p class="text-white font-medium text-bordered-light">
@@ -161,7 +159,6 @@ const t = getTranslations(currentLocale);
         <div
           class="flex items-center justify-between lg:justify-end space-x-6 mt-6 lg:mt-0"
         >
-          <!-- Bouton pour désactiver le curseur personnalisé -->
           <div class="hidden sm:block">
             <button
               id="cursor-toggle"
@@ -197,24 +194,20 @@ const t = getTranslations(currentLocale);
 
     const locale = window.location.pathname.startsWith("/en") ? "en" : "fr";
 
-    // Vérifier l'état actuel du curseur personnalisé
+    // Check the current state of the custom cursor
     const customCursorDisabled =
       localStorage.getItem("customCursorDisabled") === "true";
 
-    // Appliquer l'état initial
     updateCursorState(customCursorDisabled);
 
-    // Gestionnaire d'événement pour le bouton
     cursorToggle?.addEventListener("click", function () {
       const isCurrentlyDisabled = document.body.classList.contains(
         "custom-cursor-disabled"
       );
       const newState = !isCurrentlyDisabled;
 
-      // Sauvegarder la préférence
       localStorage.setItem("customCursorDisabled", newState.toString());
 
-      // Appliquer le nouvel état
       updateCursorState(newState);
     });
 

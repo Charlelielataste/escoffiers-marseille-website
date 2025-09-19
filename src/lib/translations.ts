@@ -119,6 +119,13 @@ export const translations = {
       allArticles: "Tous les articles",
       featuredArticle: "Article à la une",
       readArticle: "Lire l'article",
+      noArticlesCategory: "Aucun article correspondant à cette catégorie",
+    },
+    MobileFacebookSection: {
+      title: "Suivez-nous sur Facebook !",
+      description:
+        "Rejoignez notre communauté des Disciples d'Escoffier Provence Méditerranée et découvrez nos actualités, événements et initiatives culinaires.",
+      button: "Nous suivre",
     },
     events: {
       seeMore: "En savoir plus",
@@ -268,6 +275,13 @@ export const translations = {
       allArticles: "All articles",
       featuredArticle: "Featured article",
       readArticle: "Read the article",
+      noArticlesCategory: "No articles corresponding to this category",
+    },
+    MobileFacebookSection: {
+      title: "Follow us on Facebook !",
+      description:
+        "Join our community of Disciples d'Escoffier Provence Méditerranée and discover our news, events and culinary initiatives.",
+      button: "Follow us",
     },
     events: {
       seeMore: "See more",

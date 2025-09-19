@@ -1,5 +1,5 @@
 ---
-// Déclaration de type pour l'API Facebook
+// Facebook API
 declare global {
   interface Window {
     FB: {
@@ -27,15 +27,12 @@ declare global {
 </div>
 
 <script is:inline data-astro-rerun>
-  // Fonction pour charger le SDK Facebook
   function loadFacebookSDK() {
-    // Vérifier si le SDK est déjà chargé
     if (window.FB) {
-      window.FB.XFBML.parse(); // Re-scan du DOM
+      window.FB.XFBML.parse(); // Re-scan DOM
       return;
     }
 
-    // Créer et charger le script Facebook SDK
     const script = document.createElement("script");
     script.async = true;
     script.defer = true;
@@ -45,18 +42,9 @@ declare global {
     document.body.appendChild(script);
   }
 
-  // Charger le SDK quand le DOM est prêt
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", loadFacebookSDK);
   } else {
     loadFacebookSDK();
   }
 </script>
-
-<style>
-  /* Styles pour le conteneur Facebook si nécessaire */
-  .fb-page {
-    border: none;
-    overflow: hidden;
-  }
-</style>

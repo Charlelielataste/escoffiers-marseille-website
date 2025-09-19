@@ -73,7 +73,9 @@ const t = getTranslations(locale);
           ))
         }
       </div>
-      <h3 class="text-2xl font-bold mb-3 lg:line-clamp-2 text-primary">
+      <h3
+        class="text-xl md:text-2xl font-bold mb-3 lg:line-clamp-2 text-primary"
+      >
         {title}
       </h3>
 
@@ -83,10 +85,10 @@ const t = getTranslations(locale);
 
       <div class="flex justify-end mt-auto">
         <div
-          class="font-bold flex items-center gap-x-2 text-primary-accessible"
+          class="font-bold flex items-center text-sm md:text-base gap-x-2 text-primary-accessible"
         >
           <span>{t.articles.readArticle}</span>
-          <ArrowRight size={12} />
+          <ArrowRight size={10} />
         </div>
       </div>
     </div>

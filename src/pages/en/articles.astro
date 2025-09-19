@@ -24,8 +24,12 @@ const articlesWithoutFeatured = featuredArticle
 <Layout title="Articles">
   <Hero picture={ArticlesImage} pictureAlt="Articles">
     <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-      <h1 class="text-5xl md:text-7xl font-bold mb-6">Articles</h1>
-      <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
+      <h1 class="text-4xl md:text-7xl font-bold mb-6 text-bordered">
+        Articles
+      </h1>
+      <h2
+        class="text-3xl md:text-5xl font-bold mb-8 text-primary text-bordered"
+      >
         Our Knowledge
       </h2>
       <p
@@ -54,10 +58,10 @@ const articlesWithoutFeatured = featuredArticle
           <div class="flex rounded-3xl bg-white shadow-xl w-full h-[540px] border border-tertiary/20 relative">
             <div class="flex flex-col gap-y-2 justify-center items-center w-full">
               <p class="text-center text-primary text-2xl font-bold">
-                Aucun article à la une pour le moment
+                No featured article for the moment
               </p>
               <p class="text-center text-primary text-lg">
-                Revenez plus tard pour découvrir nos dernières actualités
+                Come back later to discover our latest news
               </p>
             </div>
           </div>
@@ -65,7 +69,6 @@ const articlesWithoutFeatured = featuredArticle
       }
       <FacebookSection />
     </div>
-    <!-- Filtres et Articles -->
     <ArticleFilter articles={articlesWithoutFeatured} locale="en" />
   </div>
 </Layout>

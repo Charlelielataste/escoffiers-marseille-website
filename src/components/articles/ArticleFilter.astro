@@ -17,7 +17,6 @@ const t = getTranslations(locale);
 ---
 
 <section class="max-w-6xl mx-auto">
-  <!-- Filtres -->
   <div class="mb-8">
     <h3 class="text-xl font-semibold mb-4 text-center">
       {t.articles.category}
@@ -26,7 +25,7 @@ const t = getTranslations(locale);
     <div class="flex flex-wrap gap-3 justify-center">
       <button
         data-filter=""
-        class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
+        class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-sm md:text-base text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
       >
         {t.articles.allArticles}
       </button>
@@ -35,7 +34,7 @@ const t = getTranslations(locale);
         tags.map((tag) => (
           <button
             data-filter={tag.slug.current}
-            class="filter-btn px-4 py-2 rounded-full border-2 border-secondary text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
+            class="filter-btn px-4 py-2 text-sm md:text-base rounded-full border-2 border-secondary text-black bg-white hover:text-black hover:bg-secondary transition-all duration-200 font-bold"
           >
             {tag.title[locale]}
           </button>
@@ -44,7 +43,6 @@ const t = getTranslations(locale);
     </div>
   </div>
 
-  <!-- Articles -->
   <div
     class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8"
     id="articles-container"
@@ -72,10 +70,9 @@ const t = getTranslations(locale);
     }
   </div>
 
-  <!-- Message quand aucun article ne correspond -->
   <div id="no-articles-message" class="hidden text-center h-80 pt-8">
     <p class="text-gray-600 text-lg">
-      Pas d'articles correspondant à cette catégorie
+      {t.articles.noArticlesCategory}
     </p>
   </div>
 </section>
@@ -84,15 +81,12 @@ const t = getTranslations(locale);
   document.addEventListener("astro:page-load", function () {
     const filterBtns = document.querySelectorAll(".filter-btn");
 
-    // Variables pour tracker l'état
     let currentActiveBtn: HTMLButtonElement | null = null;
     let currentFilter = "";
 
-    // Restaurer le filtre depuis localStorage
     const savedFilter = localStorage.getItem("articlesFilter") || "";
     currentFilter = savedFilter;
 
-    // Trouver et activer le bon bouton au chargement
     currentActiveBtn = document.querySelector(
       `[data-filter="${savedFilter}"]`
     ) as HTMLButtonElement;
@@ -104,7 +98,6 @@ const t = getTranslations(locale);
       currentFilter = "";
     }
 
-    // Données des articles (côté client)
     const articlesData = Array.from(
       document.querySelectorAll(".article-card")
     ).map((card) => ({
@@ -112,46 +105,35 @@ const t = getTranslations(locale);
       tags: card.getAttribute("data-tags")?.split(",") || [],
     }));
 
-    // Initialiser l'état des boutons et filtrer selon le filtre sauvegardé
     function initializeFiltersFromStorage() {
-      // Reset tous les boutons
       filterBtns.forEach((btn) => resetButton(btn as HTMLButtonElement));
 
-      // Activer le bon bouton
       if (currentActiveBtn) {
         activateButton(currentActiveBtn);
       }
 
-      // Appliquer le filtre
       filterArticles(currentFilter);
     }
 
-    // Initialiser les filtres depuis localStorage
     initializeFiltersFromStorage();
 
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", function (this: HTMLButtonElement) {
         const selectedTag = this.getAttribute("data-filter") || "";
 
-        // Éviter les traitements inutiles si même filtre
         if (selectedTag === currentFilter) return;
 
-        // Reset uniquement le bouton précédent
         if (currentActiveBtn) {
           resetButton(currentActiveBtn);
         }
 
-        // Activer le nouveau bouton
         activateButton(this);
 
-        // Mettre à jour les références
         currentActiveBtn = this;
         currentFilter = selectedTag;
 
-        // Sauvegarder le filtre dans localStorage
         localStorage.setItem("articlesFilter", selectedTag);
 
-        // Filtrer avec show/hide au lieu de remove/append
         filterArticles(selectedTag);
       });
     });
@@ -176,7 +158,6 @@ const t = getTranslations(locale);
         if (shouldShow) visibleCount++;
       });
 
-      // Afficher ou masquer le message "pas d'articles"
       const noArticlesMessage = document.getElementById("no-articles-message");
       if (noArticlesMessage) {
         noArticlesMessage.classList.toggle("hidden", visibleCount > 0);

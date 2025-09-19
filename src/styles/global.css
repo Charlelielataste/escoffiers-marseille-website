@@ -96,6 +96,11 @@ body.custom-cursor-disabled select:disabled {
     0 0 1px black;
 }
 
+.fb-page {
+  border: none;
+  overflow: hidden;
+}
+
 .partners-marquee-container {
   width: 100%;
   transform: none;

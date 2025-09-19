@@ -1,5 +1,4 @@
 ---
-import MailIcon from "@/components/icons/MailIcon.astro";
 import { getTranslations, type Locale } from "@/lib/i18n";
 
 export interface Props {
@@ -10,13 +9,12 @@ const { locale } = Astro.props;
 const t = getTranslations(locale);
 ---
 
-<!-- Formulaire -->
 <div class="bg-container rounded-2xl max-w-2xl mx-auto p-8 shadow-lg">
   <form id="contact-form" name="contact" method="POST" class="space-y-6">
-    <!-- Champ honeypot caché pour la protection anti-spam -->
+    <!-- Honeypot -->
     <div style="display: none;">
       <label>
-        Ne pas remplir ce champ si vous êtes humain:
+        fill this field if robot:
         <input name="bot-field" />
       </label>
     </div>
@@ -58,7 +56,6 @@ const t = getTranslations(locale);
       </div>
     </div>
 
-    <!-- Email -->
     <div class="form-group">
       <label
         for="email"
@@ -77,7 +74,6 @@ const t = getTranslations(locale);
       />
     </div>
 
-    <!-- Téléphone -->
     <div class="form-group">
       <label
         for="phone"
@@ -94,7 +90,6 @@ const t = getTranslations(locale);
       />
     </div>
 
-    <!-- Expérience culinaire -->
     <div class="form-group">
       <label
         for="profession"
@@ -113,7 +108,6 @@ const t = getTranslations(locale);
       />
     </div>
 
-    <!-- Adress -->
     <div class="grid md:grid-cols-2 gap-4">
       <div class="form-group">
         <label
@@ -155,7 +149,6 @@ const t = getTranslations(locale);
       </div>
     </div>
 
-    <!-- Message -->
     <div class="form-group">
       <label
         for="message"
@@ -175,7 +168,6 @@ const t = getTranslations(locale);
       <div id="message-error" class="text-red-500 text-sm hidden"></div>
     </div>
 
-    <!-- Bouton d'envoi / Zone de message -->
     <div class="pt-4">
       <button
         type="submit"
@@ -185,7 +177,6 @@ const t = getTranslations(locale);
       >
         <span id="button-text">{t.contact.form.submit}</span>
       </button>
-      <!-- Zone pour afficher les messages de succès/erreur -->
       <div
         id="form-message"
         class="hidden w-full py-4 px-6 rounded-lg text-center font-semibold"
@@ -197,16 +188,15 @@ const t = getTranslations(locale);
 <div id="contact" class="p-5"></div>
 <div
   id="contact"
-  class="py-10 border-t px-8 border-b border-primary/40 flex flex-col items-center justify-center gap-y-6"
+  class="py-10 border-t text-center px-8 border-b border-primary/40 flex flex-col items-center justify-center gap-y-6"
 >
   <h2 class="text-lg sm:text-2xl font-bold text-primary">
     {t.contact.contactEmail}
   </h2>
   <div class="flex items-center gap-x-4">
-    <MailIcon size="16" class="text-primary shrink-0" />
     <a
       href="mailto:contact@disciplesescoffier-provence-mediterranee.org"
-      class="font-medium hover:text-tertiary transition-colors sm:text-lg"
+      class="font-medium hover:text-tertiary transition-colors text-base sm:text-lg"
     >
       contact@disciplesescoffier-provence-mediterranee.org
     </a>
@@ -240,17 +230,14 @@ const t = getTranslations(locale);
     const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
     const MAX_SUBMISSIONS = 3;
 
-    // Fonction de validation du code postal
     function validateZipCode(zipCode: string): boolean {
       return /^[0-9]{5}$/.test(zipCode);
     }
 
-    // Fonction de validation du message
     function validateMessage(message: string): boolean {
       return message.trim().length >= 20;
     }
 
-    // Fonction pour afficher/masquer les erreurs
     function showFieldError(fieldId: string, message: string) {
       const errorDiv = document.getElementById(`${fieldId}-error`);
       if (errorDiv) {
@@ -266,14 +253,13 @@ const t = getTranslations(locale);
       }
     }
 
-    // Fonction de vérification du rate limiting
     function checkRateLimit(): boolean {
       const now = Date.now();
       const submissions = JSON.parse(
         localStorage.getItem(RATE_LIMIT_KEY) || "[]"
       );
 
-      // Nettoyer les anciennes soumissions
+      // Clean old submissions
       const recentSubmissions = submissions.filter(
         (time: number) => now - time < RATE_LIMIT_WINDOW
       );
@@ -281,7 +267,6 @@ const t = getTranslations(locale);
       return recentSubmissions.length < MAX_SUBMISSIONS;
     }
 
-    // Fonction pour enregistrer une soumission
     function recordSubmission() {
       const now = Date.now();
       const submissions = JSON.parse(
@@ -289,7 +274,7 @@ const t = getTranslations(locale);
       );
       submissions.push(now);
 
-      // Garder seulement les soumissions récentes
+      // Keep only recent submissions
       const recentSubmissions = submissions.filter(
         (time: number) => now - time < RATE_LIMIT_WINDOW
       );
@@ -297,12 +282,10 @@ const t = getTranslations(locale);
     }
 
     function checkFormValidity() {
-      // Vérifier que tous les champs obligatoires sont remplis
       const allFieldsFilled = requiredFields.every(
         (field) => field.value.trim() !== ""
       );
 
-      // Vérifications spécifiques
       const zipCodeField = document.getElementById(
         "zipCode"
       ) as HTMLInputElement;
@@ -312,7 +295,6 @@ const t = getTranslations(locale);
 
       let isValid = allFieldsFilled;
 
-      // Validation du code postal
       if (zipCodeField.value && !validateZipCode(zipCodeField.value)) {
         showFieldError(
           "zipCode",
@@ -325,7 +307,6 @@ const t = getTranslations(locale);
         hideFieldError("zipCode");
       }
 
-      // Validation du message
       if (messageField.value && !validateMessage(messageField.value)) {
         showFieldError(
           "message",
@@ -338,7 +319,6 @@ const t = getTranslations(locale);
         hideFieldError("message");
       }
 
-      // Activer le bouton si tout est ok
       if (isValid && allFieldsFilled) {
         submitButton.disabled = false;
         submitButton.className =
@@ -350,7 +330,6 @@ const t = getTranslations(locale);
       }
     }
 
-    // Fonction pour afficher un message à la place du bouton
     function showFormMessage(message: string, isError: boolean = false) {
       const submitButton = document.getElementById(
         "submit-button"
@@ -359,10 +338,8 @@ const t = getTranslations(locale);
         "form-message"
       ) as HTMLDivElement;
 
-      // Masquer le bouton
       submitButton.style.display = "none";
 
-      // Configurer et afficher le message
       messageDiv.className = `w-full py-4 px-6 rounded-lg text-center font-semibold ${
         isError ? "bg-red-500 text-white" : "bg-green-500 text-white"
       }`;
@@ -370,7 +347,7 @@ const t = getTranslations(locale);
       messageDiv.classList.remove("hidden");
     }
 
-    // Fonction pour envoyer l'email via Brevo
+    // Send email via Brevo
     async function sendEmailViaBrevo(data: any) {
       const fullName = `${data.firstName} ${data.lastName}`;
 
@@ -424,19 +401,18 @@ const t = getTranslations(locale);
       return await response.json();
     }
 
-    // Gérer la soumission du formulaire
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      // Vérifier le honeypot
+      // Check honeypot
       const botField = document.querySelector(
         'input[name="bot-field"]'
       ) as HTMLInputElement;
       if (botField && botField.value) {
-        return; // Bot détecté, ne pas envoyer
+        return;
       }
 
-      // Vérifier le rate limiting
+      // Check rate limiting
       if (!checkRateLimit()) {
         showFormMessage(
           locale === "fr"
@@ -447,7 +423,6 @@ const t = getTranslations(locale);
         return;
       }
 
-      // Désactiver le bouton et changer le texte
       submitButton.disabled = true;
       const originalText = buttonText.textContent;
       buttonText.textContent =
@@ -456,7 +431,6 @@ const t = getTranslations(locale);
         "w-full bg-primary/50 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-not-allowed";
 
       try {
-        // Collecter les données du formulaire
         const formData = new FormData(form);
         const data = {
           firstName: formData.get("firstName") as string,
@@ -469,10 +443,8 @@ const t = getTranslations(locale);
           message: formData.get("message") as string,
         };
 
-        // Envoyer directement via Brevo
         await sendEmailViaBrevo(data);
 
-        // Enregistrer la soumission pour le rate limiting
         recordSubmission();
 
         showFormMessage(
@@ -480,8 +452,6 @@ const t = getTranslations(locale);
             ? "Votre candidature a été envoyée avec succès ! Nous vous recontacterons bientôt."
             : "Your application has been sent successfully! We will contact you soon."
         );
-        // Ne pas reset le formulaire pour éviter le spam
-        // form.reset();
       } catch (error) {
         console.error("Erreur:", error);
         showFormMessage(
@@ -491,25 +461,21 @@ const t = getTranslations(locale);
           true
         );
 
-        // En cas d'erreur, restaurer le bouton pour permettre une nouvelle tentative
         buttonText.textContent = originalText;
         checkFormValidity();
       }
-      // En cas de succès, le formulaire reste bloqué (pas de finally)
     });
 
-    // Écouter les changements sur les champs obligatoires
     requiredFields.forEach((field) => {
       field.addEventListener("input", checkFormValidity);
     });
 
-    // Écouter spécifiquement le champ message
     const messageField = document.getElementById(
       "message"
     ) as HTMLTextAreaElement;
     messageField.addEventListener("input", checkFormValidity);
 
-    // Vérification initiale
+    // Initial check
     checkFormValidity();
   });
 </script>

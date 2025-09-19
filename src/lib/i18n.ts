@@ -33,7 +33,7 @@ const slugMap: Record<string, Record<Locale, string>> = {
   "/nous-rejoindre/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
   "/en/join-us/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
 
-  "/": { fr: "/", en: "/en" },
+  "/": { fr: "/", en: "/en/" },
   "/en/": { fr: "/", en: "/en/" },
 };
 
@@ -54,10 +54,10 @@ export function getAlternateLanguageUrl(
  * Generate the navigation URLs adapted to the current language
  */
 export function getNavUrls(currentLocale: Locale) {
-  const baseUrl = currentLocale === "fr" ? "" : "/en/";
+  const baseUrl = currentLocale === "fr" ? "" : "/en";
 
   return {
-    home: currentLocale === "fr" ? "/" : "/en/",
+    home: currentLocale === "fr" ? "/" : "/en",
     about: `${baseUrl}${currentLocale === "fr" ? "/a-propos/" : "/about/"}`,
     articles: `${baseUrl}/articles/`,
     events: `${baseUrl}${currentLocale === "fr" ? "/evenements/" : "/events/"}`,

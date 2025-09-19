@@ -10,7 +10,6 @@ import { formatDateTime } from "@/lib/date";
 
 const events = await getAllEvents();
 
-// Fonction pour grouper les événements par mois/année
 function groupEventsByMonth(events: Event[]) {
   const grouped = events.reduce(
     (acc, event) => {
@@ -30,14 +29,12 @@ function groupEventsByMonth(events: Event[]) {
     {} as Record<string, typeof events>
   );
 
-  // Trier les événements dans chaque groupe par date décroissante
   Object.keys(grouped).forEach((monthYear) => {
     grouped[monthYear].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   });
 
-  // Trier les groupes par date décroissante (plus récent en premier)
   const sortedGroups = Object.entries(grouped).sort(
     ([monthYearA], [monthYearB]) => {
       const dateA = new Date(grouped[monthYearA][0].date);
@@ -56,8 +53,12 @@ const groupedEvents = groupEventsByMonth(events);
   <div class="relative">
     <Hero picture={EventsImage} pictureAlt="Events">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6">Events</h1>
-        <h2 class="text-3xl md:text-5xl font-bold mb-8 text-primary">
+        <h1 class="text-4xl md:text-7xl font-bold mb-6 text-bordered">
+          Events
+        </h1>
+        <h2
+          class="text-3xl md:text-5xl font-bold mb-8 text-primary text-bordered"
+        >
           Our Actions
         </h2>
         <p
@@ -73,15 +74,13 @@ const groupedEvents = groupEventsByMonth(events);
         {
           groupedEvents.map(([monthYear, events], groupIndex) => (
             <div class="mb-12">
-              {/* En-tête du mois/année */}
               <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                <h2 class="sm:text-4xl text-3xl font-bold text-gray-800 mb-4">
                   {monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}
                 </h2>
                 <hr class="w-24 h-1 bg-primary mx-auto rounded-full" />
               </div>
 
-              {/* Grille des événements pour ce mois */}
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                 {events.map((event) => (
                   <EventCard
@@ -96,7 +95,6 @@ const groupedEvents = groupEventsByMonth(events);
                 ))}
               </div>
 
-              {/* Séparateur entre les groupes (sauf pour le dernier) */}
               {groupIndex < groupedEvents.length - 1 && (
                 <div class="flex items-center justify-center my-12">
                   <div class="flex-grow h-px bg-gray-300" />

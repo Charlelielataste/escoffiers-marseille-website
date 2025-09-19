@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getTranslations, type Locale } from "@/lib/i18n";
-import TeamImage from "@/assets/about/team.jpg";
+import TeamImage from "@/assets/about/team.jpeg";
 import { getAssociationAge } from "@/lib/date";
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 const t = getTranslations(currentLocale);
@@ -39,7 +39,7 @@ const t = getTranslations(currentLocale);
           {t.about.teamSection.nextParagraph}
         </p>
 
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-2 gap-2 sm:gap-6">
           <div class="text-center">
             <div class="text-3xl font-bold text-primary mb-2">
               {getAssociationAge()}
