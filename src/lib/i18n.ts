@@ -33,6 +33,21 @@ const slugMap: Record<string, Record<Locale, string>> = {
   "/nous-rejoindre/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
   "/en/join-us/": { fr: "/nous-rejoindre/", en: "/en/join-us/" },
 
+  "/mentions-legales/": { fr: "/mentions-legales/", en: "/en/legal-mentions/" },
+  "/en/legal-mentions/": {
+    fr: "/mentions-legales/",
+    en: "/en/legal-mentions/",
+  },
+
+  "/politique-confidentialite/": {
+    fr: "/politique-confidentialite/",
+    en: "/en/privacy-policy/",
+  },
+  "/en/privacy-policy/": {
+    fr: "/politique-confidentialite/",
+    en: "/en/privacy-policy/",
+  },
+
   "/": { fr: "/", en: "/en/" },
   "/en/": { fr: "/", en: "/en/" },
 };
@@ -69,6 +84,14 @@ export function getNavUrls(currentLocale: Locale) {
     }`,
     contact: `${baseUrl}${
       currentLocale === "fr" ? "/nous-rejoindre/" : "/join-us/"
+    }`,
+    legalMentions: `${baseUrl}${
+      currentLocale === "fr" ? "/mentions-legales/" : "/legal-mentions/"
+    }`,
+    privacyPolicy: `${baseUrl}${
+      currentLocale === "fr"
+        ? "/politique-confidentialite/"
+        : "/privacy-policy/"
     }`,
   };
 }
