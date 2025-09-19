@@ -1,12 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { getTranslations, type Locale } from "@/lib/i18n";
 import { Image } from "astro:assets";
 import Image404 from "@/assets/hero/404.png";
 import Hero from "@/components/Hero.astro";
-
-const locale = (Astro.currentLocale || "fr") as Locale;
-const t = getTranslations(locale);
 ---
 
 <Layout>
@@ -40,14 +36,15 @@ const t = getTranslations(locale);
         id="404-heading"
         class="text-3xl md:text-4xl font-bold text-black mb-6"
       >
-        {t.notFound.heading}
+        Oups ! Cette page n'existe pas...
       </h2>
 
       <p
         id="404-description"
         class="text-lg md:text-xl text-primary-accessible mb-8 lg:mb-8 max-w-2xl mx-auto"
       >
-        {t.notFound.description}
+        Pas de panique ! Il semble que vous ayez cherché une page qui n'est pas
+        ou n'est plus disponible sur notre site !
       </p>
 
       <div
@@ -55,19 +52,19 @@ const t = getTranslations(locale);
       >
         <a
           id="404-home-button"
-          href={locale === "fr" ? "/" : "/en/"}
+          href={"/"}
           class="bg-primary text-bordered-light text-white w-full py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
-          {t.notFound.homeButton}
+          Retour à l'accueil
         </a>
 
         <a
           id="404-report-button"
           href="mailto:contact@disciplesescoffier-provence-mediterranee.org?subject=Signalement%20de%20problème%20sur%20le%20site"
-          aria-label={t.notFound.reportButton}
+          aria-label="test"
           class="bg-secondary text-bordered-light text-white py-3 w-full rounded-lg font-semibold hover:bg-secondary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
-          {t.notFound.reportButton}
+          Signaler un problème
         </a>
       </div>
     </div>
@@ -77,7 +74,7 @@ const t = getTranslations(locale);
 <script>
   document.addEventListener("astro:page-load", function () {
     const currentPath = window.location.pathname;
-    const isEnglish = currentPath.startsWith("/en");
+    const isEnglish = currentPath.startsWith("/en/");
 
     const translations = {
       fr: {
@@ -98,10 +95,10 @@ const t = getTranslations(locale);
 
     const t = translations[isEnglish ? "en" : "fr"];
 
-    const heading = document.querySelector("#404-heading");
-    const description = document.querySelector("#404-description");
-    const homeButton = document.querySelector("#404-home-button");
-    const reportButton = document.querySelector("#404-report-button");
+    const heading = document.getElementById("404-heading");
+    const description = document.getElementById("404-description");
+    const homeButton = document.getElementById("404-home-button");
+    const reportButton = document.getElementById("404-report-button");
 
     if (heading && heading.textContent?.trim() !== t.heading) {
       heading.textContent = t.heading;
