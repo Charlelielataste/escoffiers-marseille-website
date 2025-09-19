@@ -49,6 +49,19 @@ label:hover {
 }
 
 /* Curseur not-allowed pour les éléments désactivés */
+/* Curseur rolling pour les zones de texte */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+[contenteditable="true"],
+.text-cursor {
+  cursor: url('/icons/rolling.svg'), text !important;
+}
+
 button:disabled,
 button[disabled],
 a[aria-disabled="true"],
@@ -68,6 +81,18 @@ body.custom-cursor-disabled a:hover,
 body.custom-cursor-disabled button:hover,
 body.custom-cursor-disabled label:hover {
   cursor: pointer !important;
+}
+
+body.custom-cursor-disabled input[type="text"],
+body.custom-cursor-disabled input[type="email"],
+body.custom-cursor-disabled input[type="password"],
+body.custom-cursor-disabled input[type="search"],
+body.custom-cursor-disabled input[type="url"],
+body.custom-cursor-disabled input[type="tel"],
+body.custom-cursor-disabled textarea,
+body.custom-cursor-disabled [contenteditable="true"],
+body.custom-cursor-disabled .text-cursor {
+  cursor: text !important;
 }
 
 body.custom-cursor-disabled button:disabled,
