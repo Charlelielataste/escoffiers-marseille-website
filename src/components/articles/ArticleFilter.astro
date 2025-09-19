@@ -16,7 +16,7 @@ const { articles, locale } = Astro.props as Props;
 const t = getTranslations(locale);
 ---
 
-<section class="max-w-6xl mx-auto">
+<section class="max-w-6xl mx-auto mb-0 md:mb-2">
   <div class="mb-8">
     <h3 class="text-xl font-semibold mb-4 text-center">
       {t.articles.category}
@@ -43,10 +43,7 @@ const t = getTranslations(locale);
     </div>
   </div>
 
-  <div
-    class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8"
-    id="articles-container"
-  >
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="articles-container">
     {
       articles.map((article) => (
         <div

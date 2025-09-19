@@ -73,7 +73,7 @@ const groupedEvents = groupEventsByMonth(events);
       <div class="max-w-5xl mx-auto px-5">
         {
           groupedEvents.map(([monthYear, events], groupIndex) => (
-            <div class="mb-12">
+            <div class="mb-0 md:mb-2">
               <div class="text-center mb-12">
                 <h2 class="sm:text-4xl text-3xl font-bold text-gray-800 mb-4">
                   {monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}
@@ -81,7 +81,7 @@ const groupedEvents = groupEventsByMonth(events);
                 <hr class="w-24 h-1 bg-primary mx-auto rounded-full" />
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {events.map((event) => (
                   <EventCard
                     title={event.title.fr}
