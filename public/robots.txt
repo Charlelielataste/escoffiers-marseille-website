@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://disciplesescoffier-provence-mediterranee.org/sitemap.xml
+
+# Disallow admin and development files
+Disallow: /admin/
+Disallow: /_astro/
+Disallow: /api/
+
+# Allow search engines to access all public content
+Allow: /
+Allow: /en/
+Allow: /articles
+Allow: /evenements
+Allow: /a-propos
+Allow: /les-disciples
+Allow: /nous-rejoindre
+Allow: /partenaires
+Allow: /en/about
+Allow: /en/articles
+Allow: /en/events
+Allow: /en/the-disciples
+Allow: /en/join-us
+Allow: /en/partners
+Allow: /en/legal-mentions
+Allow: /mentions-legales
+Allow: /en/privacy-policy
+Allow: /politique-confidentialite
+
+# Crawl delay
+Crawl-delay: 1
