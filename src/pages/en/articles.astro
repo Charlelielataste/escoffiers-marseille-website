@@ -2,10 +2,23 @@
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import ArticlesImage from "@/assets/hero/articles.jpeg";
-import ArticlesSection from "@/components/articles/ArticlesSection.astro";
+import ArticleSection from "@/components/articles/ArticleSection.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Articles",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/articles/",
+  description: "Stay informed about our latest news, tips and recipes",
+};
 ---
 
-<Layout title="Articles">
+<Layout
+  title="Articles"
+  description="Stay informed about our latest news, tips and recipes"
+  keywords="Articles, news, tips, recipes, provence, mediterranee, mediteranee, mediterranee, méditerranée, chefferie, chef, cuisine, gastronomy, french cuisine, mediterranean cuisine"
+  jsonLd={jsonLd}
+>
   <Hero picture={ArticlesImage} pictureAlt="Articles">
     <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-7xl font-bold mb-6 text-bordered">

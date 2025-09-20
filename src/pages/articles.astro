@@ -3,9 +3,23 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import ArticlesImage from "@/assets/hero/articles.jpeg";
 import ArticlesSection from "@/components/articles/ArticlesSection.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Articles",
+  url: "https://disciplesescoffier-provence-mediterranee.org/articles/",
+  description:
+    "Restez informés de nos dernières actualités, conseils et recettes",
+};
 ---
 
-<Layout title="Articles">
+<Layout
+  title="Articles"
+  description="Restez informés de nos dernières actualités, conseils et recettes"
+  keywords="Articles, actualités, conseils, recettes, provence, mediterranee, mediteranee, mediterranee, méditerranée, chefferie, chef, cuisine, gastronomie, cuisine française, cuisine méditerranéenne"
+  jsonLd={jsonLd}
+>
   <Hero picture={ArticlesImage} pictureAlt="Articles">
     <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-7xl font-bold mb-6 text-bordered">
