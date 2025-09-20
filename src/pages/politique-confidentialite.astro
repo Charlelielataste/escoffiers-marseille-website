@@ -1,9 +1,21 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Politique de Confidentialité",
+  url: "https://disciplesescoffier-provence-mediterranee.org/politique-confidentialite/",
+  description:
+    "L'association Disciples d'Escoffier Provence Méditerranée s'engage à protéger et respecter votre vie privée.",
+};
 ---
 
 <Layout
   title="Politique de Confidentialité - Disciples d'Escoffier Provence Méditerranée"
+  description="L'association Disciples d'Escoffier Provence Méditerranée s'engage à protéger et respecter votre vie privée."
+  keywords="Politique de Confidentialité, confidentialité, vie privée"
+  jsonLd={jsonLd}
 >
   <section class="relative pt-28 pb-16 bg-white">
     <div class="container mx-auto px-5 max-w-4xl">

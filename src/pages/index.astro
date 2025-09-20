@@ -11,21 +11,22 @@ import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import InternationalBanner from "@/components/home/InternationalBanner.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
 
-// const jsonLd = {
-//   "@context": "https://schema.org",
-//   "@type": "WebSite",
-//   name: "Disciples d'Escoffier Provence Méditerranée",
-//   url: "https://votre-domaine.com",
-//   description:
-//     "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne. Événements, formations et networking culinaire.",
-// };
-
-// description="Découvrez les Disciples d'Escoffier Provence Méditerranée, association dédiée à la gastronomie française. Événements culinaires, formations et réseau professionnel en Provence."
-//   keywords="Disciples Escoffier, gastronomie Provence, événements culinaires, association gastronomique, cuisine française, Marseille, formations culinaires"
-//   jsonLd={jsonLd}
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Accueil - Disciples d'Escoffier Provence Méditerranée",
+  url: "https://disciplesescoffier-provence-mediterranee.org",
+  description:
+    "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne et à l'héritage d'Auguste Escoffier. Événements, héritage et articles culinaires.",
+};
 ---
 
-<Layout title="Accueil - Site Officiel">
+<Layout
+  title="Accueil - Site Officiel"
+  description="Découvrez les Disciples d'Escoffier Provence Méditerranée, association dédiée à la gastronomie française et à l'héritage d'Auguste Escoffier. Événements culinaires, héritage et articles culinaires."
+  keywords="Disciples Escoffier, gastronomie, Provence, événements culinaires, association gastronomique, cuisine française, Marseille, formations culinaires, Escoffier, Auguste Escoffier, Disciples, disciples, mediterranee, mediteranee, mediterranee, méditerranée"
+  jsonLd={jsonLd}
+>
   <div class="relative">
     <Hero
       picture={HomeImage}

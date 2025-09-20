@@ -36,7 +36,7 @@ export function formatDateTime(
 }
 
 export function getAssociationAge(): number {
-  const foundationDate = new Date(2016, 3, 3);
+  const foundationDate = new Date(2016, 9, 10);
   const currentDate = new Date();
 
   let age = currentDate.getFullYear() - foundationDate.getFullYear();

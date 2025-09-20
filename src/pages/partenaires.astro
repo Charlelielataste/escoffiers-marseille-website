@@ -3,9 +3,23 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import PartnersImage from "@/assets/hero/partners.jpg";
 import PartnersSection from "@/components/partners/PartnersSection.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Nos Partenaires",
+  url: "https://disciplesescoffier-provence-mediterranee.org/partenaires/",
+  description:
+    "Découvrez les entreprises qui nous soutiennent dans nos actions",
+};
 ---
 
-<Layout title="Nos Partenaires">
+<Layout
+  title="Nos Partenaires"
+  description="Découvrez les entreprises qui nous soutiennent dans nos actions"
+  keywords="Partenaires, entreprises, entreprise, soutien, soutiennent, soutiennent nous, provence, mediterranee, mediteranee, mediterranee, méditerranée"
+  jsonLd={jsonLd}
+>
   <div class="relative">
     <Hero picture={PartnersImage} pictureAlt="Nos Partenaires">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">

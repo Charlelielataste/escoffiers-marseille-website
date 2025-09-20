@@ -1,6 +1,3 @@
-import MissionSection from "@/components/about/MissionSection.astro";
-
-// Traductions pour la navigation
 export const translations = {
   fr: {
     nav: {

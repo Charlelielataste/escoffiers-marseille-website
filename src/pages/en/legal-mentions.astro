@@ -1,8 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Mentions Légales",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/legal-mentions/",
+  description:
+    "Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy.",
+};
 ---
 
-<Layout title="Legal Mentions - Disciples d'Escoffier Provence Méditerranée">
+<Layout
+  title="Legal Mentions - Disciples d'Escoffier Provence Méditerranée"
+  description="Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy."
+  keywords="Legal Mentions, legal mentions, privacy"
+  jsonLd={jsonLd}
+>
   <section class="relative pt-28 pb-16 bg-white">
     <div class="container mx-auto px-5 max-w-4xl">
       <h1 class="lg:text-5xl text-4xl font-bold text-primary mb-6 text-center">

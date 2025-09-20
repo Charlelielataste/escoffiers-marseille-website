@@ -3,9 +3,23 @@ import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Image404 from "@/assets/hero/404.png";
 import Hero from "@/components/Hero.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Page non trouvée",
+  url: "https://disciplesescoffier-provence-mediterranee.org/404/",
+  description: "La page que vous cherchez n'existe pas",
+};
 ---
 
-<Layout title="Page non trouvée" navbar={false}>
+<Layout
+  title="Page non trouvée"
+  description="La page que vous cherchez n'existe pas"
+  keywords="Page non trouvée, 404, page non trouvée, provence, mediterranee, mediteranee, mediterranee, méditerranée, oops, pas de panique, cherchez une page qui n'existe pas, site non disponible"
+  jsonLd={jsonLd}
+  navbar={false}
+>
   <Hero
     picture={Image404}
     pictureAlt="404"
