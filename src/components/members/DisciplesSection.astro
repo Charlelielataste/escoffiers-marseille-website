@@ -1,0 +1,121 @@
+---
+import MembersCard from "@/components/members/MembersCard.astro";
+import { getAllMembers } from "@/lib/sanity-queries";
+import { urlFor } from "@/lib/sanity";
+import { getTranslations, type Locale } from "@/lib/i18n";
+
+const membres = await getAllMembers();
+
+const honnorMembers = membres.filter((membre) => membre.isHonored);
+const members = membres.filter((membre) => !membre.isHonored);
+
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
+
+const president = {
+  fr: {
+    name: "Alain Laporte",
+    role: "Président",
+    description:
+      "Membre fondateur des Disciples d'Escoffier Provence Méditerranée",
+  },
+  en: {
+    name: "Alain Laporte",
+    role: "President",
+    description: "Founder of the Disciples d'Escoffier Provence Méditerranée",
+  },
+};
+---
+
+<section class="relative px-5 sm:px-10 bg-white py-1">
+  <div class="max-w-6xl mx-auto">
+    <div class="container mx-auto px-4">
+      <h3
+        class="text-3xl md:text-4xl font-bold text-center text-primary mt-12 mb-5"
+      >
+        {t.members.president}
+      </h3>
+      <hr class="w-24 h-1 bg-primary mx-auto rounded-full mb-12" />
+      <div class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto pb-16">
+        <MembersCard
+          photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
+          color={"#d13429"}
+          name={president[currentLocale].name}
+          role={president[currentLocale].role}
+          description={president[currentLocale].description}
+          email={"alain.laporte@formactions.fr"}
+          workplace={"Form'actions Consulting"}
+          size="150px"
+          locale={currentLocale}
+        />
+      </div>
+    </div>
+  </div>
+
+  {
+    honnorMembers.length > 0 && (
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3 class="text-3xl md:text-4xl font-bold text-center text-tertiary-accessible mt-12 mb-5">
+            {t.members.honoredMembers}
+          </h3>
+          <hr class="w-24 h-1 bg-tertiary-accessible mx-auto rounded-full mb-12" />
+          <div class="flex justify-center">
+            <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
+              {honnorMembers.map((membre) => (
+                <MembersCard
+                  photo={urlFor(membre.image).width(150).height(150).url()}
+                  color={membre.color}
+                  name={membre.name}
+                  role={membre.role[currentLocale]}
+                  description={membre.description[currentLocale]}
+                  email={membre.email}
+                  workplace={membre.workplace}
+                  locale={currentLocale}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    members.length > 0 && (
+      <div class="max-w-6xl mx-auto">
+        <div class="container mx-auto px-4">
+          <h3 class="text-3xl md:text-4xl font-bold text-center text-black mt-12 mb-5">
+            {t.members.members}
+          </h3>
+          <hr class="w-24 h-1 bg-black mx-auto rounded-full mb-12" />
+          <div class="flex justify-center">
+            <div class="flex flex-wrap justify-center gap-x-4 gap-y-16 max-w-6xl mb-16">
+              {members.map((membre) => (
+                <MembersCard
+                  photo={urlFor(membre.image).width(150).height(150).url()}
+                  color={membre.color}
+                  name={membre.name}
+                  role={membre.role[currentLocale]}
+                  description={membre.description[currentLocale]}
+                  email={membre.email}
+                  workplace={membre.workplace}
+                  locale={currentLocale}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  {
+    honnorMembers.length === 0 && members.length === 0 && (
+      <div class="max-w-6xl mx-auto">
+        <p class="text-center text-lg font-bold pt-12 pb-20">
+          {t.members.noMembers}
+        </p>
+      </div>
+    )
+  }
+</section>

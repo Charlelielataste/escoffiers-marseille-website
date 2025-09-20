@@ -112,6 +112,10 @@ export const translations = {
       featuredArticle: "Article à la une",
       readArticle: "Lire l'article",
       noArticlesCategory: "Aucun article correspondant à cette catégorie",
+      noArticles: "Aucun article pour le moment",
+      noArticlesDescription:
+        "Revenez plus tard pour découvrir nos dernières actualités",
+      backToArticles: "Retour aux articles",
     },
     MobileFacebookSection: {
       title: "Suivez-nous sur Facebook !",
@@ -121,9 +125,24 @@ export const translations = {
     },
     events: {
       seeMore: "En savoir plus",
+      noEvents: "Aucun événement pour le moment",
+      noEventsDescription:
+        "Revenez plus tard pour découvrir nos derniers événements",
+      backToEvents: "Retour aux événements",
+      eventEnded: "Événement terminé",
+      participateToTheEvent: "Participer à l'événement",
     },
     members: {
       contact: "Contactez-moi",
+      president: "Notre Président",
+      members: "Nos Membres",
+      honoredMembers: "Nos Membres Honorés",
+      noMembers: "Nous n'avons pas encore de membres enregistrés.",
+    },
+    partners: {
+      thanksToThem: "Merci à eux !",
+      seeTheirSite: "Voir leur site",
+      noPartners: "Nous n'avons pas encore de partenaires.",
     },
     contact: {
       contactEmail:
@@ -260,6 +279,9 @@ export const translations = {
       featuredArticle: "Featured article",
       readArticle: "Read the article",
       noArticlesCategory: "No articles corresponding to this category",
+      noArticles: "No articles for the moment",
+      noArticlesDescription: "Come back later to discover our latest news",
+      backToArticles: "Back to articles",
     },
     MobileFacebookSection: {
       title: "Follow us on Facebook !",
@@ -269,9 +291,23 @@ export const translations = {
     },
     events: {
       seeMore: "See more",
+      noEvents: "No events for the moment",
+      noEventsDescription: "Come back later to discover our latest events",
+      backToEvents: "Back to events",
+      eventEnded: "Event ended",
+      participateToTheEvent: "Participate to the event",
     },
     members: {
       contact: "Contact me",
+      president: "Our President",
+      members: "Our Members",
+      honoredMembers: "Our Honored Members",
+      noMembers: "We don't have any disciples records yet.",
+    },
+    partners: {
+      thanksToThem: "Thank you to them !",
+      seeTheirSite: "See their site",
+      noPartners: "We don't have any partners yet.",
     },
     contact: {
       contactEmail: "For all other requests, please contact us:",

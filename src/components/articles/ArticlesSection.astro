@@ -1,0 +1,57 @@
+---
+import ArticleCard from "@/components/articles/ArticleCard.astro";
+import ArticleFilter from "@/components/articles/ArticleFilter.astro";
+import MobileFacebookSection from "@/components/articles/MobileFacebookSection.astro";
+import { getAllArticles, getSettings } from "@/lib/sanity-queries";
+import { urlFor } from "@/lib/sanity";
+import { formatDate } from "@/lib/date";
+import FacebookSection from "@/components/articles/FacebookSection.astro";
+import { getTranslations, type Locale } from "@/lib/i18n";
+
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+
+const allArticles = await getAllArticles();
+const settings = await getSettings();
+
+const featuredArticle = settings?.featuredArticle || allArticles[0];
+const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
+
+const articlesWithoutFeatured = featuredArticle
+  ? allArticles.filter((article) => article._id !== featuredArticle._id)
+  : allArticles;
+
+const t = getTranslations(currentLocale);
+---
+
+<section class="relative px-5 sm:px-10 bg-white py-10 space-y-10">
+  <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 max-w-6xl mx-auto">
+    <MobileFacebookSection />
+    {
+      hasFeaturedArticle ? (
+        <ArticleCard
+          title={featuredArticle.title[currentLocale]}
+          date={formatDate(new Date(featuredArticle.date), currentLocale)}
+          image={urlFor(featuredArticle.image).width(1000).height(600).url()}
+          excerpt={featuredArticle.intro[currentLocale]}
+          slug={featuredArticle.slug[currentLocale].current}
+          tags={featuredArticle.tags || []}
+          is_first={true}
+          locale={currentLocale}
+        />
+      ) : (
+        <div class="flex rounded-3xl bg-white shadow-xl w-full h-[540px] border border-tertiary/20 relative">
+          <div class="flex flex-col gap-y-2 justify-center items-center w-full">
+            <p class="text-center text-primary text-2xl font-bold">
+              {t.articles.noArticles}
+            </p>
+            <p class="text-center text-primary text-lg">
+              {t.articles.noArticlesDescription}
+            </p>
+          </div>
+        </div>
+      )
+    }
+    <FacebookSection />
+  </div>
+  <ArticleFilter articles={articlesWithoutFeatured} locale={currentLocale} />
+</section>

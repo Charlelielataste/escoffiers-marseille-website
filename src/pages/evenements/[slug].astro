@@ -1,10 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getEventBySlug, getEventSlugs } from "@/lib/sanity-queries";
-import { urlFor } from "@/lib/sanity";
-import { PortableText } from "astro-portabletext";
-import { formatDateTime } from "@/lib/date";
-import ArrowLeft from "@/components/icons/ArrowLeft.astro";
+import EventContent from "@/components/events/EventContent.astro";
 
 export async function getStaticPaths() {
   const events = await getEventSlugs();
@@ -30,94 +27,5 @@ const multilingualSlugs = {
 ---
 
 <Layout title={event.title.fr} multilingualUrls={multilingualSlugs}>
-  <article class="max-w-6xl mx-auto px-6 py-20">
-    <div class="mb-6 mt-4">
-      <a
-        href={`/evenements#${event.slug.fr.current}`}
-        data-astro-reload
-        class="inline-flex items-center text-sm gap-3 bg-tertiary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
-      >
-        <ArrowLeft size={12} class="text-white" />
-        <span class="mt-0.5 text-bordered-light">Retour aux événements</span>
-      </a>
-    </div>
-    <!-- Image en haut -->
-    <div class="mb-5">
-      <img
-        src={urlFor(event.image).width(1200).height(600).url()}
-        alt={event.title.fr}
-        class="w-full h-96 object-cover rounded-2xl shadow-lg"
-      />
-    </div>
-
-    <!-- Date -->
-    <div class="mb-6">
-      <time
-        datetime={new Date(event.date).toISOString()}
-        class="text-gray-600 text-lg font-bold"
-      >
-        Le {formatDateTime(new Date(event.date))}
-      </time>
-    </div>
-
-    <!-- Titre -->
-    <h1
-      class="text-4xl md:text-5xl font-bold text-tertiary-accessible mb-8 leading-tight"
-    >
-      {event.title.fr}
-    </h1>
-
-    <!-- Localisation -->
-    <div class="mb-8">
-      <span class="font-semibold">Lieu : </span>
-      <a
-        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary-accessible font-semibold hover:text-secondary/80 transition-colors duration-200 underline decoration-2 underline-offset-2"
-      >
-        {event.location}
-      </a>
-    </div>
-
-    <!-- Introduction -->
-    <div class="mb-12">
-      <div
-        class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
-      >
-        {event.intro.fr}
-      </div>
-    </div>
-
-    <!-- Lien ou statut terminé -->
-    {
-      new Date(event.date) < new Date() ? (
-        <div class="mb-8 flex justify-center">
-          <div class="sm:w-[50%] w-[80%] text-center bg-red-800 text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center">
-            Événement terminé
-          </div>
-        </div>
-      ) : (
-        event.link && (
-          <div class="mb-8 flex justify-center">
-            <a
-              href={event.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="sm:w-[50%] w-[80%] text-center text-bordered-light bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center"
-            >
-              Participer à l'événement
-            </a>
-          </div>
-        )
-      )
-    }
-
-    <!-- Contenu principal -->
-    <div
-      class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-tertiary-accessible prose-h1:font-bold prose-h2:text-tertiary-accessible prose-h3:text-tertiary-accessible prose-black max-w-none bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
-    >
-      <PortableText value={event.body.fr} />
-    </div>
-  </article>
+  <EventContent event={event} />
 </Layout>

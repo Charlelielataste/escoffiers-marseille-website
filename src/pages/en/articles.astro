@@ -1,24 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
-import ArticleCard from "@/components/articles/ArticleCard.astro";
-import ArticleFilter from "@/components/articles/ArticleFilter.astro";
-import FacebookSection from "@/components/articles/FacebookSection.astro";
-import MobileFacebookSection from "@/components/articles/MobileFacebookSection.astro";
 import ArticlesImage from "@/assets/hero/articles.jpeg";
-import { getAllArticles, getSettings } from "@/lib/sanity-queries";
-import { urlFor } from "@/lib/sanity";
-import { formatDate } from "@/lib/date";
-
-const allArticles = await getAllArticles();
-const settings = await getSettings();
-
-const featuredArticle = settings?.featuredArticle || allArticles[0];
-const hasFeaturedArticle = featuredArticle && allArticles.length > 0;
-
-const articlesWithoutFeatured = featuredArticle
-  ? allArticles.filter((article) => article._id !== featuredArticle._id)
-  : allArticles;
+import ArticlesSection from "@/components/articles/ArticlesSection.astro";
 ---
 
 <Layout title="Articles">
@@ -39,36 +23,5 @@ const articlesWithoutFeatured = featuredArticle
       </p>
     </div>
   </Hero>
-  <div class="relative px-5 sm:px-10 bg-white py-10 space-y-10">
-    <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 max-w-6xl mx-auto">
-      <MobileFacebookSection />
-      {
-        hasFeaturedArticle ? (
-          <ArticleCard
-            title={featuredArticle.title.en}
-            date={formatDate(new Date(featuredArticle.date), "en")}
-            image={urlFor(featuredArticle.image).width(1000).height(600).url()}
-            excerpt={featuredArticle.intro.en}
-            slug={featuredArticle.slug.en.current}
-            tags={featuredArticle.tags || []}
-            is_first={true}
-            locale="en"
-          />
-        ) : (
-          <div class="flex rounded-3xl bg-white shadow-xl w-full h-[540px] border border-tertiary/20 relative">
-            <div class="flex flex-col gap-y-2 justify-center items-center w-full">
-              <p class="text-center text-primary text-2xl font-bold">
-                No featured article for the moment
-              </p>
-              <p class="text-center text-primary text-lg">
-                Come back later to discover our latest news
-              </p>
-            </div>
-          </div>
-        )
-      }
-      <FacebookSection />
-    </div>
-    <ArticleFilter articles={articlesWithoutFeatured} locale="en" />
-  </div>
+  <ArticlesSection />
 </Layout>

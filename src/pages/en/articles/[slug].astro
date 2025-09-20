@@ -1,10 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { formatDate } from "@/lib/date";
 import { getArticleBySlug, getArticleSlugs } from "@/lib/sanity-queries";
-import { urlFor } from "@/lib/sanity";
-import { PortableText } from "astro-portabletext";
-import ArrowLeft from "@/components/icons/ArrowLeft.astro";
+import ArticleContent from "@/components/articles/ArticleContent.astro";
 
 export async function getStaticPaths() {
   const articles = await getArticleSlugs();
@@ -23,7 +20,6 @@ if (!article) {
   return Astro.redirect("/en/articles");
 }
 
-// Préparer les slugs multilingues pour la navigation
 const multilingualSlugs = {
   fr: `/articles/${article.slug.fr.current}/`,
   en: `/en/articles/${article.slug.en.current}/`,
@@ -31,66 +27,5 @@ const multilingualSlugs = {
 ---
 
 <Layout title={article.title.en} multilingualUrls={multilingualSlugs}>
-  <article class="max-w-6xl mx-auto px-6 py-20">
-    <div class="mb-6 mt-4">
-      <a
-        href={`/en/articles#${article.slug.en.current}`}
-        data-astro-reload
-        class="inline-flex items-center text-sm gap-3 bg-primary text-white px-5 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md"
-      >
-        <ArrowLeft size={12} class="text-white" />
-        <span class="mt-0.5 text-bordered-light">Back to articles</span>
-      </a>
-    </div>
-    <!-- Image en haut -->
-    <div class="mb-8">
-      <img
-        src={urlFor(article.image).width(1200).height(600).url()}
-        alt={article.title.en}
-        class="w-full h-96 object-cover rounded-2xl shadow-lg"
-      />
-    </div>
-
-    <!-- Date -->
-    <div class="mb-6">
-      <time
-        datetime={new Date(article.date).toISOString()}
-        class="text-gray-600 text-lg font-medium"
-      >
-        {formatDate(new Date(article.date), "en")}
-      </time>
-    </div>
-
-    <!-- Titre -->
-    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-8 leading-tight">
-      {article.title.en}
-    </h1>
-
-    <!-- Tags -->
-    <div class="flex flex-wrap gap-3 mb-8">
-      {
-        (article.tags || []).map((tag) => (
-          <span class="bg-secondary/40 text-black py-2 px-4 rounded-full text-sm font-semibold shadow-sm">
-            {tag.title.en}
-          </span>
-        ))
-      }
-    </div>
-
-    <!-- Introduction -->
-    <div class="mb-12">
-      <div
-        class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
-      >
-        {article.intro.en}
-      </div>
-    </div>
-
-    <!-- Contenu principal -->
-    <div
-      class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-h3:text-primary prose-black max-w-none bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
-    >
-      <PortableText value={article.body.en} />
-    </div>
-  </article>
+  <ArticleContent article={article} />
 </Layout>

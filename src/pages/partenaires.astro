@@ -2,11 +2,7 @@
 import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import PartnersImage from "@/assets/hero/partners.jpg";
-import { getAllPartners } from "@/lib/sanity-queries";
-import { urlFor } from "@/lib/sanity";
-import { Image } from "astro:assets";
-
-const partners = await getAllPartners();
+import PartnersSection from "@/components/partners/PartnersSection.astro";
 ---
 
 <Layout title="Nos Partenaires">
@@ -28,59 +24,6 @@ const partners = await getAllPartners();
         </p>
       </div>
     </Hero>
-    <section class="relative lg:px-10 bg-white py-10">
-      <h2 class="text-3xl md:text-5xl font-bold text-center mb-6">
-        Merci à eux !
-      </h2>
-      <hr class="w-28 h-1 bg-primary mx-auto rounded-full" />
-      {
-        partners.length > 0 ? (
-          <div class="max-w-6xl mx-auto px-5 sm:px-10 lg:px-0 mt-16">
-            <div class="flex justify-center">
-              <div class="mb-0 md:mb-2 w-full flex flex-col gap-8">
-                {partners.map((partner) => (
-                  <div
-                    id={partner.name}
-                    style="scroll-margin-top: 200px;"
-                    class="border-2 w-full border-primary/20 rounded-2xl p-4 gap-8 flex md:flex-row flex-col items-center justify-left"
-                  >
-                    <Image
-                      src={urlFor(partner.image).width(200).fit("max").url()}
-                      alt={partner.name}
-                      width={100}
-                      height={100}
-                      class="object-contain shadow-xl"
-                    />
-
-                    <div class="flex flex-col items-start gap-3 w-full">
-                      <h3 class="text-3xl w-full md:text-left text-center font-bold text-primary">
-                        {partner.name}
-                      </h3>
-                      <p class="text-left text-gray-500">
-                        {partner.description.fr}
-                      </p>
-                      <a
-                        href={partner.link}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        class="text-primary-accessible font-bold hover:text-secondary/80 transition-colors duration-300 hover:underline"
-                      >
-                        Voir leur site
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div class="max-w-6xl mx-auto px-5 sm:px-10 lg:px-0 mt-16">
-            <p class="text-center text-lg font-bold">
-              Nous n'avons pas encore de partenaires.
-            </p>
-          </div>
-        )
-      }
-    </section>
+    <PartnersSection />
   </div>
 </Layout>

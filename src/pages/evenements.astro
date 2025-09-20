@@ -1,52 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
-import EventCard from "@/components/events/EventCard.astro";
 import EventsImage from "@/assets/hero/events.jpg";
-
-import { getAllEvents } from "@/lib/sanity-queries";
-import { urlFor, type Event } from "@/lib/sanity";
-import { formatDateTime } from "@/lib/date";
-
-const events = await getAllEvents();
-
-function groupEventsByMonth(events: Event[]) {
-  const grouped = events.reduce(
-    (acc, event) => {
-      const date = new Date(event.date);
-      const monthYear = date.toLocaleDateString("fr-FR", {
-        year: "numeric",
-        month: "long",
-      });
-
-      if (!acc[monthYear]) {
-        acc[monthYear] = [];
-      }
-      acc[monthYear].push(event);
-
-      return acc;
-    },
-    {} as Record<string, typeof events>
-  );
-
-  Object.keys(grouped).forEach((monthYear) => {
-    grouped[monthYear].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-  });
-
-  const sortedGroups = Object.entries(grouped).sort(
-    ([monthYearA], [monthYearB]) => {
-      const dateA = new Date(grouped[monthYearA][0].date);
-      const dateB = new Date(grouped[monthYearB][0].date);
-      return dateB.getTime() - dateA.getTime();
-    }
-  );
-
-  return sortedGroups;
-}
-
-const groupedEvents = groupEventsByMonth(events);
+import EventSection from "@/components/events/EventSection.astro";
 ---
 
 <Layout title="Événements">
@@ -69,45 +25,6 @@ const groupedEvents = groupEventsByMonth(events);
         </p>
       </div>
     </Hero>
-    <div class="relative bg-white py-10">
-      <div class="max-w-5xl mx-auto px-5">
-        {
-          groupedEvents.map(([monthYear, events], groupIndex) => (
-            <div class="mb-0 md:mb-2">
-              <div class="text-center mb-12">
-                <h2 class="sm:text-4xl text-3xl font-bold text-gray-800 mb-4">
-                  {monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}
-                </h2>
-                <hr class="w-24 h-1 bg-primary mx-auto rounded-full" />
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {events.map((event) => (
-                  <EventCard
-                    title={event.title.fr}
-                    slug={event.slug.fr.current}
-                    date={formatDateTime(new Date(event.date))}
-                    location={event.location}
-                    image={urlFor(event.image).width(1200).height(800).url()}
-                    description={event.intro.fr}
-                    locale="fr"
-                  />
-                ))}
-              </div>
-
-              {groupIndex < groupedEvents.length - 1 && (
-                <div class="flex items-center justify-center my-12">
-                  <div class="flex-grow h-px bg-gray-300" />
-                  <div class="mx-4">
-                    <div class="w-3 h-3 bg-primary rounded-full" />
-                  </div>
-                  <div class="flex-grow h-px bg-gray-300" />
-                </div>
-              )}
-            </div>
-          ))
-        }
-      </div>
-    </div>
+    <EventSection />
   </div>
 </Layout>
