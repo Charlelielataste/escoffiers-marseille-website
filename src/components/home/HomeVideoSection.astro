@@ -2,8 +2,10 @@
 import { getSettings } from "@/lib/sanity-queries";
 import { fileUrl } from "@/lib/sanity";
 import { cn } from "@/lib/utils";
+import type { Locale } from "@/lib/i18n";
 
 const settings = await getSettings();
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
 
 if (!settings?.lastEventVideo.video) {
   return null;
@@ -17,6 +19,9 @@ if (!settings?.lastEventVideo.video) {
         <div class="w-full h-[680px] relative rounded-lg hidden sm:block">
           <video
             src={fileUrl(settings.lastEventVideo.video)}
+            aria-label={
+              currentLocale === "fr" ? "Vidéo de fond" : "Background video"
+            }
             class="w-full h-[680px] object-cover rounded-lg shadow-lg blur-xs opacity-60"
             autoplay
             muted
@@ -25,6 +30,9 @@ if (!settings?.lastEventVideo.video) {
           <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-[680px]">
             <video
               src={fileUrl(settings.lastEventVideo.video)}
+              aria-label={
+                currentLocale === "fr" ? "Vidéo de l'événement" : "Event video"
+              }
               class="w-full h-[680px] object-cover video-responsive"
               autoplay
               muted
@@ -46,6 +54,9 @@ if (!settings?.lastEventVideo.video) {
     >
       <video
         src={fileUrl(settings.lastEventVideo.video)}
+        aria-label={currentLocale === "fr"
+          ? "Vidéo de l'événement"
+          : "Event video"}
         class="w-full h-full object-cover rounded-lg shadow-lg video-responsive"
         autoplay
         muted

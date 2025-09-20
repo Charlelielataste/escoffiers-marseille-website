@@ -12,44 +12,52 @@ import ServiceIcon from "@/components/icons/ServiceIcon.astro";
 const valuesFr = [
   {
     title: "Inculquer",
+    ariaLabel: "Homme avec étoile",
     description:
       "Inculquer aux professionnels de la gastronomie l'esprit humaniste d'Auguste Escoffier.",
     icon: InculcateIcon,
   },
   {
     title: "Promouvoir",
+    ariaLabel: "Megaphone",
     description: "Promouvoir le métier de cuisinier et des métiers de bouches.",
     icon: PromoteIcon,
   },
   {
     title: "Transmettre",
+    ariaLabel: "Chapeau de promotion écolière",
     description:
       "Assurer la transmission des savoirs entre les générations de cuisinier.",
     icon: TransmissionIcon,
   },
   {
     title: "Concours",
+    ariaLabel: "Trophée sur un livre",
     description:
       "Organiser un concours international « Jeunes Talents Escoffier ».",
     icon: CompetitionIcon,
   },
   {
     title: "Honorer",
+    ariaLabel: "Chef avec moustache",
     description: "Honorer la mémoire et l'héritage d'Auguste Escoffier.",
     icon: HonorIcon,
   },
   {
     title: "Rapprocher",
+    ariaLabel: "Deux mains avec un coeur au centre",
     description: "Rapprocher la cuisine et les métiers de la salle.",
     icon: BringTogetherIcon,
   },
   {
     title: "Valoriser",
+    ariaLabel: "Bol avec une préparation de cuisine",
     description: "Valoriser les produits de qualité.",
     icon: ValueFoodIcon,
   },
   {
     title: "Organiser",
+    ariaLabel: "Main serveur avec un plat sous cloche",
     description: "Organiser des manifestations gastronomiques.",
     icon: ServiceIcon,
   },
@@ -58,45 +66,53 @@ const valuesFr = [
 const valuesEn = [
   {
     title: "Inculcate",
+    ariaLabel: "Man with a star",
     description:
       "Inculcate the humanist spirit of Auguste Escoffier to professionals of gastronomy.",
     icon: InculcateIcon,
   },
   {
     title: "Promote",
+    ariaLabel: "Megaphone",
     description:
       "Promote the profession of chef and the professions of the kitchen.",
     icon: PromoteIcon,
   },
   {
     title: "Transmit",
+    ariaLabel: "Promotion cap",
     description:
       "Ensure the transmission of knowledge between generations of chefs.",
     icon: TransmissionIcon,
   },
   {
     title: "Competition",
+    ariaLabel: "Trophy on a book",
     description:
       "Organize an international competition « Jeunes Talents Escoffier ».",
     icon: CompetitionIcon,
   },
   {
     title: "Honor",
+    ariaLabel: "Chef with a mustache",
     description: "Honor the memory and the legacy of Auguste Escoffier.",
     icon: HonorIcon,
   },
   {
     title: "Bring together",
+    ariaLabel: "Two hands with a heart in the center",
     description: "Bring together cuisine and service.",
     icon: BringTogetherIcon,
   },
   {
     title: "Value",
+    ariaLabel: "Bowl with a preparation of cuisine",
     description: "Value the quality of products.",
     icon: ValueFoodIcon,
   },
   {
     title: "Organize",
+    ariaLabel: "Server with a plate under a glass",
     description: "Organize gastronomic manifestations.",
     icon: ServiceIcon,
   },
@@ -129,7 +145,11 @@ const t = getTranslations(currentLocale);
           return (
             <div class="bg-white p-8 rounded-2xl shadow-lg hover:scale-102 duration-300">
               <div class="text-primary mb-5 flex">
-                <IconComponent size="48" class="text-primary" />
+                <IconComponent
+                  aria-label={value.ariaLabel}
+                  size="48"
+                  class="text-primary"
+                />
               </div>
               <h3 class="text-xl font-bold mb-3">{value.title}</h3>
               <p class="text-gray-600 leading-relaxed">{value.description}</p>

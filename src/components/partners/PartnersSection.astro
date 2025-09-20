@@ -45,6 +45,7 @@ const t = getTranslations(currentLocale);
                     href={partner.link}
                     rel="noopener noreferrer"
                     target="_blank"
+                    aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
                     class="text-primary-accessible font-bold hover:text-secondary/80 transition-colors duration-300 hover:underline"
                   >
                     {t.partners.seeTheirSite}

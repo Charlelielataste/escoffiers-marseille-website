@@ -18,7 +18,9 @@ const t = getTranslations(currentLocale);
             width="1080"
             height="900"
             src={TeamImage}
-            alt="Cuisine professionnelle"
+            alt={currentLocale === "fr"
+              ? "Jeunes espoirs culinaires"
+              : "Young culinary talents"}
             class="object-cover w-full h-full"
           />
           <div
