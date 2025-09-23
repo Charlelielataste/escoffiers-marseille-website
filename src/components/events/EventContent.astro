@@ -56,11 +56,12 @@ const eventPath =
   </h1>
 
   <div class="mb-8">
-    <span class="font-semibold">Location : </span>
+    <span class="font-semibold">{t.events.location} : </span>
     <a
       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={t.events.locationLink}
       class="text-primary-accessible font-semibold hover:text-secondary/80 transition-colors duration-200 underline decoration-2 underline-offset-2"
     >
       {event.location}

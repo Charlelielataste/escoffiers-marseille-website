@@ -1,8 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Politique de Confidentialité",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/privacy-policy/",
+  description:
+    "Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy.",
+};
 ---
 
-<Layout title="Privacy Policy - Disciples d'Escoffier Provence Méditerranée">
+<Layout
+  title="Privacy Policy - Disciples d'Escoffier Provence Méditerranée"
+  description="Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy."
+  keywords="Privacy Policy, privacy, privacy policy"
+  jsonLd={jsonLd}
+>
   <section class="relative pt-28 pb-16 bg-white">
     <div class="container mx-auto px-5 max-w-4xl">
       <h1 class="lg:text-5xl text-4xl font-bold text-primary mb-6 text-center">
@@ -217,6 +231,7 @@ import Layout from "@/layouts/Layout.astro";
             <p>
               To exercise these rights, contact us at:
               <a
+                aria-label="contact email"
                 href="mailto:contact@disciplesescoffier-provence-mediterranee.org"
                 class="text-primary hover:text-primary/80 underline"
               >
@@ -325,6 +340,7 @@ import Layout from "@/layouts/Layout.astro";
                 href="https://www.cnil.fr"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="CNIL website"
                 class="text-primary hover:text-primary/80 underline"
                 >www.cnil.fr</a
               >
@@ -360,6 +376,7 @@ import Layout from "@/layouts/Layout.astro";
               <strong>Email:</strong>
               <a
                 href="mailto:contact@disciplesescoffier-provence-mediterranee.org"
+                aria-label="contact email"
                 class="text-primary hover:text-primary/80 underline"
               >
                 contact@disciplesescoffier-provence-mediterranee.org

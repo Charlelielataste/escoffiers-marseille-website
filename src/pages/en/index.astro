@@ -10,9 +10,23 @@ import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import InternationalBanner from "@/components/home/InternationalBanner.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Home - Disciples d'Escoffier Provence Méditerranée - English",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/",
+  description:
+    "Association gastronomique dedicated to the promotion of French and Mediterranean gastronomy and to the legacy of Auguste Escoffier. Events, heritage and culinary articles.",
+};
 ---
 
-<Layout title="Home - Official Site">
+<Layout
+  title="Home - Official Site"
+  description="Discover the Disciples d'Escoffier Provence Méditerranée, association dedicated to the promotion of French and Mediterranean gastronomy and to the legacy of Auguste Escoffier. Events, heritage and culinary articles."
+  keywords="Disciples Escoffier, gastronomy, Provence, events, association gastronomique, cuisine française, Marseille, formations culinaires, Escoffier, Auguste Escoffier, Disciples, disciples, mediterranee, mediteranee, mediterranee, méditerranée"
+  jsonLd={jsonLd}
+>
   <div class="relative">
     <Hero
       picture={HomeImage}

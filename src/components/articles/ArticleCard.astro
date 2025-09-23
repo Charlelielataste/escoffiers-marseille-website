@@ -40,7 +40,11 @@ const t = getTranslations(locale);
     is_first ? "lg:h-[540px] border-tertiary/40" : "border-primary/40"
   )}
 >
-  <a href={articlePath} class="w-full p-5">
+  <a
+    href={articlePath}
+    aria-label={`${t.articles.readArticle} ${title}`}
+    class="w-full p-5"
+  >
     {
       is_first && (
         <div class="absolute top-6 left-6 bg-white border border-tertiary/50 text-primary-accessible flex items-center gap-x-2 px-4 py-1 rounded-tl-2xl rounded-br-2xl font-bold z-10">

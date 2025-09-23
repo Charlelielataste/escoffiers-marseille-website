@@ -45,7 +45,9 @@ const t = getTranslations(currentLocale);
           width="1080"
           height="900"
           src={MissionImage}
-          alt="Cuisine professionnelle"
+          alt={currentLocale === "fr"
+            ? "Table d'un repas Escoffier pendant un événement"
+            : "Escoffier's table during an event"}
           class="object-cover w-full h-full"
         />
         <div

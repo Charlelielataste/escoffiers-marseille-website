@@ -1,10 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { formatDate } from "@/lib/date";
 import { getArticleBySlug, getArticleSlugs } from "@/lib/sanity-queries";
-import { urlFor } from "@/lib/sanity";
-import { PortableText } from "astro-portabletext";
-import ArrowLeft from "@/components/icons/ArrowLeft.astro";
 import ArticleContent from "@/components/articles/ArticleContent.astro";
 
 export async function getStaticPaths() {
@@ -28,8 +24,23 @@ const multilingualSlugs = {
   fr: `/articles/${article.slug.fr.current}/`,
   en: `/en/articles/${article.slug.en.current}/`,
 };
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Article",
+  url: `https://disciplesescoffier-provence-mediterranee.org/articles/${article.slug.fr.current}/`,
+  description: article.intro.fr,
+  keywords: `${article.tags.map((tag) => tag.title.fr).join(", ")}, provence, mediterranee, mediteranee, mediterranee, méditerranée, articles, actualités, conseils, recettes, chefferie, chef, cuisine, gastronomie, cuisine française, cuisine méditerranéenne`,
+};
 ---
 
-<Layout title={article.title.fr} multilingualUrls={multilingualSlugs}>
+<Layout
+  title={article.title.fr}
+  description={article.intro.fr}
+  keywords={`${article.tags.map((tag) => tag.title.fr).join(", ")}, provence, Disciples d'Escoffier, disciples, escoffier, escoffier, mediterranee, mediteranee, mediterranee, méditerranée, articles, actualités, conseils, recettes, cuisine, gastronomie, cuisine française`}
+  jsonLd={jsonLd}
+  multilingualUrls={multilingualSlugs}
+>
   <ArticleContent article={article} />
 </Layout>

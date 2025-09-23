@@ -5,9 +5,23 @@ import Layout from "@/layouts/Layout.astro";
 import ValuesSection from "@/components/about/ValuesSection.astro";
 import TeamSection from "@/components/about/TeamSection.astro";
 import AboutImage from "@/assets/hero/about.jpg";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "À Propos",
+  url: "https://disciplesescoffier-provence-mediterranee.org/a-propos/",
+  description:
+    "Disciples d'Escoffier, nous perpétuons l'excellence culinaire française à travers les générations",
+};
 ---
 
-<Layout title="À Propos">
+<Layout
+  title="À Propos"
+  description="Disciples d'Escoffier, nous perpétuons l'excellence culinaire française à travers les générations"
+  keywords="À Propos, Disciples d'Escoffier, Provence Méditerranée, institution, Auguste Escoffier, Escoffier, heritage, disciples, gastronomie, provence, mediterranee, mediteranee, mediterranee, méditerranée"
+  jsonLd={jsonLd}
+>
   <div class="relative">
     <Hero picture={AboutImage} pictureAlt="A propos">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">

@@ -24,8 +24,23 @@ const multilingualSlugs = {
   fr: `/articles/${article.slug.fr.current}/`,
   en: `/en/articles/${article.slug.en.current}/`,
 };
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Article",
+  url: `https://disciplesescoffier-provence-mediterranee.org/en/articles/${article.slug.en.current}/`,
+  description: article.intro.en,
+  keywords: `${article.tags.map((tag) => tag.title.en).join(", ")}, provence, mediterranee, mediteranee, mediterranee, méditerranée, articles, actualités, conseils, recettes, cuisine, gastronomie, cuisine française`,
+};
 ---
 
-<Layout title={article.title.en} multilingualUrls={multilingualSlugs}>
+<Layout
+  title={article.title.en}
+  description={article.intro.en}
+  keywords={`${article.tags.map((tag) => tag.title.en).join(", ")}, provence, Disciples Escoffier, disciples, escoffier, escoffier, mediterranee, mediteranee, mediterranee, méditerranée, articles, news, tips, recipes, cuisine, gastronomy, cuisine française`}
+  jsonLd={jsonLd}
+  multilingualUrls={multilingualSlugs}
+>
   <ArticleContent article={article} />
 </Layout>

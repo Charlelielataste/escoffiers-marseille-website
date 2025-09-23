@@ -3,9 +3,23 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import MembersImage from "@/assets/hero/members.jpg";
 import DisciplesSection from "@/components/members/DisciplesSection.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "The Disciples",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/the-disciples/",
+  description:
+    "Discover the team of Disciples d'Escoffier Provence Mediterranée, composed of members from all professions of gastronomy.",
+};
 ---
 
-<Layout title="The Disciples">
+<Layout
+  title="The Disciples"
+  description="Discover the team of Disciples d'Escoffier Provence Mediterranée, composed of members from all professions of gastronomy."
+  keywords="The Disciples, team, Disciples d'Escoffier, Provence Méditerranée, disciples, gastronomy, provence, mediterranee, mediteranee, mediterranee, méditerranée"
+  jsonLd={jsonLd}
+>
   <div class="relative">
     <Hero picture={MembersImage} pictureAlt="The Disciples">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">

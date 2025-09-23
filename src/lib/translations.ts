@@ -1,6 +1,3 @@
-import MissionSection from "@/components/about/MissionSection.astro";
-
-// Traductions pour la navigation
 export const translations = {
   fr: {
     nav: {
@@ -57,6 +54,7 @@ export const translations = {
       },
       lastActionsSection: {
         title: "Nos Actions Récentes",
+        noActions: "Aucune action récente pour le moment.",
       },
       nextEventsSection: {
         title: "Nos Événements à venir",
@@ -131,6 +129,8 @@ export const translations = {
       backToEvents: "Retour aux événements",
       eventEnded: "Événement terminé",
       participateToTheEvent: "Participer à l'événement",
+      location: "Lieu",
+      locationLink: "Lien vers le lieu sur Google Maps",
     },
     members: {
       contact: "Contactez-moi",
@@ -224,6 +224,7 @@ export const translations = {
       },
       lastActionsSection: {
         title: "Our Recent Actions",
+        noActions: "No recent actions for the moment.",
       },
       nextEventsSection: {
         title: "Our Upcoming Events",
@@ -296,6 +297,8 @@ export const translations = {
       backToEvents: "Back to events",
       eventEnded: "Event ended",
       participateToTheEvent: "Participate to the event",
+      location: "Location",
+      locationLink: "Link to the location Google Maps",
     },
     members: {
       contact: "Contact me",

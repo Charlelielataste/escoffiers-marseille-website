@@ -1,8 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Mentions Légales",
+  url: "https://disciplesescoffier-provence-mediterranee.org/en/legal-mentions/",
+  description:
+    "Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy.",
+};
 ---
 
-<Layout title="Legal Mentions - Disciples d'Escoffier Provence Méditerranée">
+<Layout
+  title="Legal Mentions - Disciples d'Escoffier Provence Méditerranée"
+  description="Association Disciples d'Escoffier Provence Méditerranée is committed to protecting and respecting your privacy."
+  keywords="Legal Mentions, legal mentions, privacy"
+  jsonLd={jsonLd}
+>
   <section class="relative pt-28 pb-16 bg-white">
     <div class="container mx-auto px-5 max-w-4xl">
       <h1 class="lg:text-5xl text-4xl font-bold text-primary mb-6 text-center">
@@ -67,6 +81,7 @@ import Layout from "@/layouts/Layout.astro";
               href="https://www.netlify.com"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Netlify website"
               class="text-primary hover:text-primary/80 underline"
               >www.netlify.com</a
             >
@@ -164,6 +179,7 @@ import Layout from "@/layouts/Layout.astro";
             For more information on the collection and processing of your
             personal data, we invite you to consult our <a
               href="/en/privacy-policy"
+              aria-label="See the privacy policy"
               class="text-primary hover:text-primary/80 underline"
               >privacy policy</a
             >.
@@ -208,6 +224,7 @@ import Layout from "@/layouts/Layout.astro";
             at:
             <a
               href="mailto:contact@disciplesescoffier-provence-mediterranee.org"
+              aria-label="contact email"
               class="text-primary hover:text-primary/80 underline"
             >
               contact@disciplesescoffier-provence-mediterranee.org

@@ -3,20 +3,55 @@ import Navbar from "@/components/navigation/Navbar.astro";
 import Footer from "@/components/navigation/Footer.astro";
 import "../styles/global.css";
 import "../styles/fonts.css";
-import { type Locale } from "../lib/i18n";
+import { type Locale, getAlternateLanguageUrl } from "../lib/i18n";
 import { ClientRouter } from "astro:transitions";
 
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
 export interface Props {
   navbar?: boolean;
   title?: string;
+  description: string;
+  keywords: string;
+  canonical?: string;
   multilingualUrls?: {
     fr: string;
     en: string;
   };
+  jsonLd?: object;
 }
 
-const { title, multilingualUrls, navbar = true } = Astro.props;
+const {
+  title,
+  description,
+  keywords,
+  canonical,
+  multilingualUrls,
+  jsonLd,
+  navbar = true,
+} = Astro.props;
+
+const fullTitle = title
+  ? `${title} - Disciples Escoffier Provence Méditerranée`
+  : "Disciples Escoffier Provence Méditerranée";
+
+const organizationDescriptions =  currentLocale === "fr" ? "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne" : "Gastronomy association dedicated to the promotion of French and Mediterranean gastronomy";
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Disciples d'Escoffier Provence Méditerranée",
+  "url": "https://votre-domaine.com",
+  "logo": "https://votre-domaine.com/logos/logo-escoffier-nav.png",
+  "description": organizationDescriptions,
+};
+
+const currentUrl = new URL(Astro.request.url);
+const canonicalUrl = canonical || currentUrl.href;
+
+const alternateUrls = multilingualUrls || {
+  fr: getAlternateLanguageUrl(Astro.url.pathname, "fr"),
+  en: getAlternateLanguageUrl(Astro.url.pathname, "en"),
+};
 ---
 
 <html lang={currentLocale}>
@@ -33,18 +68,25 @@ const { title, multilingualUrls, navbar = true } = Astro.props;
       href="/favicon-white.svg"
       media="(prefers-color-scheme: dark)"
     />
-    <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Les Disciples d'Escoffier Provence Méditerranée"
-    />
     <title>
-      {
-        title
-          ? `${title} - Les Disciples d'Escoffier Provence Méditerranée`
-          : "Les Disciples d'Escoffier Provence Méditerranée"
-      }
+      {fullTitle}
     </title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Hreflang for multilingual -->
+    <link rel="alternate" hreflang="fr" href={new URL(alternateUrls.fr, currentUrl.origin).href} />
+    <link rel="alternate" hreflang="en" href={new URL(alternateUrls.en, currentUrl.origin).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(alternateUrls.fr, currentUrl.origin).href} />
+
+    <!-- JSON-LD for the structure -->
+    {jsonLd && <script is:inline type="application/ld+json">{JSON.stringify(jsonLd)}</script>}
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)}></script>
+
     <ClientRouter />
   </head>
   <body class="font-['Museo_Sans']" style="overscroll-behavior: none;">
