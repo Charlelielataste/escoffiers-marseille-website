@@ -4,7 +4,7 @@ import { urlFor, type Article } from "@/lib/sanity";
 import { PortableText } from "astro-portabletext";
 import ArrowLeft from "@/components/icons/ArrowLeft.astro";
 import { getTranslations, type Locale } from "@/lib/i18n";
-
+import { Image } from "astro:assets";
 export interface Props {
   article: Article;
 }
@@ -32,10 +32,13 @@ const articlePath =
     </a>
   </div>
   <div class="mb-8">
-    <img
+    <Image
       src={urlFor(article.image).width(1200).height(600).url()}
       alt={article.title[currentLocale]}
       class="w-full h-96 object-cover rounded-2xl shadow-lg"
+      width={1200}
+      height={600}
+      loading="eager"
     />
   </div>
 

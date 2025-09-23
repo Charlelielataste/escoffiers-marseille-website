@@ -3,6 +3,10 @@ import MembersCard from "@/components/members/MembersCard.astro";
 import { getAllMembers } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { getTranslations, type Locale } from "@/lib/i18n";
+import PresidentImage from "@/assets/president.jpg";
+import MapIcon from "@/components/icons/MapIcon.astro";
+import MailIcon from "@/components/icons/MailIcon.astro";
+import { Image } from "astro:assets";
 
 const membres = await getAllMembers();
 
@@ -37,17 +41,56 @@ const president = {
       </h3>
       <hr class="w-24 h-1 bg-primary mx-auto rounded-full mb-12" />
       <div class="flex justify-center gap-x-4 gap-y-16 max-w-6xl mx-auto pb-16">
-        <MembersCard
-          photo={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZdkatSs1kuSHjueaj6u6RMjIb23IzQImpQ&s"}
-          color={"#d13429"}
-          name={president[currentLocale].name}
-          role={president[currentLocale].role}
-          description={president[currentLocale].description}
-          email={"alain.laporte@formactions.fr"}
-          workplace={"Form'actions Consulting"}
-          size="150px"
-          locale={currentLocale}
-        />
+        <div class="flex flex-col items-center text-center w-full sm:w-80">
+          <div class="relative mb-4 shadow-xl rounded-full">
+            <div
+              class="rounded-full overflow-hidden border-4 w-[150px] h-[150px] border-[#d13429]"
+            >
+              <Image
+                src={PresidentImage}
+                alt={president[currentLocale].name}
+                class="object-cover w-full h-full"
+                width={150}
+                height={150}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-gray-900 mb-1">
+            {president[currentLocale].name}
+          </h4>
+          <p class="text-sm font-medium mb-2 text-[#d13429]">
+            {president[currentLocale].role}
+          </p>
+          <p class="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold">
+            {president[currentLocale].description}
+          </p>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Form'actions Consulting")}`}
+            target="_blank"
+            aria-label={`Form'actions Consulting Google Maps`}
+            rel="noopener noreferrer"
+            class="flex items-center gap-x-2"
+          >
+            <MapIcon size="16" class="text-red-500" />
+            <span class="text-sm hover:text-secondary/80 underline">
+              Form'actions Consulting
+            </span>
+          </a>
+          <a
+            href={`mailto:alain.laporte@formactions.fr`}
+            aria-label={`${t.members.contact} alain.laporte@formactions.fr`}
+            class="mt-2 flex items-center gap-x-2"
+          >
+            <MailIcon size="16" class="text-primary shrink-0" />
+            <span
+              class="hover:text-secondary/80 hover:underline mt-0.5 text-sm"
+            >
+              {t.members.contact}
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
