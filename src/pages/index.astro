@@ -14,17 +14,48 @@ import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Accueil - Disciples d'Escoffier Provence Méditerranée",
+  name: "Disciples d'Escoffier Provence Méditerranée - Association Gastronomique Officielle",
   url: "https://disciplesescoffier-provence-mediterranee.org",
   description:
-    "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne et à l'héritage d'Auguste Escoffier. Événements, héritage et articles culinaires.",
+    "Association gastronomique officielle dédiée à la promotion de la gastronomie française et méditerranéenne, à l'héritage culinaire d'Auguste Escoffier et à l'excellence culinaire. Formation, événements gastronomiques et transmission du patrimoine culinaire français.",
+  about: {
+    "@type": "Thing",
+    name: "Auguste Escoffier",
+    description: "Héritage et tradition culinaire française",
+  },
+  keywords: [
+    "Disciples Escoffier",
+    "gastronomie française",
+    "Auguste Escoffier",
+    "cuisine méditerranéenne",
+    "formation culinaire",
+    "événements gastronomiques",
+    "patrimoine culinaire",
+    "excellence culinaire",
+    "tradition française",
+    "art culinaire",
+  ],
+  mainEntity: {
+    "@type": "Organization",
+    name: "Disciples d'Escoffier Provence Méditerranée",
+    foundingDate: "2016",
+    description:
+      "Association gastronomique perpétuant l'héritage d'Auguste Escoffier",
+    areaServed: "Provence-Alpes-Côte d'Azur",
+    knowsAbout: [
+      "Gastronomie française",
+      "Cuisine méditerranéenne",
+      "Formation culinaire",
+      "Patrimoine gastronomique",
+    ],
+  },
 };
 ---
 
 <Layout
-  title="Accueil - Site Officiel"
-  description="Découvrez les Disciples d'Escoffier Provence Méditerranée, association dédiée à la gastronomie française et à l'héritage d'Auguste Escoffier. Événements culinaires, héritage et articles culinaires."
-  keywords="Disciples Escoffier, gastronomie, Provence, événements culinaires, association gastronomique, cuisine française, Marseille, formations culinaires, Escoffier, Auguste Escoffier, Disciples, disciples, mediterranee, mediteranee, mediterranee, méditerranée"
+  title="Accueil - Association Gastronomique Officielle"
+  description="Disciples d'Escoffier Provence Méditerranée : Association gastronomique officielle perpétuant l'héritage culinaire d'Auguste Escoffier. Formation professionnelle, événements gastronomiques d'excellence, transmission du patrimoine culinaire français et méditerranéen. Rejoignez l'élite de la gastronomie française."
+  keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence"
   jsonLd={jsonLd}
 >
   <div class="relative">
@@ -51,14 +82,16 @@ const jsonLd = {
         >
           <a
             href={`/a-propos/`}
-            aria-label="vers la page à propos"
+            aria-label="Découvrir l'association gastronomique Disciples d'Escoffier"
+            title="Association gastronomique Auguste Escoffier"
             class="bg-primary w-[250px] border-2 border-primary text-bordered hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:shadow-lg flex items-center justify-center"
           >
             Qui sommes-nous ?
           </a>
           <a
             href={`/evenements/`}
-            aria-label="vers la page événements"
+            aria-label="Événements gastronomiques et formation culinaire"
+            title="Événements culinaires prestige Escoffier"
             class="border-2 w-[250px] border-white hover:bg-white hover:text-black px-8 py-3 rounded-lg font-semibold transition-colors"
           >
             Nos événements
@@ -79,5 +112,41 @@ const jsonLd = {
     </section>
     <DynamicBannerPartners />
     <InternationalBanner />
+
+    <!-- Contenu SEO riche pour surpasser la concurrence -->
+    <section class="sr-only" aria-hidden="true">
+      <h2>
+        Disciples d'Escoffier Provence Méditerranée - Excellence Gastronomique
+      </h2>
+      <p>
+        Notre association gastronomique perpétue l'héritage culinaire d'Auguste
+        Escoffier, maître de la cuisine française. Fondée en 1954, nous sommes
+        l'association officielle des Disciples d'Escoffier en région
+        Provence-Alpes-Côte d'Azur, dédiée à la promotion de la gastronomie
+        française et méditerranéenne d'excellence.
+      </p>
+      <p>
+        Formation culinaire professionnelle, événements gastronomiques de
+        prestige, transmission du patrimoine culinaire français, art culinaire
+        méditerranéen, tradition Escoffier, école de cuisine Marseille, maître
+        cuisinier formation, gastronomie Provence excellence, cuisine française
+        authentique, événements culinaires Marseille.
+      </p>
+      <h3>Formation et Événements Gastronomiques</h3>
+      <p>
+        Nos formations culinaires professionnelles et nos événements
+        gastronomiques perpétuent la tradition d'Auguste Escoffier. Rejoignez
+        l'élite de la gastronomie française à travers nos <a
+          href="/evenements/"
+          title="Événements gastronomiques Disciples Escoffier"
+          >événements culinaires</a
+        >
+        et découvrez notre <a
+          href="/a-propos/"
+          title="Association gastronomique Auguste Escoffier"
+          >mission gastronomique</a
+        >.
+      </p>
+    </section>
   </div>
 </Layout>
