@@ -14,10 +14,11 @@ import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Disciples d'Escoffier Provence Méditerranée - Association Gastronomique Officielle",
+  name: "Disciples d'Escoffier Provence Méditerranée - Accueil",
   url: "https://disciplesescoffier-provence-mediterranee.org",
+  logo: "https://disciplesescoffier-provence-mediterranee.org/logos/logo-escoffier-nav.png",
   description:
-    "Association gastronomique officielle dédiée à la promotion de la gastronomie française et méditerranéenne, à l'héritage culinaire d'Auguste Escoffier et à l'excellence culinaire. Formation, événements gastronomiques et transmission du patrimoine culinaire français.",
+    "Association gastronomique délégation Provence Méditerranée officielle dédiée à la promotion de la gastronomie française et méditerranéenne, à l'héritage culinaire d'Auguste Escoffier et à l'excellence culinaire. Formation, événements gastronomiques et transmission du patrimoine culinaire français.",
   about: {
     "@type": "Thing",
     name: "Auguste Escoffier",
@@ -28,33 +29,58 @@ const jsonLd = {
     "gastronomie française",
     "Auguste Escoffier",
     "cuisine méditerranéenne",
+    "recettes",
+    "cuisines",
+    "cuisine",
+    "cuisine française",
+    "cuisine méditerranéenne",
+    "cuisine de qualité",
     "formation culinaire",
     "événements gastronomiques",
     "patrimoine culinaire",
     "excellence culinaire",
     "tradition française",
     "art culinaire",
+    "Provence Méditerranée",
+    "délégation Provence Méditerranée",
+    "association gastronomique officielle",
+    "association gastronomique",
+    "association gastronomique officielle",
+    "disciples escoffier",
+    "Marseille",
+    "Aix-en-Provence",
+    "Nice",
+    "Toulon",
   ],
   mainEntity: {
     "@type": "Organization",
     name: "Disciples d'Escoffier Provence Méditerranée",
     foundingDate: "2016",
     description:
-      "Association gastronomique perpétuant l'héritage d'Auguste Escoffier",
+      "Association gastronomique perpétuant l'héritage d'Auguste Escoffier en Provence Méditerranée",
     areaServed: "Provence-Alpes-Côte d'Azur",
     knowsAbout: [
       "Gastronomie française",
       "Cuisine méditerranéenne",
       "Formation culinaire",
       "Patrimoine gastronomique",
+      "Auguste Escoffier",
+      "Formation culinaire",
+      "Événements gastronomiques",
+    ],
+    sameAs: [
+      "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=fr_FR",
+      "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=en_US",
+      "https://www.instagram.com/disciples_escoffier_prov_med/?hl=en",
+      "https://www.instagram.com/disciples_escoffier_prov_med/?hl=fr",
     ],
   },
 };
 ---
 
 <Layout
-  title="Accueil - Association Gastronomique Officielle"
-  description="Disciples d'Escoffier Provence Méditerranée : Association gastronomique officielle perpétuant l'héritage culinaire d'Auguste Escoffier. Formation professionnelle, événements gastronomiques d'excellence, transmission du patrimoine culinaire français et méditerranéen. Rejoignez l'élite de la gastronomie française."
+  title="Accueil - Association Officielle"
+  description="Disciples d'Escoffier Provence Méditerranée : Association officielle perpétuant l'héritage culinaire d'Auguste Escoffier. Formation professionnelle, événements gastronomiques d'excellence, transmission du patrimoine culinaire français et méditerranéen."
   keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence"
   jsonLd={jsonLd}
 >

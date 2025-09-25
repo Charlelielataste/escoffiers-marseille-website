@@ -34,43 +34,6 @@ const fullTitle = title
   ? `${title} - Disciples Escoffier Provence Méditerranée`
   : "Disciples Escoffier Provence Méditerranée";
 
-const organizationDescriptions =
-  currentLocale === "fr"
-    ? "Association gastronomique dédiée à la promotion de la gastronomie française et méditerranéenne"
-    : "Gastronomy association dedicated to the promotion of French and Mediterranean gastronomy";
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Disciples d'Escoffier Provence Méditerranée",
-  url: "https://disciplesescoffier-provence-mediterranee.org",
-  logo: "https://disciplesescoffier-provence-mediterranee.org/logos/logo-escoffier-nav.png",
-  description: organizationDescriptions,
-  foundingDate: "2016",
-  areaServed: {
-    "@type": "Place",
-    name: "Provence-Alpes-Côte d'Azur",
-    containedInPlace: "France",
-  },
-  memberOf: {
-    "@type": "Organization",
-    name: "Disciples d'Escoffier International",
-  },
-  knowsAbout: [
-    "Gastronomie française",
-    "Cuisine méditerranéenne",
-    "Auguste Escoffier",
-    "Formation culinaire",
-    "Événements gastronomiques",
-  ],
-  sameAs: [
-    "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=fr_FR",
-    "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=en_US",
-    "https://www.instagram.com/disciples_escoffier_prov_med/?hl=en",
-    "https://www.instagram.com/disciples_escoffier_prov_med/?hl=fr",
-  ],
-};
-
 const currentUrl = new URL(Astro.request.url);
 const canonicalUrl = canonical || currentUrl.href;
 
@@ -173,12 +136,6 @@ const alternateUrls = multilingualUrls || {
         />
       )
     }
-
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(organizationJsonLd)}
-    />
 
     <ClientRouter />
   </head>

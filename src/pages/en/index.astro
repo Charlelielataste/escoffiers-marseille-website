@@ -14,47 +14,73 @@ import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Disciples d'Escoffier Provence Méditerranée - Official Gastronomy Association",
-  url: "https://disciplesescoffier-provence-mediterranee.org/en/",
+  name: "Disciples d'Escoffier Provence Méditerranée - Home",
+  url: "https://disciplesescoffier-provence-mediterranee.org",
+  logo: "https://disciplesescoffier-provence-mediterranee.org/logos/logo-escoffier-nav.png",
   description:
-    "Official gastronomy association dedicated to promoting French and Mediterranean culinary excellence, Auguste Escoffier's culinary heritage, and gastronomic tradition. Professional culinary training, prestigious gastronomic events, and French culinary heritage transmission.",
+    "Official Provence Méditerranée delegation of the gastronomic association dedicated to promoting French and Mediterranean gastronomy, the culinary heritage of Auguste Escoffier, and culinary excellence. Training, gastronomic events, and transmission of French culinary heritage.",
   about: {
     "@type": "Thing",
     name: "Auguste Escoffier",
-    description: "French culinary heritage and gastronomic tradition",
+    description: "French culinary heritage and tradition",
   },
   keywords: [
     "Disciples Escoffier",
     "French gastronomy",
     "Auguste Escoffier",
     "Mediterranean cuisine",
+    "recipes",
+    "cuisines",
+    "cooking",
+    "French cuisine",
+    "Mediterranean cuisine",
+    "quality cuisine",
     "culinary training",
     "gastronomic events",
     "culinary heritage",
     "culinary excellence",
     "French tradition",
-    "culinary arts",
+    "culinary art",
+    "Provence Méditerranée",
+    "Provence Méditerranée delegation",
+    "official gastronomic association",
+    "gastronomic association",
+    "official gastronomic association",
+    "disciples escoffier",
+    "Marseille",
+    "Aix-en-Provence",
+    "Nice",
+    "Toulon",
   ],
   mainEntity: {
     "@type": "Organization",
     name: "Disciples d'Escoffier Provence Méditerranée",
     foundingDate: "2016",
     description:
-      "Gastronomy association perpetuating Auguste Escoffier's legacy",
+      "Gastronomic association perpetuating the heritage of Auguste Escoffier in Provence Méditerranée",
     areaServed: "Provence-Alpes-Côte d'Azur",
     knowsAbout: [
       "French gastronomy",
       "Mediterranean cuisine",
       "Culinary training",
       "Gastronomic heritage",
+      "Auguste Escoffier",
+      "Culinary training",
+      "Gastronomic events",
+    ],
+    sameAs: [
+      "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=fr_FR",
+      "https://www.facebook.com/disciples.escoffier.provence.mediterranee/?locale=en_US",
+      "https://www.instagram.com/disciples_escoffier_prov_med/?hl=en",
+      "https://www.instagram.com/disciples_escoffier_prov_med/?hl=fr",
     ],
   },
 };
 ---
 
 <Layout
-  title="Home - Official Gastronomy Association"
-  description="Disciples d'Escoffier Provence Méditerranée: Official gastronomy association perpetuating Auguste Escoffier's culinary heritage. Professional culinary training, prestigious gastronomic events, French and Mediterranean culinary heritage transmission. Join the French gastronomy elite."
+  title="Home - Official Association"
+  description="Disciples d'Escoffier Provence Méditerranée: Official association perpetuating Auguste Escoffier's culinary heritage. Professional culinary training, prestigious gastronomic events, French and Mediterranean culinary heritage transmission. Join the French gastronomy elite."
   keywords="Disciples Escoffier, Auguste Escoffier legacy, French gastronomy excellence, authentic Mediterranean cuisine, professional culinary training, official gastronomy association, prestigious culinary events, French gastronomic heritage, French culinary arts, Escoffier culinary tradition, culinary school Marseille, chef culinary training, Provence Mediterranean gastronomy, French culinary excellence, master chef Auguste Escoffier, French cuisine tradition, prestige gastronomy, chef training, gastronomic events Marseille, Provence culinary association"
   jsonLd={jsonLd}
 >
