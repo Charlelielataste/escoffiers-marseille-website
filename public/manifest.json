@@ -1,0 +1,14 @@
+{
+  "name": "Disciples Escoffier Provence Méditerranée",
+  "short_name": "Disciples Escoffier",
+  "icons": [
+    {
+      "src": "/favicon-primary.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#b0675c",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
