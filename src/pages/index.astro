@@ -8,8 +8,8 @@ import HomeImage from "@/assets/hero/home.jpg";
 import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
-import InternationalBanner from "@/components/home/InternationalBanner.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
+import HomeMetaSection from "@/components/home/HomeMetaSection.astro";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -51,6 +51,9 @@ const jsonLd = {
     "Aix-en-Provence",
     "Nice",
     "Toulon",
+    "disciples escoffier international",
+    "international disciples escoffier",
+    "disciple escoffier",
   ],
   mainEntity: {
     "@type": "Organization",
@@ -81,7 +84,7 @@ const jsonLd = {
 <Layout
   title="Accueil - Association Officielle"
   description="Disciples d'Escoffier Provence Méditerranée : Association officielle perpétuant l'héritage culinaire d'Auguste Escoffier. Formation professionnelle, événements gastronomiques d'excellence, transmission du patrimoine culinaire français et méditerranéen."
-  keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence"
+  keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence, disciples escoffier international, international disciples escoffier, disciple escoffier"
   jsonLd={jsonLd}
 >
   <div class="relative">
@@ -125,7 +128,7 @@ const jsonLd = {
         </div>
       </div>
     </Hero>
-
+    <HomeMetaSection />
     <InstitutionSection />
     <VolunteeringSection />
     <HomeVideoSection />
@@ -137,9 +140,7 @@ const jsonLd = {
       </div>
     </section>
     <DynamicBannerPartners />
-    <InternationalBanner />
 
-    <!-- Contenu SEO riche pour surpasser la concurrence -->
     <section class="sr-only" aria-hidden="true">
       <h2>
         Disciples d'Escoffier Provence Méditerranée - Excellence Gastronomique

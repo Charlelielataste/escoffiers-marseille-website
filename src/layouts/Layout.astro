@@ -34,8 +34,7 @@ const fullTitle = title
   ? `${title} - Disciples Escoffier Provence Méditerranée`
   : "Disciples Escoffier Provence Méditerranée";
 
-const currentUrl = new URL(Astro.request.url);
-const canonicalUrl = canonical || currentUrl.href;
+const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site).href;
 
 const alternateUrls = multilingualUrls || {
   fr: getAlternateLanguageUrl(Astro.url.pathname, "fr"),
@@ -94,7 +93,7 @@ const alternateUrls = multilingualUrls || {
     />
     <meta
       name="twitter:image"
-      content={new URL("/logos/logo-escoffier-nav.png", currentUrl.origin).href}
+      content={new URL("/logos/logo-escoffier-nav.png", Astro.site).href}
     />
     <meta
       name="twitter:image:alt"
@@ -110,7 +109,7 @@ const alternateUrls = multilingualUrls || {
     />
     <meta
       property="og:image"
-      content={new URL("/logos/logo-escoffier-nav.png", currentUrl.origin).href}
+      content={new URL("/logos/logo-escoffier-nav.png", Astro.site).href}
     />
 
     <link rel="canonical" href={canonicalUrl} />
@@ -119,17 +118,17 @@ const alternateUrls = multilingualUrls || {
     <link
       rel="alternate"
       hreflang="fr"
-      href={new URL(alternateUrls.fr, currentUrl.origin).href}
+      href={new URL(alternateUrls.fr, Astro.site).href}
     />
     <link
       rel="alternate"
       hreflang="en"
-      href={new URL(alternateUrls.en, currentUrl.origin).href}
+      href={new URL(alternateUrls.en, Astro.site).href}
     />
     <link
       rel="alternate"
       hreflang="x-default"
-      href={new URL(alternateUrls.fr, currentUrl.origin).href}
+      href={new URL(alternateUrls.fr, Astro.site).href}
     />
 
     <!-- JSON-LD for the structure -->
@@ -145,7 +144,7 @@ const alternateUrls = multilingualUrls || {
 
     <ClientRouter />
   </head>
-  <body class="font-['Museo_Sans']" style="overscroll-behavior: none;">
+  <body class="font-['Museo_Sans']">
     {
       navbar && (
         <Navbar

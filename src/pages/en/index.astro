@@ -8,8 +8,8 @@ import HomeImage from "@/assets/hero/home.jpg";
 import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
-import InternationalBanner from "@/components/home/InternationalBanner.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
+import HomeMetaSection from "@/components/home/HomeMetaSection.astro";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@ const jsonLd = {
 <Layout
   title="Home - Official Association"
   description="Disciples d'Escoffier Provence Méditerranée: Official association perpetuating Auguste Escoffier's culinary heritage. Professional culinary training, prestigious gastronomic events, French and Mediterranean culinary heritage transmission. Join the French gastronomy elite."
-  keywords="Disciples Escoffier, Auguste Escoffier legacy, French gastronomy excellence, authentic Mediterranean cuisine, professional culinary training, official gastronomy association, prestigious culinary events, French gastronomic heritage, French culinary arts, Escoffier culinary tradition, culinary school Marseille, chef culinary training, Provence Mediterranean gastronomy, French culinary excellence, master chef Auguste Escoffier, French cuisine tradition, prestige gastronomy, chef training, gastronomic events Marseille, Provence culinary association"
+  keywords="Disciples Escoffier, Auguste Escoffier legacy, French gastronomy excellence, authentic Mediterranean cuisine, professional culinary training, official gastronomy association, prestigious culinary events, French gastronomic heritage, French culinary arts, Escoffier culinary tradition, culinary school Marseille, chef culinary training, Provence Mediterranean gastronomy, French culinary excellence, master chef Auguste Escoffier, French cuisine tradition, prestige gastronomy, chef training, gastronomic events Marseille, Provence culinary association, disciples escoffier international, international disciples escoffier, disciple escoffier"
   jsonLd={jsonLd}
 >
   <div class="relative">
@@ -125,7 +125,7 @@ const jsonLd = {
         </div>
       </div>
     </Hero>
-
+    <HomeMetaSection />
     <InstitutionSection />
     <VolunteeringSection />
     <HomeVideoSection />
@@ -137,9 +137,7 @@ const jsonLd = {
       </div>
     </section>
     <DynamicBannerPartners />
-    <InternationalBanner />
 
-    <!-- Rich SEO content to outrank competitors -->
     <section class="sr-only" aria-hidden="true">
       <h2>
         Disciples d'Escoffier Provence Méditerranée - Gastronomic Excellence

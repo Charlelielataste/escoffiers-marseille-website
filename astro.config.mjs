@@ -4,6 +4,7 @@ import path from "node:path"
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://disciplesescoffier-provence-mediterranee.org',
     prefetch: {
         prefetchAll: true,
     },
