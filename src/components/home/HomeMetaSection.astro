@@ -1,0 +1,38 @@
+---
+import { getTranslations, type Locale } from "@/lib/i18n";
+import homeImage from "@/assets/hero/members.jpg";
+const currentLocale = (Astro.currentLocale || "fr") as Locale;
+const t = getTranslations(currentLocale);
+---
+
+<section
+  class="relative py-10 bg-primary bg-cover bg-center bg-no-repeat"
+  style={`background-image: linear-gradient(rgba(176, 103, 92, 0.95), rgba(176, 103, 92, 0.9)), url('${homeImage.src}');`}
+>
+  <div class="max-w-6xl mx-auto px-4">
+    <h2
+      class="text-4xl md:text-5xl font-bold text-white text-bordered-light mb-6"
+    >
+      <strong>{t.home.HomeMetaSection.title}</strong>
+    </h2>
+    <p class="text-xl
+        mb-6
+        leading-relaxed font-bold text-white">
+      {t.home.HomeMetaSection.description}
+      <a
+        href={`https://disciplesescoffier.org/${currentLocale === "fr" ? "" : "en/"}`}
+        rel="noopener noreferrer"
+        aria-label={currentLocale === "fr"
+          ? "vers le site des Disciples d'Escoffier International"
+          : "to the site of the International Disciples d'Escoffier"}
+        target="_blank"
+        class="underline hover:text-secondary font-bold"
+      >
+        {t.home.HomeMetaSection.link}
+      </a>, {t.home.HomeMetaSection.secondparagraph}
+      <br />
+      <br />
+      {t.home.HomeMetaSection.nextParagraph}
+    </p>
+  </div>
+</section>
