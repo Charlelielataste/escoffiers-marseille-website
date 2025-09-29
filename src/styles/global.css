@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+/* Prevent overscroll bounce on all elements */
+html, body {
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+}
+
+/* Additional protection for webkit browsers */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #f9f5db;
@@ -34,6 +45,9 @@ body {
   background: var(--background);
   color: var(--text-primary);
   cursor: url('/icons/spoon-icon.svg'), auto;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 a:hover {
