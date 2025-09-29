@@ -24,6 +24,16 @@ export const translations = {
       allRightsReserved: "Tous droits réservés",
     },
     home: {
+      HomeMetaSection: {
+        title: "Une délégation Disciples d'Escoffier International",
+        description:
+          "Bienvenue sur le site officiel de la délégation Provence Méditerranée des",
+        link: "Disciples d'Escoffier International",
+        secondparagraph:
+          "une association fondée en 1954 qui réunit des passionnés de gastronomie du monde entier.",
+        nextParagraph:
+          "Une association officielle dédiée à la promotion de la gastronomie française et méditerranéenne, à l'héritage d'Auguste Escoffier et à l'excellence culinaire. Formation, événements gastronomiques et transmission du patrimoine culinaire français.",
+      },
       associationsSection: {
         title: "Au Service de la Gastronomie",
         description:
@@ -194,6 +204,16 @@ export const translations = {
       allRightsReserved: "All rights reserved",
     },
     home: {
+      HomeMetaSection: {
+        title: "A delegation of the International Disciples d'Escoffier",
+        description:
+          "Welcome to the official site of the Provence Méditerranée delegation of",
+        link: "Disciples d'Escoffier International",
+        secondparagraph:
+          "an association founded in 1954 that brings together enthusiasts of gastronomy from all over the world.",
+        nextParagraph:
+          "An official association dedicated to the promotion of French and Mediterranean gastronomy, the culinary heritage of Auguste Escoffier and culinary excellence. Training, gastronomic events and transmission of the French culinary heritage.",
+      },
       associationsSection: {
         title: "At the Service of Gastronomy",
         description:
