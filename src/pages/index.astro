@@ -4,12 +4,12 @@ import Hero from "@/components/Hero.astro";
 import InstitutionSection from "@/components/home/InstitutionSection.astro";
 import VolunteeringSection from "@/components/home/VolunteeringSection.astro";
 import AssociationsSection from "@/components/home/AssociationsSection.astro";
+import homeImage from "public/logos/logo-escoffier-nav.png";
 import HomeImage from "@/assets/hero/home.jpg";
 import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
-import HomeMetaSection from "@/components/home/HomeMetaSection.astro";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -128,7 +128,38 @@ const jsonLd = {
         </div>
       </div>
     </Hero>
-    <HomeMetaSection />
+    <section
+      class="relative py-10 bg-cover bg-center bg-no-repeat"
+      style={`background-image: linear-gradient(rgba(176, 103, 92, 0.9), rgba(176, 103, 92, 0.9)), url('${homeImage.src}');`}
+    >
+      <div class="max-w-6xl mx-auto px-4 flex flex-col">
+        <p class="text-xl mb-6 leading-relaxed font-bold text-white">
+          Bienvenue sur le site officiel des Disciples d'Escoffier Provence
+          Méditerranée, une association officielle dédiée à la promotion de la
+          gastronomie française et méditerranéenne, à l'héritage d'Auguste
+          Escoffier et à l'excellence culinaire. Formation, événements
+          gastronomiques et transmission du patrimoine culinaire français.
+          <br />
+          <br />
+          Nous somme une délégation de l'association des
+          <a
+            href={`https://disciplesescoffier.org/`}
+            rel="noopener noreferrer"
+            aria-label="vers le site des Disciples d'Escoffier International"
+            target="_blank"
+            class="underline hover:text-secondary font-bold"
+          >
+            Disciples d'Escoffier International
+          </a>
+          , une association fondée en 1954 qui réunit des passionnés de gastronomie
+          du monde entier, comptant plus de 10000 membres et 45 délégations.
+        </p>
+        <cite class="font-bold text-white self-end mt-3"
+          >- Alain Laporte, Président des Disciples d'Escoffier Provence
+          Méditerranée</cite
+        >
+      </div>
+    </section>
     <InstitutionSection />
     <VolunteeringSection />
     <HomeVideoSection />

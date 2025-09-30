@@ -62,8 +62,6 @@ label:hover {
   cursor: url('/icons/fork-icon.svg'), auto;
 }
 
-/* Curseur not-allowed pour les éléments désactivés */
-/* Curseur rolling pour les zones de texte */
 input[type="text"],
 input[type="email"],
 input[type="password"],

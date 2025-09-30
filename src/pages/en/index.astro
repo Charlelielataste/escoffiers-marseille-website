@@ -9,7 +9,7 @@ import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
-import HomeMetaSection from "@/components/home/HomeMetaSection.astro";
+import homeImage from "public/logos/logo-escoffier-nav.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -125,7 +125,38 @@ const jsonLd = {
         </div>
       </div>
     </Hero>
-    <HomeMetaSection />
+    <section
+      class="relative py-10 bg-cover bg-center bg-no-repeat"
+      style={`background-image: linear-gradient(rgba(176, 103, 92, 0.9), rgba(176, 103, 92, 0.9)), url('${homeImage.src}');`}
+    >
+      <div class="max-w-6xl mx-auto px-4 flex flex-col">
+        <p class="text-xl mb-6 leading-relaxed font-bold text-white">
+          Welcome to the official site of Disciples d'Escoffier Provence
+          Méditerranée, an official association dedicated to the promotion of
+          French and Mediterranean gastronomy, the culinary heritage of Auguste
+          Escoffier and culinary excellence. Training, gastronomic events and
+          transmission of the French culinary heritage.
+          <br />
+          <br />
+          We are a delegation of the association of
+          <a
+            href={`https://disciplesescoffier.org/en/`}
+            rel="noopener noreferrer"
+            aria-label="to the site of the International Disciples d'Escoffier"
+            target="_blank"
+            class="underline hover:text-secondary font-bold"
+          >
+            Disciples d'Escoffier International
+          </a>
+          , an association founded in 1954 that brings together enthusiasts of gastronomy
+          from all over the world, counting more than 10000 members and 45 delegations.
+        </p>
+        <cite class="font-bold text-white self-end mt-3"
+          >- Alain Laporte, President of Disciples d'Escoffier Provence
+          Méditerranée</cite
+        >
+      </div>
+    </section>
     <InstitutionSection />
     <VolunteeringSection />
     <HomeVideoSection />
