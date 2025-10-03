@@ -188,6 +188,16 @@ body.custom-cursor-disabled select:disabled {
   transform: scale(1.2);
 }
 
+.bg-desktop-only {
+  background-image: none;
+}
+
+@media (min-width: 768px) {
+  .bg-desktop-only {
+    background-image: var(--bg-image);
+  }
+}
+
 @keyframes partners-scroll {
   0% {
     transform: translateX(0%);
@@ -205,3 +215,4 @@ body.custom-cursor-disabled select:disabled {
     transform: rotate(360deg);
   }
 }
+

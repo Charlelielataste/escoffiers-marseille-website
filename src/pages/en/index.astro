@@ -9,12 +9,12 @@ import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
 import NextEventsSection from "@/components/home/NextEventsSection.astro";
 import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro";
-import homeImage from "public/logos/logo-escoffier-nav.png";
+import BannerCoverImage from "public/logos/logo-escoffier-nav.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Disciples d'Escoffier Provence Méditerranée - Home",
+  name: "Home",
   url: "https://disciplesescoffier-provence-mediterranee.org",
   logo: "https://disciplesescoffier-provence-mediterranee.org/logos/logo-escoffier-nav.png",
   description:
@@ -51,6 +51,11 @@ const jsonLd = {
     "Aix-en-Provence",
     "Nice",
     "Toulon",
+    "disciples escoffier international",
+    "international disciples escoffier",
+    "disciple escoffier",
+    "disciples d'escoffier",
+    "disiples escoffier",
   ],
   mainEntity: {
     "@type": "Organization",
@@ -81,7 +86,7 @@ const jsonLd = {
 <Layout
   title="Home - Official Association"
   description="Disciples d'Escoffier Provence Méditerranée: Official association perpetuating Auguste Escoffier's culinary heritage. Professional culinary training, prestigious gastronomic events, French and Mediterranean culinary heritage transmission. Join the French gastronomy elite."
-  keywords="Disciples Escoffier, Auguste Escoffier legacy, French gastronomy excellence, authentic Mediterranean cuisine, professional culinary training, official gastronomy association, prestigious culinary events, French gastronomic heritage, French culinary arts, Escoffier culinary tradition, culinary school Marseille, chef culinary training, Provence Mediterranean gastronomy, French culinary excellence, master chef Auguste Escoffier, French cuisine tradition, prestige gastronomy, chef training, gastronomic events Marseille, Provence culinary association, disciples escoffier international, international disciples escoffier, disciple escoffier"
+  keywords="Disciples Escoffier, Auguste Escoffier legacy, French gastronomy excellence, authentic Mediterranean cuisine, professional culinary training, official gastronomy association, prestigious culinary events, French gastronomic heritage, French culinary arts, Escoffier culinary tradition, culinary school Marseille, chef culinary training, Provence Mediterranean gastronomy, French culinary excellence, master chef Auguste Escoffier, French cuisine tradition, prestige gastronomy, chef training, gastronomic events Marseille, Provence culinary association, disciples escoffier international, international disciples escoffier, disciple escoffier, disciple escoffier, disciples d'escoffier, disiples escoffier"
   jsonLd={jsonLd}
 >
   <div class="relative">
@@ -126,8 +131,8 @@ const jsonLd = {
       </div>
     </Hero>
     <section
-      class="relative py-10 bg-cover bg-center bg-no-repeat"
-      style={`background-image: linear-gradient(rgba(176, 103, 92, 0.9), rgba(176, 103, 92, 0.9)), url('${homeImage.src}');`}
+      class="relative py-10 bg-cover bg-center bg-no-repeat bg-primary md:bg-primary/85 bg-desktop-only"
+      style={`--bg-image: url('${BannerCoverImage.src}');`}
     >
       <div class="max-w-6xl mx-auto px-4 flex flex-col">
         <p class="text-xl mb-6 leading-relaxed font-bold text-white">

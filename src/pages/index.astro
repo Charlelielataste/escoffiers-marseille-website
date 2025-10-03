@@ -4,7 +4,7 @@ import Hero from "@/components/Hero.astro";
 import InstitutionSection from "@/components/home/InstitutionSection.astro";
 import VolunteeringSection from "@/components/home/VolunteeringSection.astro";
 import AssociationsSection from "@/components/home/AssociationsSection.astro";
-import homeImage from "public/logos/logo-escoffier-nav.png";
+import BannerCoverImage from "public/logos/logo-escoffier-nav.png";
 import HomeImage from "@/assets/hero/home.jpg";
 import HomeVideoSection from "@/components/home/HomeVideoSection.astro";
 import LastActionsSection from "@/components/home/LastActionsSection.astro";
@@ -14,7 +14,7 @@ import DynamicBannerPartners from "@/components/home/DynamicBannerPartners.astro
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Disciples d'Escoffier Provence Méditerranée - Accueil",
+  name: "Accueil",
   url: "https://disciplesescoffier-provence-mediterranee.org",
   logo: "https://disciplesescoffier-provence-mediterranee.org/logos/logo-escoffier-nav.png",
   description:
@@ -54,6 +54,8 @@ const jsonLd = {
     "disciples escoffier international",
     "international disciples escoffier",
     "disciple escoffier",
+    "disciples d'escoffier",
+    "disiples escoffier",
   ],
   mainEntity: {
     "@type": "Organization",
@@ -84,7 +86,7 @@ const jsonLd = {
 <Layout
   title="Accueil - Association Officielle"
   description="Disciples d'Escoffier Provence Méditerranée : Association officielle perpétuant l'héritage culinaire d'Auguste Escoffier. Formation professionnelle, événements gastronomiques d'excellence, transmission du patrimoine culinaire français et méditerranéen."
-  keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence, disciples escoffier international, international disciples escoffier, disciple escoffier"
+  keywords="Disciples Escoffier, Auguste Escoffier héritage, gastronomie française excellence, cuisine méditerranéenne authentique, formation culinaire professionnelle, association gastronomique officielle, événements culinaires prestige, patrimoine gastronomique français, art culinaire français, tradition culinaire Escoffier, école de cuisine Marseille, chef culinaire formation, gastronomie Provence Méditerranée, excellence culinaire française, maître cuisinier Auguste Escoffier, cuisine française tradition, gastronomie de prestige, formation chef cuisinier, événements gastronomiques Marseille, association culinaire Provence, disciples escoffier international, international disciples escoffier, disciple escoffier, disciples d'escoffier, disiples escoffier"
   jsonLd={jsonLd}
 >
   <div class="relative">
@@ -129,8 +131,8 @@ const jsonLd = {
       </div>
     </Hero>
     <section
-      class="relative py-10 bg-cover bg-center bg-no-repeat"
-      style={`background-image: linear-gradient(rgba(176, 103, 92, 0.9), rgba(176, 103, 92, 0.9)), url('${homeImage.src}');`}
+      class="relative py-10 bg-cover bg-center bg-no-repeat bg-primary md:bg-primary/85 bg-desktop-only"
+      style={`--bg-image: url('${BannerCoverImage.src}');`}
     >
       <div class="max-w-6xl mx-auto px-4 flex flex-col">
         <p class="text-xl mb-6 leading-relaxed font-bold text-white">
