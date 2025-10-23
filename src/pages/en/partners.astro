@@ -3,21 +3,12 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import PartnersImage from "@/assets/hero/partners.jpg";
 import PartnersSection from "@/components/partners/PartnersSection.astro";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Our Partners",
-  url: "https://disciplesescoffier-provence-mediterranee.org/en/partners/",
-  description: "Discover the companies that support us in our actions",
-};
 ---
 
 <Layout
   title="Our Partners"
   description="Discover the companies that support us in our actions"
   keywords="Partners, companies, company, support, support us, support us in our actions, provence, mediterranee, mediteranee, mediterranee, méditerranée"
-  jsonLd={jsonLd}
 >
   <div class="relative">
     <Hero picture={PartnersImage} pictureAlt="Our Partners">

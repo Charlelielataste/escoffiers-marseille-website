@@ -3,22 +3,12 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import ContactForm from "@/components/contact/ContactForm.astro";
 import ContactImage from "@/assets/hero/contact.jpg";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Nous Rejoindre",
-  url: "https://disciplesescoffier-provence-mediterranee.org/nous-rejoindre/",
-  description:
-    "Passionné(e) de cuisine ou des métiers de la salle et désireux(se) de perpétuer l'héritage d'Auguste Escoffier ? Contactez-nous pour découvrir comment devenir disciple et servir la gastronomie",
-};
 ---
 
 <Layout
   title="Nous Rejoindre"
   description="Passionné(e) de cuisine ou des métiers de la salle et désireux(se) de perpétuer l'héritage d'Auguste Escoffier ? Contactez-nous pour découvrir comment  devenir disciple et servir la gastronomie"
   keywords="Nous Rejoindre, contact, contactez-nous, devenir disciple, servir la gastronomier"
-  jsonLd={jsonLd}
 >
   <div class="relative">
     <Hero picture={ContactImage} pictureAlt="Nous Rejoindre">

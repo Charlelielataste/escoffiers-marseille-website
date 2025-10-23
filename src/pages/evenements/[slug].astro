@@ -24,23 +24,12 @@ const multilingualSlugs = {
   fr: `/evenements/${event.slug.fr.current}/`,
   en: `/en/events/${event.slug.en.current}/`,
 };
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Événement",
-  url: `https://disciplesescoffier-provence-mediterranee.org/evenements/${event.slug.fr.current}/`,
-  description: event.intro.fr,
-  keywords:
-    "provence, mediterranee, mediteranee, mediterranee, Disciples Escoffier, disciples, escoffier, escoffier, mediterranee, mediterranee, méditerranée, événements, actions, évènements culinaires, actions, activities, charité, don, donner",
-};
 ---
 
 <Layout
   title={event.title.fr}
   description={event.intro.fr}
   keywords="provence, mediterranee, mediteranee, Disciples Escoffier, disciples, escoffier, escoffier, mediterranee, mediterranee, méditerranée, événements, actions, évènements culinaires, actions, activities, charité, don, donner"
-  jsonLd={jsonLd}
   multilingualUrls={multilingualSlugs}
 >
   <EventContent event={event} />

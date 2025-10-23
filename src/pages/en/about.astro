@@ -5,22 +5,12 @@ import Layout from "@/layouts/Layout.astro";
 import ValuesSection from "@/components/about/ValuesSection.astro";
 import TeamSection from "@/components/about/TeamSection.astro";
 import AboutImage from "@/assets/hero/about.jpg";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "About",
-  url: "https://disciplesescoffier-provence-mediterranee.org/en/about/",
-  description:
-    "Disciples of Escoffier, we perpetuate the excellence of French cuisine through generations. Discover our institution and our values.",
-};
 ---
 
 <Layout
   title="About"
   description="Disciples of Escoffier, we perpetuate the excellence of French cuisine through generations. Discover our institution and our values."
   keywords="About, Disciples d'Escoffier, Provence Méditerranée, institution, Auguste Escoffier, Escoffier, legacy, disciples, gastronomy, provence, mediterranee, mediteranee, mediterranee, méditerranée, disciple escoffier, disciples d'escoffier, disiples escoffier"
-  jsonLd={jsonLd}
 >
   <div class="relative">
     <Hero picture={AboutImage} pictureAlt="About">

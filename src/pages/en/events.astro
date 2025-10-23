@@ -3,21 +3,12 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import EventsImage from "@/assets/hero/events.jpg";
 import EventSection from "@/components/events/EventSection.astro";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Events",
-  url: "https://disciplesescoffier-provence-mediterranee.org/en/events/",
-  description: "Discover our latest actions and upcoming culinary events",
-};
 ---
 
 <Layout
   title="Events"
   description="Discover our latest actions and upcoming culinary events"
   keywords="Events, actions, culinary events, actions, activities, charity, donation, donate, provence, mediterranee, mediteranee, mediterranee, méditerranée, disciple escoffier, disciples d'escoffier, disiples escoffier"
-  jsonLd={jsonLd}
 >
   <div class="relative">
     <Hero picture={EventsImage} pictureAlt="Events">

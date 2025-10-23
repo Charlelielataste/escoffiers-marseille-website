@@ -3,15 +3,6 @@ import Hero from "@/components/Hero.astro";
 import Layout from "@/layouts/Layout.astro";
 import ContactForm from "@/components/contact/ContactForm.astro";
 import ContactImage from "@/assets/hero/contact.jpg";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Join Us",
-  url: "https://disciplesescoffier-provence-mediterranee.org/en/join-us/",
-  description:
-    "Passionate about cuisine or the professions of the kitchen and want to perpetuate the legacy of Auguste Escoffier ? Contact us to discover how to become a disciple and serve gastronomy",
-};
 ---
 
 <Layout
@@ -19,8 +10,6 @@ const jsonLd = {
   description="Passionate about cuisine or the professions of the kitchen and want to perpetuate the legacy of Auguste Escoffier ? Contact us to discover how to become a disciple and serve gastronomy"
   keywords="Join Us, Provence Méditerranée, contact, contactez-nous, become disciple, serve gastronomy"
 >
-  jsonLd={jsonLd}
-  >
   <div class="relative">
     <Hero picture={ContactImage} pictureAlt="Join Us">
       <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
