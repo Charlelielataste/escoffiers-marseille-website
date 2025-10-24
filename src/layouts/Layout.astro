@@ -100,16 +100,24 @@ const alternateUrls = multilingualUrls || {
       content="Disciples d'Escoffier Provence Méditerranée"
     />
     <meta
-      name="twitter:domain"
-      content="disciplesescoffier-provence-mediterranee.org"
-    />
-    <meta
       property="og:locale"
       content={currentLocale === "fr" ? "fr_FR" : "en_US"}
     />
     <meta
       property="og:image"
       content={new URL("/logos/logo-escoffier-nav.png", Astro.site).href}
+    />
+    <meta
+      name="application-name"
+      content="Disciples d'Escoffier Provence Méditerranée"
+    />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="Disciples d'Escoffier Provence Méditerranée"
+    />
+    <meta
+      name="msapplication-TileTitle"
+      content="Disciples d'Escoffier Provence Méditerranée"
     />
 
     <link rel="canonical" href={canonicalUrl} />
