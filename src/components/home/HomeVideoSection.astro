@@ -16,13 +16,14 @@ if (!settings?.lastEventVideo.video) {
   <div class="max-w-6xl mx-auto px-4 flex justify-center items-center">
     {
       settings.lastEventVideo.orientation === "portrait" && (
-        <div class="w-full h-[680px] relative rounded-lg hidden sm:block">
+        <div class="w-full h-[680px] relative rounded-lg hidden md:block">
           <video
             src={fileUrl(settings.lastEventVideo.video)}
             aria-label={
               currentLocale === "fr" ? "Vidéo de fond" : "Background video"
             }
             class="w-full h-[680px] object-cover rounded-lg shadow-lg blur-xs opacity-60"
+            data-autoplay-mobile="false"
             autoplay
             muted
             loop
@@ -34,6 +35,7 @@ if (!settings?.lastEventVideo.video) {
                 currentLocale === "fr" ? "Vidéo de l'événement" : "Event video"
               }
               class="w-full h-[680px] object-cover video-responsive"
+              data-autoplay-mobile="false"
               autoplay
               muted
               controlslist="nodownload"
@@ -48,7 +50,7 @@ if (!settings?.lastEventVideo.video) {
       class={cn(
         "relative h-[680px]",
         settings.lastEventVideo.orientation === "portrait"
-          ? "w-96 block sm:hidden"
+          ? "w-96 block md:hidden"
           : "w-full"
       )}
     >
@@ -58,6 +60,7 @@ if (!settings?.lastEventVideo.video) {
           ? "Vidéo de l'événement"
           : "Event video"}
         class="w-full h-full object-cover rounded-lg shadow-lg video-responsive"
+        data-autoplay-mobile="false"
         autoplay
         muted
         loop
@@ -82,3 +85,37 @@ if (!settings?.lastEventVideo.video) {
     object-fit: contain !important;
   }
 </style>
+
+<script>
+  function disableAutoplayOnMobile() {
+    if (typeof window === "undefined") return;
+
+    const isMobile = window.innerWidth < 768;
+    const videos = document.querySelectorAll<HTMLVideoElement>(
+      'video[data-autoplay-mobile="false"]'
+    );
+
+    videos.forEach((video) => {
+      if (isMobile) {
+        video.removeAttribute("autoplay");
+        video.pause();
+      } else {
+        video.setAttribute("autoplay", "");
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", disableAutoplayOnMobile);
+  } else {
+    disableAutoplayOnMobile();
+  }
+
+  document.addEventListener("astro:page-load", disableAutoplayOnMobile);
+
+  let resizeTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(disableAutoplayOnMobile, 100);
+  });
+</script>
