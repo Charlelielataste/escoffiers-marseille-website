@@ -133,7 +133,8 @@ export async function getAllMembers(): Promise<Member[]> {
       description,
       workplace,
       email,
-      isHonored
+      isHonored,
+      link
     }
   `);
 }
