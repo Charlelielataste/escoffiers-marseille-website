@@ -60,23 +60,28 @@ const t = getTranslations(locale);
     {description}
   </p>
   {
-    workplace && (
-      <a
-        href={
-          link ??
-          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(workplace)}`
-        }
-        target="_blank"
-        aria-label={workplace}
-        rel="noopener noreferrer"
-        class="flex items-center gap-x-2"
-      >
-        <MapIcon size="16" class="text-red-500" />
-        <span class="text-sm hover:text-secondary/80 underline">
-          {workplace}
-        </span>
-      </a>
-    )
+    workplace &&
+      (link ? (
+        <a
+          href={link}
+          target="_blank"
+          aria-label={workplace}
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-2"
+        >
+          <MapIcon size="16" class="text-red-500" />
+          <span class="text-sm hover:text-secondary/80 underline">
+            {workplace}
+          </span>
+        </a>
+      ) : (
+        <div class="flex items-center gap-x-2">
+          <MapIcon size="16" class="text-red-500" />
+          <span class="text-sm hover:text-secondary/80 underline">
+            {workplace}
+          </span>
+        </div>
+      ))
   }
   {
     email && (
