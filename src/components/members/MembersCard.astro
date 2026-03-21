@@ -12,6 +12,7 @@ export interface Props {
   description: string;
   email?: string;
   workplace?: string;
+  link?: string;
   size?: string;
   locale: Locale;
 }
@@ -24,6 +25,7 @@ const {
   description,
   email,
   workplace,
+  link,
   size = "112px",
   locale,
 } = Astro.props;
@@ -60,9 +62,12 @@ const t = getTranslations(locale);
   {
     workplace && (
       <a
-        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(workplace)}`}
+        href={
+          link ??
+          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(workplace)}`
+        }
         target="_blank"
-        aria-label={`${workplace} Google Maps`}
+        aria-label={workplace}
         rel="noopener noreferrer"
         class="flex items-center gap-x-2"
       >

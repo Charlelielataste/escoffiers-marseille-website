@@ -104,6 +104,7 @@ export interface Member {
     en: string;
   };
   workplace?: string;
+  link?: string;
   email?: string;
   isHonored: boolean;
 }
