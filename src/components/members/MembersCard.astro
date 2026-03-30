@@ -2,6 +2,7 @@
 import MailIcon from "@/components/icons/MailIcon.astro";
 import MapIcon from "@/components/icons/MapIcon.astro";
 import { getTranslations, type Locale } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 
 export interface Props {
@@ -86,7 +87,7 @@ const t = getTranslations(locale);
       <a
         href={`mailto:${email}`}
         aria-label={`${t.members.contact} ${email}`}
-        class="mt-2 flex items-center gap-x-2"
+        class={cn("flex items-center gap-x-2", workplace ? "mt-2" : "")}
       >
         <MailIcon size="16" class="text-primary shrink-0" />
         <span class="hover:text-secondary/80 hover:underline mt-0.5 text-sm">
