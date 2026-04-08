@@ -5,6 +5,8 @@ import { PortableText } from "astro-portabletext";
 import ArrowLeft from "@/components/icons/ArrowLeft.astro";
 import { getTranslations, type Locale } from "@/lib/i18n";
 import { Image } from "astro:assets";
+import SanityImage from "@/components/portabletext/SanityImage.astro";
+import ExternalLink from "@/components/portabletext/ExternalLink.astro";
 export interface Props {
   article: Article;
 }
@@ -74,8 +76,11 @@ const articlePath =
   </div>
 
   <div
-    class="prose prose-lg prose-a:text-blue-500 prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-h3:text-primary prose-black max-w-none bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
+    class="prose prose-lg prose-a:text-primary-accessible prose-p:font-medium prose-a:font-bold prose-h1:text-primary prose-h1:font-bold prose-h2:text-primary prose-h3:text-primary prose-black max-w-none bg-white p-5 lg:p-8 rounded-2xl shadow-sm border border-gray-100"
   >
-    <PortableText value={article.body[currentLocale]} />
+    <PortableText
+      value={article.body[currentLocale]}
+      components={{ type: { image: SanityImage }, mark: { link: ExternalLink } }}
+    />
   </div>
 </article>

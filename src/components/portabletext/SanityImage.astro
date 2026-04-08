@@ -1,0 +1,21 @@
+---
+import { urlFor } from "@/lib/sanity";
+import { Image } from "astro:assets";
+
+const { node } = Astro.props;
+const { asset, alt, caption } = node;
+
+const src = urlFor(asset).width(1200).url();
+---
+
+<figure class="my-8">
+  <Image
+    src={src}
+    alt={alt || ""}
+    class="w-full rounded-xl shadow-md"
+    width={1200}
+    height={675}
+    loading="lazy"
+  />
+  {caption && <figcaption class="text-center text-sm text-gray-500 mt-3">{caption}</figcaption>}
+</figure>
