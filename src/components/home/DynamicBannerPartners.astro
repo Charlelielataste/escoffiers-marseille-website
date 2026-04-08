@@ -1,11 +1,11 @@
 ---
-import { getAllPartners } from "@/lib/sanity-queries";
+import { getHonoredPartners } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import { Image } from "astro:assets";
 import { getTranslations, type Locale } from "@/lib/i18n";
 
 const currentLocale = (Astro.currentLocale || "fr") as Locale;
-const partners = await getAllPartners();
+const partners = await getHonoredPartners();
 
 if (partners.length === 0) {
   return null;

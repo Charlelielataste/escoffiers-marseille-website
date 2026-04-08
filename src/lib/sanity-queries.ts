@@ -146,6 +146,20 @@ export async function getAllPartners(): Promise<Partner[]> {
       name,
       image,
       description,
+      isHonored,
+      link,
+    }
+  `);
+}
+
+export async function getHonoredPartners(): Promise<Partner[]> {
+  return await client.fetch(`
+    *[_type == "partner" && isHonored == true] | order(name asc) {
+      _id,
+      name,
+      image,
+      description,
+      isHonored,
       link,
     }
   `);
