@@ -29,27 +29,29 @@ const t = getTranslations(currentLocale);
                 <Image
                   src={urlFor(partner.image).width(200).fit("max").url()}
                   alt={partner.name}
-                  width={100}
-                  height={100}
-                  class="object-contain shadow-xl"
+                  width={200}
+                  height={200}
+                  class="object-contain rounded-lg"
                 />
 
                 <div class="flex flex-col items-start gap-3 w-full">
-                  <h3 class="text-3xl w-full md:text-left text-center font-bold text-primary">
+                  <h3 class="text-3xl w-full md:text-left text-center uppercase font-bold text-primary">
                     {partner.name}
                   </h3>
                   <p class="text-left text-gray-500">
                     {partner.description[currentLocale]}
                   </p>
-                  <a
-                    href={partner.link}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
-                    class="text-primary-accessible font-bold hover:text-secondary/80 transition-colors duration-300 hover:underline"
-                  >
-                    {t.partners.seeTheirSite}
-                  </a>
+                  {partner.link && (
+                    <a
+                      href={partner.link}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label={`${partner.name} ${currentLocale === "fr" ? "site internet" : "website"}`}
+                      class="text-primary-accessible font-bold hover:text-secondary/80 transition-colors duration-300 hover:underline"
+                    >
+                      {t.partners.seeTheirSite}
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
