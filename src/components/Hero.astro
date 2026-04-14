@@ -43,7 +43,7 @@ const placeholder = await getImage({
     )}
     role="img"
     aria-label={pictureAlt}
-    style={`background-image: url('${placeholder.src}'); filter: blur(10px); will-change: opacity; transition: opacity 1.5s ease-out;`}
+    style={`background-image: url('${placeholder.src}'); filter: blur(10px); transition: opacity 1.5s ease-out;`}
     id="hero-placeholder"
   >
   </div>
@@ -57,9 +57,8 @@ const placeholder = await getImage({
       "absolute md:fixed w-full h-full object-cover opacity-0 top-[60px] sm:top-[71px]",
       is_404 && "top-0 sm:top-0 h-full",
     )}
-    style="transition: opacity 1.2s ease-in-out; will-change: opacity;"
+    style="transition: opacity 1.2s ease-in-out;"
     id="hero-image"
-    onload="window.heroImageLoaded && window.heroImageLoaded()"
   />
 
   <div
@@ -99,6 +98,9 @@ const placeholder = await getImage({
     let ticking = false;
 
     function handleImageLoaded() {
+      heroImage.style.willChange = "opacity";
+      if (heroPlaceholder) heroPlaceholder.style.willChange = "opacity";
+
       setTimeout(() => {
         heroImage.style.opacity = "1";
 
@@ -108,9 +110,18 @@ const placeholder = await getImage({
           }
         }, 800);
       }, 5);
+
+      heroImage.addEventListener(
+        "transitionend",
+        () => {
+          heroImage.style.willChange = "";
+          if (heroPlaceholder) heroPlaceholder.style.willChange = "";
+        },
+        { once: true },
+      );
     }
 
-    (window as any).heroImageLoaded = handleImageLoaded;
+    heroImage.addEventListener("load", handleImageLoaded);
 
     if (heroImage.complete && heroImage.naturalHeight !== 0) {
       handleImageLoaded();
@@ -120,13 +131,13 @@ const placeholder = await getImage({
       let mobileTicking = false;
 
       function updateMobileParallax() {
-        const scrolled = window.pageYOffset;
+        const scrolled = window.scrollY;
         const maxScroll = 600;
-        const translateY = Math.min(scrolled * 0.5, maxScroll * 0.5);
+        const translateY = Math.min(scrolled * 0.4, maxScroll * 0.4);
 
-        heroImage.style.transform = `translateY(${translateY.toFixed(1)}px)`;
+        heroImage.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
         if (heroPlaceholder) {
-          heroPlaceholder.style.transform = `translateY(${translateY.toFixed(1)}px)`;
+          heroPlaceholder.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
         }
         mobileTicking = false;
       }
@@ -138,13 +149,31 @@ const placeholder = await getImage({
         }
       }
 
-      window.addEventListener("scroll", requestMobileTick, { passive: true });
+      const heroSection = heroImage.closest("section");
+      if (heroSection) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                window.addEventListener("scroll", requestMobileTick, {
+                  passive: true,
+                });
+              } else {
+                window.removeEventListener("scroll", requestMobileTick);
+              }
+            });
+          },
+          { rootMargin: "100px" },
+        );
+        observer.observe(heroSection);
+      }
+
       updateMobileParallax();
       return;
     }
 
     function updateImageScale() {
-      const scrolled = window.pageYOffset;
+      const scrolled = window.scrollY;
       const maxScrollForZoom = window.innerHeight * 2;
       const progress = Math.min(scrolled / maxScrollForZoom, 1);
 
@@ -173,8 +202,6 @@ const placeholder = await getImage({
         ticking = true;
       }
     }
-
-    window.addEventListener("scroll", requestTick, { passive: true });
 
     const heroSection = heroImage.closest("section");
     if (heroSection) {
