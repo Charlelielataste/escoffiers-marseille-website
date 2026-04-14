@@ -138,17 +138,12 @@ body.custom-cursor-disabled select:disabled {
   overflow: hidden;
 }
 
-.partners-marquee-container {
-  width: 100%;
-  transform: none;
-}
-
 .partners-marquee-container:hover .partners-marquee {
-  animation-play-state: var(--pause-on-hover);
+  animation-play-state: paused;
 }
 
 .partners-marquee-container:active .partners-marquee {
-  animation-play-state: var(--pause-on-click);
+  animation-play-state: paused;
 }
 
 .partners-overlay::before,
@@ -169,11 +164,9 @@ body.custom-cursor-disabled select:disabled {
 
 .partners-marquee {
   flex: 0 0 auto;
-  animation: partners-scroll var(--duration) linear var(--delay)
-    var(--iteration-count);
-  animation-play-state: var(--play);
-  animation-delay: var(--delay);
-  animation-direction: var(--direction);
+  animation: partners-scroll var(--duration) linear 0s infinite;
+  animation-play-state: running;
+  animation-direction: normal;
 }
 
 .animate-spin-slow {
