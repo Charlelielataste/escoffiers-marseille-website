@@ -13,6 +13,13 @@ if (partners.length === 0) {
 
 const partnersPath = currentLocale === "fr" ? `/partenaires/` : `/en/partners/`;
 const t = getTranslations(currentLocale);
+
+const partnerItems = partners.map((partner) => ({
+  href: `${partnersPath}#${partner.name}`,
+  ariaLabel: `${partner.name} ${currentLocale === "fr" ? "vers la page partenaire" : "to the partner page"}`,
+  imgSrc: urlFor(partner.image).width(120).fit("max").url(),
+  name: partner.name,
+}));
 ---
 
 <section class="relative py-7 bg-background">
@@ -20,47 +27,28 @@ const t = getTranslations(currentLocale);
     <h3 class="text-center text-2xl font-semibold text-primary mb-7">
       {t.home.partnersBanner}
     </h3>
-    <div
-      class="partners-marquee-container overflow-hidden flex flex-row relative"
-      style="
-              --pause-on-hover: paused;
-              --pause-on-click: paused;
-              --width: 100%;
-              --transform: none;
-            "
-    >
-      <!-- Gradient transition -->
+    <div class="partners-marquee-container overflow-hidden flex flex-row relative">
       <div
         class="partners-overlay absolute h-full w-full before:pointer-events-none before:absolute before:top-0 before:right-0 before:z-[2] before:w-[20%] before:rotate-180 before:touch-none after:pointer-events-none after:absolute after:top-0 after:left-0 after:z-[2] after:w-[20%] after:touch-none"
       >
       </div>
 
-      <!-- First marquee -->
-      <div
-        class="partners-marquee z-[1] flex flex-row"
-        style="
-                --play: running;
-                --direction: normal;
-                --delay: 0s;
-                --iteration-count: infinite;
-                --min-width: 100%;
-              "
-      >
-        <div
-          class="partners-initial-child-container flex flex-row items-center"
-        >
+      <div class="partners-marquee z-[1] flex flex-row">
+        <div class="partners-initial-child-container flex flex-row items-center">
           {
-            partners.map((partner) => (
+            partnerItems.map((item) => (
               <a
-                href={`${partnersPath}#${partner.name}`}
-                aria-label={`${partner.name} ${currentLocale === "fr" ? "vers la page partenaire" : "to the partner page"}`}
-                class="sm:mx-8 mx-4 w-[120px] h-24 flex items-center justify-center py-2"
+                href={item.href}
+                aria-label={item.ariaLabel}
+                class="sm:mx-8 mx-4 w-[120px] h-20 flex items-center justify-center py-2"
               >
                 <Image
-                  src={urlFor(partner.image).width(200).fit("max").url()}
-                  alt={partner.name}
-                  width={200}
-                  height={200}
+                  src={item.imgSrc}
+                  alt={item.name}
+                  width={120}
+                  height={64}
+                  loading="lazy"
+                  decoding="async"
                   class="pointer-events-none max-h-16 w-auto object-contain opacity-60 select-none hover:opacity-80 transition-opacity duration-300"
                 />
               </a>
@@ -69,32 +57,23 @@ const t = getTranslations(currentLocale);
         </div>
       </div>
 
-      <!-- Second marquee for continuity -->
-      <div
-        aria-hidden="true"
-        class="partners-marquee flex items-center"
-        style="
-                --play: running;
-                --direction: normal;
-                --delay: 0s;
-                --iteration-count: infinite;
-                --min-width: 100%;
-              "
-      >
+      <div aria-hidden="true" class="partners-marquee flex items-center">
         {
-          partners.map((partner) => (
+          partnerItems.map((item) => (
             <a
               tabindex="-1"
-              href={`${partnersPath}#${partner.name}`}
-              aria-label={`${partner.name} ${currentLocale === "fr" ? "vers la page partenaire" : "to the partner page"}`}
+              href={item.href}
+              aria-label={item.ariaLabel}
               class="sm:mx-8 mx-4 w-[120px] h-20 flex items-center justify-center py-2"
             >
               <Image
-                src={urlFor(partner.image).width(200).fit("max").url()}
-                alt={partner.name}
-                width={200}
-                height={200}
-                class="pointer-events-none max-h-16 w-auto object-contain opacity-60 select-none"
+                src={item.imgSrc}
+                alt={item.name}
+                width={120}
+                height={64}
+                loading="lazy"
+                decoding="async"
+                class="pointer-events-none max-h-16 w-auto object-contain opacity-60 select-none hover:opacity-80 transition-opacity duration-300"
               />
             </a>
           ))
@@ -125,13 +104,10 @@ const t = getTranslations(currentLocale);
         console.error("Partners marquee elements not found");
       } else {
         const calculateWidth = () => {
-          const marqueeRect = marquee.getBoundingClientRect();
-          let marqueeWidth = marqueeRect.width;
+          const marqueeWidth = marquee.getBoundingClientRect().width;
 
-          const marquees = container.querySelectorAll(".partners-marquee");
-          marquees.forEach((m) => {
-            // Slower speed for a more readable scrolling
-            const duration = marqueeWidth / 30; // 30px per second
+          container.querySelectorAll(".partners-marquee").forEach((m) => {
+            const duration = marqueeWidth / 30;
             (m as HTMLElement).style.setProperty("--duration", `${duration}s`);
           });
         };
