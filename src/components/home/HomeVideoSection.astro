@@ -48,10 +48,10 @@ if (!settings?.lastEventVideo.video) {
     }
     <div
       class={cn(
-        "relative h-[680px]",
+        "relative",
         settings.lastEventVideo.orientation === "portrait"
-          ? "w-96 block md:hidden"
-          : "w-full"
+          ? "w-96 block md:hidden h-[680px]"
+          : "w-full h-full",
       )}
     >
       <video
@@ -59,7 +59,12 @@ if (!settings?.lastEventVideo.video) {
         aria-label={currentLocale === "fr"
           ? "Vidéo de l'événement"
           : "Event video"}
-        class="w-full h-full object-cover rounded-lg shadow-lg video-responsive"
+        class={cn(
+          "w-full object-contain rounded-lg video-responsive",
+          settings.lastEventVideo.orientation === "portrait"
+            ? "h-full shadow-lg"
+            : "h-fit",
+        )}
         data-autoplay-mobile="false"
         autoplay
         muted
@@ -92,7 +97,7 @@ if (!settings?.lastEventVideo.video) {
 
     const isMobile = window.innerWidth < 768;
     const videos = document.querySelectorAll<HTMLVideoElement>(
-      'video[data-autoplay-mobile="false"]'
+      'video[data-autoplay-mobile="false"]',
     );
 
     videos.forEach((video) => {
