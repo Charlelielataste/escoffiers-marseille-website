@@ -75,7 +75,7 @@ const eventPath =
 
   <div class="mb-8">
     <div
-      class="text-xl text-gray-700 leading-relaxed font-medium bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+      class="text-lg text-gray-700 leading-relaxed font-medium bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
     >
       {event.intro[currentLocale]}
     </div>
@@ -109,7 +109,10 @@ const eventPath =
   >
     <PortableText
       value={event.body[currentLocale]}
-      components={{ type: { image: SanityImage }, mark: { link: ExternalLink } }}
+      components={{
+        type: { image: SanityImage },
+        mark: { link: ExternalLink },
+      }}
     />
   </div>
 </article>
