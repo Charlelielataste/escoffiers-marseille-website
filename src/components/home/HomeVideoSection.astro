@@ -51,7 +51,7 @@ if (!settings?.lastEventVideo.video) {
         "relative",
         settings.lastEventVideo.orientation === "portrait"
           ? "w-96 block md:hidden h-[680px]"
-          : "w-full h-full",
+          : "w-full",
       )}
     >
       <video
@@ -63,7 +63,7 @@ if (!settings?.lastEventVideo.video) {
           "w-full object-contain rounded-lg video-responsive",
           settings.lastEventVideo.orientation === "portrait"
             ? "h-full shadow-lg"
-            : "h-fit",
+            : "aspect-video rounded-xl md:rounded-3xl",
         )}
         data-autoplay-mobile="false"
         autoplay
